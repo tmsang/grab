@@ -11,12 +11,18 @@ namespace tmsang.domain
         // =========================================
 
         // this private variable is core of Entity        
-        private List<R_Request> _orderRequests = new List<R_Request>();
-        public virtual IEnumerable<R_Request> OrderRequests
+        private List<R_Request> _requests = new List<R_Request>();
+        private List<R_Order> _orders = new List<R_Order>();
+
+        public virtual IEnumerable<R_Request> Requests
         {
             get
             {
-                return this._orderRequests.Where(p => p.GuestId == this.Id);
+                var requests = from request in _requests
+                               join order in _orders on request.OrderId equals order.Id
+                               where order.Id == this.Id
+                               select request;
+                return requests;
             }
         }
 

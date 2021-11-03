@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace tmsang.domain
 {
@@ -15,6 +16,10 @@ namespace tmsang.domain
 
         public virtual string Password { get; protected set; }
         public virtual byte[] Salt { get; protected set; }
+        
+        // should make relationship, IList (allow Add) - but IEnumerable is not
+        public virtual IList<B_DriverBike> Bikes { get; set; } 
+
 
         public static R_Driver Create(string fullName, string personId, string personImage, string address, string phone, string email, string password, byte[] salt)
         {
@@ -39,7 +44,8 @@ namespace tmsang.domain
             DomainEvents.Raise<R_DriverCreatedEvent>(new R_DriverCreatedEvent { R_Driver = user });
 
             return user;
-        }
+        }        
+
         public virtual void ResetPassword(string newPassword)
         {
             this.Password = newPassword;

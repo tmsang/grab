@@ -36,8 +36,7 @@ namespace tmsang.api
 
             services.AddScoped<IRepository<R_Admin>, MyRepository<R_Admin>>();
             services.AddScoped<IRepository<R_Driver>, MyRepository<R_Driver>>();
-            services.AddScoped<IRepository<R_Guest>, MyRepository<R_Guest>>();
-            services.AddScoped<IRepository<B_DriverBike>, MyRepository<B_DriverBike>>();
+            services.AddScoped<IRepository<R_Guest>, MyRepository<R_Guest>>();            
 
             // ----------------------------------------------
             // DI: Application
@@ -66,7 +65,7 @@ namespace tmsang.api
             services.AddScoped<Handles<R_AccountSmsVerificationEvent>, R_AccountSmsVerificationHandle>();
 
             // B. ORDER
-            services.AddScoped<Handles<R_GuestRequestedEvent>, DomainEventHandle<R_GuestRequestedEvent>>();
+            services.AddScoped<Handles<R_RequestsOfGuestEvent>, DomainEventHandle<R_RequestsOfGuestEvent>>();
 
             // C. Resolve cac service manual
             var serviceProvider = services.BuildServiceProvider();

@@ -9,7 +9,7 @@ namespace tmsang.application
         readonly IRepository<R_Admin> adminAccountRepository;
         readonly IRepository<R_Driver> driverAccountRepository;
         readonly IRepository<R_Guest> guestAccountRepository;
-        readonly IRepository<B_DriverBike> driverBikeRepository;
+        
         readonly IStorage storage;
         readonly IAuth auth;
 
@@ -20,8 +20,7 @@ namespace tmsang.application
         public AccountService(
             IRepository<R_Admin> adminAccountRepository,
             IRepository<R_Driver> driverAccountRepository,
-            IRepository<R_Guest> guestAccountRepository,
-            IRepository<B_DriverBike> driverBikeRepository,
+            IRepository<R_Guest> guestAccountRepository,            
 
             AccountDomainService accountDomainService,
             IStorage storage,
@@ -31,8 +30,7 @@ namespace tmsang.application
         {
             this.adminAccountRepository = adminAccountRepository;
             this.driverAccountRepository = driverAccountRepository;
-            this.guestAccountRepository = guestAccountRepository;
-            this.driverBikeRepository = driverBikeRepository;
+            this.guestAccountRepository = guestAccountRepository;            
 
             this.accountDomainService = accountDomainService;
             this.storage = storage;
@@ -68,7 +66,7 @@ namespace tmsang.application
             }
             // add thong tin dang ky vao bang R_Admin -> raise event (email)
             var hash = auth.EncryptPassword(registerDto.Password);
-            var account = R_Admin.Create(registerDto.FullName, registerDto.Phone, registerDto.Email, hash.Hash, hash.Salt);
+            var account = R_Admin.Create(registerDto.FullName, registerDto.Email, registerDto.Phone, registerDto.Address, hash.Hash, hash.Salt);
             this.unitOfWork.ForceBeginTransaction();
             this.adminAccountRepository.Add(account);
         }
@@ -180,7 +178,7 @@ namespace tmsang.application
             // add thong tin dang ky vao bang R_Admin -> raise event (email)
             var hash = auth.EncryptPassword(registerDto.Password);
 
-            var account = R_Driver.Create(registerDto.FirstName, registerDto.LastName, registerDto.PersonalId, 
+            var account = R_Driver.Create(registerDto.FullName, registerDto.PersonalId, 
                                             registerDto.Avatar, registerDto.Address, registerDto.Phone, registerDto.Email, 
                                             hash.Hash, hash.Salt);
 
@@ -188,8 +186,11 @@ namespace tmsang.application
                                             registerDto.ChassisNo, registerDto.BikeType, registerDto.Brand, registerDto.RegistrationDate);
             
             this.unitOfWork.ForceBeginTransaction();
-            this.driverAccountRepository.Add(account);
-            this.driverBikeRepository.Add(bike);                // vi Bike quan he 1-1 voi Driver Account, nen ta add the nay, chu 1-n thi di tu root
+
+            // bike is just branch -> should use root (Driver)
+            account.Bikes.Add(bike);                          // vi Bike quan he 1-1 voi Driver Account, nen ta add the nay, chu 1-n thi di tu root
+
+            this.driverAccountRepository.Add(account);            
         }
         public TokenDto DriverLogin(DriverLoginDto loginDto)
         {

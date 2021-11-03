@@ -2,9 +2,9 @@
 
 namespace tmsang.domain
 {
-    public class R_Request: BaseEntity
+    public class R_Request: BaseEntity, IAggregateRoot
     {
-        public virtual int Id { get; protected set; }
+        public virtual Guid Id { get; protected set; }
 
         public virtual Guid OrderId { get; protected set; }
 
