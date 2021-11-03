@@ -11,8 +11,8 @@ namespace tmsang.domain
         // =========================================
 
         // this private variable is core of Entity        
-        private List<R_OrderRequest> _orderRequests = new List<R_OrderRequest>();
-        public virtual IEnumerable<R_OrderRequest> OrderRequests
+        private List<R_Request> _orderRequests = new List<R_Request>();
+        public virtual IEnumerable<R_Request> OrderRequests
         {
             get
             {

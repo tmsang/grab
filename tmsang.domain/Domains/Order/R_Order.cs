@@ -10,5 +10,6 @@ namespace tmsang.domain
     {
         public Guid Id { get; protected set; }
         public Guid AccountId { get; protected set; }
+        public int OrderStatusId { get; protected set; }
     }
 }

@@ -2,7 +2,7 @@
 {
     public class R_GuestRequestedEvent : DomainEvent
     {
-        public R_OrderRequest R_OrderRequest { get; set; }
+        public R_Request R_OrderRequest { get; set; }
         public override void Flatten()
         {
             var name = "R_OrderRequest";

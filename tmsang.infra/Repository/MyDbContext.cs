@@ -1,10 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using tmsang.domain;
 
 namespace tmsang.infra
@@ -15,30 +11,49 @@ namespace tmsang.infra
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)
         {
         }
+        
+        // Account
+        public DbSet<R_Admin> Admins { get; set; }
+        public DbSet<B_AdminHistory> AdminHistories { get; set; }
+        public DbSet<B_AdminPolicy> AdminPolicies { get; set; }
 
-        public DbSet<R_Admin> R_Admins { get; set; }
-        public DbSet<R_Driver> R_Drivers { get; set; }
-        public DbSet<R_Guest> R_Guests { get; set; }
-        public DbSet<R_Account> R_Accounts { get; set; }
-        public DbSet<B_AccountHistory> B_AccountHistories { get; set; }
-        public DbSet<B_DriverBike> B_DriverBikes { get; set; }
+        public DbSet<R_Driver> Drivers { get; set; }
+        public DbSet<B_DriverHistory> DriverHistories { get; set; }
+        public DbSet<B_DriverPolicy> DriverPolicies { get; set; }
+        public DbSet<B_DriverFeePolicy> DriverFeePolicies { get; set; }
+        public DbSet<B_DriverTrustLevel> DriverTrustLevels { get; set; }
+        public DbSet<B_DriverBike> DriverBikes { get; set; }
 
-        public DbSet<M_AccountStatus> M_AccountTrackingTypes { get; set; }
-        public DbSet<M_Area> M_Areas { get; set; }
-        public DbSet<M_OrderTrackingType> M_OrderTrackingTypes { get; set; }
-        public DbSet<M_PersonalPolicyType> M_PersonalPolicyTypes { get; set; }
-        public DbSet<M_RoutineCost> M_RoutineCosts { get; set; }
-        public DbSet<M_TaxVAT> M_TaxVATs { get; set; }
+        public DbSet<R_Guest> Guests { get; set; }
+        public DbSet<B_GuestHistory> GuestHistories { get; set; }
+        public DbSet<B_GuestPolicy> GuestPolicies { get; set; }
 
-        public DbSet<R_Order> R_Orders { get; set; }
-        public DbSet<R_OrderRequest> R_OrderRequests { get; set; }
-        public DbSet<R_OrderResponse> R_OrderResponses { get; set; }
-        public DbSet<R_OrderPayment> r_OrderPayments { get; set; }
-        public DbSet<R_OrderEvaluation> R_OrderEvaluations { get; set; }
-        public DbSet<R_Location> R_Locations { get; set; }
-        public DbSet<B_OrderRequestLocation> B_OrderRequestLocations { get; set; }
-        public DbSet<B_OrderPaymentCreditCard> B_OrderPaymentCreditCards { get; set; }
-        public DbSet<B_OrderHistory> B_OrderHistories { get; set; }
+        // Order
+        public DbSet<R_Order> Orders { get; set; }
+        
+        public DbSet<R_Request> Requests { get; set; }
+        public DbSet<B_RequestHistory> RequestHistories { get; set; }
+        public DbSet<R_Response> Responses { get; set; }
+        public DbSet<B_ResponseHistory> ResponseHistories { get; set; }
+        public DbSet<R_Payment> Payments { get; set; }
+        public DbSet<B_PaymentHistory> PaymentHistories { get; set; }
+        public DbSet<R_Evaluation> Evaluations { get; set; }
+        public DbSet<B_EvaluationHistory> EvaluationHistories { get; set; }
+
+        // FeePolicy
+        public DbSet<R_FeePolicy> FeePolicies { get; set; }
+        public DbSet<R_FeePolicyGroup> FeePolicyGroups { get; set; }
+        public DbSet<B_FeePolicyAccountInGroup> FeePolicyAccountInGroups { get; set; }
+
+        // Common
+        public DbSet<R_Location> Locations { get; set; }
+
+        // Master Data
+        public DbSet<M_AccountStatus> AccountStatus { get; set; }        
+        public DbSet<M_OrderStatus> OrderStatus { get; set; }
+        public DbSet<M_PersonalPolicyType> PersonalPolicyTypes { get; set; }
+        public DbSet<M_RoutineCost> RoutineCosts { get; set; }
+        public DbSet<M_TaxVAT> TaxVATs { get; set; }        
 
 
         public override int SaveChanges()
@@ -69,10 +84,10 @@ namespace tmsang.infra
             modelBuilder.Entity<B_GuestHistory>().ToTable("B_GuestHistories");
 
             modelBuilder.Entity<R_Order>().ToTable("R_Orders");
-            modelBuilder.Entity<R_OrderRequest>().ToTable("R_OrderRequests");
-            modelBuilder.Entity<R_OrderResponse>().ToTable("R_OrderResponses");
-            modelBuilder.Entity<R_OrderPayment>().ToTable("R_OrderPayments");
-            modelBuilder.Entity<R_OrderEvaluation>().ToTable("R_OrderEvaluations");
+            modelBuilder.Entity<R_Request>().ToTable("R_OrderRequests");
+            modelBuilder.Entity<R_Response>().ToTable("R_OrderResponses");
+            modelBuilder.Entity<R_Payment>().ToTable("R_OrderPayments");
+            modelBuilder.Entity<R_Evaluation>().ToTable("R_OrderEvaluations");
             modelBuilder.Entity<B_OrderPaymentCreditCard>().ToTable("B_OrderPaymentCreditCards");
             
             modelBuilder.Entity<B_OrderRequestHistory>().ToTable("B_OrderRequestHistories");

@@ -2,7 +2,7 @@
 
 namespace tmsang.domain
 {
-    public class B_OrderPaymentCreditCard: R_OrderPayment
+    public class B_OrderPaymentCreditCard: R_Payment
     {
         public virtual string FullName { get; protected set; }
         public virtual string Number { get; protected set; }
