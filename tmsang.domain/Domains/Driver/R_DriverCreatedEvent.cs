@@ -7,7 +7,7 @@
         {
             var name = "R_Driver";
             this.Args.Add(name + " Id", R_Driver.Id);
-            this.Args.Add(name + " FullName", R_Driver.FirstName + " " + R_Driver.LastName);
+            this.Args.Add(name + " FullName", R_Driver.FullName);
             this.Args.Add(name + " Phone", R_Driver.Phone);
             this.Args.Add(name + " Email", R_Driver.Email);
         }

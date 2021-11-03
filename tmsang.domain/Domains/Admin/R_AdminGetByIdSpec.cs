@@ -3,19 +3,19 @@ using System.Linq.Expressions;
 
 namespace tmsang.domain
 {
-    public class R_DriverGetByIdSpec : SpecificationBase<R_Driver>
+    public class R_AdminGetByIdSpec : SpecificationBase<R_Admin>
     {
         readonly string id;
 
-        public R_DriverGetByIdSpec(string id)
+        public R_AdminGetByIdSpec(string id)
         {
             this.id = id;
         }
 
-        public override Expression<Func<R_Driver, bool>> SpecExpression
+        public override Expression<Func<R_Admin, bool>> SpecExpression
         {
             get {
-                return p => p.AccountStatusId == (int)E_AccountStatus.Active 
+                return p => p.Mode == E_Mode.Active
                             && p.Id.ToString() == this.id;
             }
         }

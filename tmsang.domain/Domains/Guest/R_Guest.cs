@@ -4,13 +4,13 @@ using System.Linq;
 
 namespace tmsang.domain
 {
-    public class R_Guest: R_Account
+    public class R_Guest: BaseEntity, IAggregateRoot
     {
         // =========================================
         // A. Design Entity + Properties
         // =========================================
 
-        // this private variable is core of Entity
+        // this private variable is core of Entity        
         private List<R_OrderRequest> _orderRequests = new List<R_OrderRequest>();
         public virtual IEnumerable<R_OrderRequest> OrderRequests
         {
@@ -20,9 +20,13 @@ namespace tmsang.domain
             }
         }
 
+        public virtual Guid Id { get; protected set; }
         public virtual string FullName { get; protected set; }
         public virtual string Email { get; protected set; }
         public virtual string Phone { get; protected set; }
+
+        public virtual E_Mode Mode { get; protected set; }
+
         public virtual string Password { get; protected set; }
         public virtual byte[] Salt { get; protected set; }
 
@@ -47,9 +51,9 @@ namespace tmsang.domain
                 FullName = fullName,
                 Phone = phone,
                 Email = email,
+
                 Password = password,
-                Salt = salt,
-                AccountStatusId = (int)E_AccountStatus.Active           // tam thoi chua check mail, nen de la 1 - active
+                Salt = salt                
             };
             // add event sourcing
             DomainEvents.Raise<R_GuestCreatedEvent>(new R_GuestCreatedEvent() { R_Guest = guest });

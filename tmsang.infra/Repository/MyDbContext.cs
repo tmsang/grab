@@ -23,7 +23,7 @@ namespace tmsang.infra
         public DbSet<B_AccountHistory> B_AccountHistories { get; set; }
         public DbSet<B_DriverBike> B_DriverBikes { get; set; }
 
-        public DbSet<M_AccountTrackingType> M_AccountTrackingTypes { get; set; }
+        public DbSet<M_AccountStatus> M_AccountTrackingTypes { get; set; }
         public DbSet<M_Area> M_Areas { get; set; }
         public DbSet<M_OrderTrackingType> M_OrderTrackingTypes { get; set; }
         public DbSet<M_PersonalPolicyType> M_PersonalPolicyTypes { get; set; }
