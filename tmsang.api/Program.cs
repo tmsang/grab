@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,6 +14,7 @@ namespace tmsang.api
     {
         public static void Main(string[] args)
         {
+            File.AppendAllText("Files/TrackMigration/test.txt", $"{DateTime.Now}: Begin Main... \n");
             CreateHostBuilder(args).Build().Run();
         }
 

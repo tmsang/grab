@@ -107,6 +107,8 @@ namespace tmsang.infra
             modelBuilder.Entity<M_PersonalPolicyType>().ToTable("M_PersonalPolicyTypes");
             modelBuilder.Entity<M_RoutineCost>().ToTable("M_RoutineCosts");
             modelBuilder.Entity<M_TaxVAT>().ToTable("M_TaxVAT");
+
+            modelBuilder.Entity<R_Location>().ToTable("R_Locations");
         }
 
     }

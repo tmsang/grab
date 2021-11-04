@@ -5,15 +5,19 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
+using System.IO;
 using tmsang.infra;
 
 namespace tmsang.api
 {
     public class Startup
-    {
+    {        
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            File.AppendAllText("Files/TrackMigration/test.txt", $"{DateTime.Now}: Begin Startup...\n");
         }
 
         public IConfiguration Configuration { get; }
@@ -21,6 +25,8 @@ namespace tmsang.api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            File.AppendAllText("Files/TrackMigration/test.txt", $"{DateTime.Now}: Begin ConfigureServices...\n");
+
             // TODO: add dbcontext cho MySQL
             string mySqlConnectionStr = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContextPool<MyDbContext>(options => options.UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr)));
@@ -48,6 +54,8 @@ namespace tmsang.api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            File.AppendAllText("Files/TrackMigration/test.txt", $"{DateTime.Now}: Begin Configure...\n");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
