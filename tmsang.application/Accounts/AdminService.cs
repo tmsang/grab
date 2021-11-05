@@ -83,9 +83,8 @@ namespace tmsang.application
             }
 
             // check expired date (nameid = ecd6672c-25b0-4e8a-82be-0d9e276b1a77;sangnews2014@gmail.com;2021-11-04 13:10:55)
-            var exp = auth.GetClaim(token, "exp");
-            DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(long.Parse(exp));
-            if (DateTime.Now > dateTimeOffset.LocalDateTime)
+            var exp = auth.GetClaim(token, "exp");            
+            if (DateTime.Now > DateTimeOffset.FromUnixTimeSeconds(long.Parse(exp)).LocalDateTime)
             {
                 throw new Exception("Expired date is over");
             }

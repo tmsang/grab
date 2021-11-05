@@ -54,16 +54,20 @@ namespace tmsang.api
             services.AddScoped<R_GuestDomainService>();
 
             services.AddScoped<Handles<R_AdminCreatedEvent>, DomainEventHandle<R_AdminCreatedEvent>>();         // event
-            services.AddScoped<Handles<R_DriverCreatedEvent>, DomainEventHandle<R_DriverCreatedEvent>>();
-            services.AddScoped<Handles<R_GuestCreatedEvent>, DomainEventHandle<R_GuestCreatedEvent>>();
-
             services.AddScoped<Handles<R_AdminCreatedEvent>, R_AdminCreatedEmailHandle>();                      // handle
-            //services.AddScoped<Handles<R_DriverCreatedEvent>, R_DriverCreatedEmailHandle>();
-            //services.AddScoped<Handles<R_GuestCreatedEvent>, R_GuestCreatedEmailHandle>();
-
             services.AddScoped<Handles<R_AdminChangePasswordEvent>, DomainEventHandle<R_AdminChangePasswordEvent>>();   // event
-
             services.AddScoped<Handles<R_AdminChangePasswordEvent>, R_AdminChangePasswordEmailHandle>();                // handle
+
+            services.AddScoped<Handles<R_DriverCreatedEvent>, DomainEventHandle<R_DriverCreatedEvent>>();
+            services.AddScoped<Handles<R_DriverCreatedEvent>, R_DriverCreatedEmailHandle>();
+            services.AddScoped<Handles<R_DriverChangePasswordEvent>, DomainEventHandle<R_DriverChangePasswordEvent>>();   // event
+            services.AddScoped<Handles<R_DriverChangePasswordEvent>, R_DriverChangePasswordEmailHandle>();                // handle
+
+            services.AddScoped<Handles<R_GuestCreatedEvent>, DomainEventHandle<R_GuestCreatedEvent>>();                        
+            services.AddScoped<Handles<R_GuestCreatedEvent>, R_GuestCreatedEmailHandle>();
+            services.AddScoped<Handles<R_GuestChangePasswordEvent>, DomainEventHandle<R_GuestChangePasswordEvent>>();   // event
+            services.AddScoped<Handles<R_GuestChangePasswordEvent>, R_GuestChangePasswordEmailHandle>();                // handle
+
 
             services.AddScoped<Handles<R_AccountSmsVerificationEvent>, DomainEventHandle<R_AccountSmsVerificationEvent>>();
             services.AddScoped<Handles<R_AccountSmsVerificationEvent>, R_AccountSmsVerificationHandle>();

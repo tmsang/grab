@@ -48,6 +48,8 @@ namespace tmsang.domain
         public virtual void ResetPassword(string hash, byte[] salt) {
             this.Password = hash;
             this.Salt = salt;
+
+            DomainEvents.Raise<R_AdminChangePasswordEvent>(new R_AdminChangePasswordEvent { R_Admin = this });
         }
     }
 }
