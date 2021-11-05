@@ -9,7 +9,7 @@ namespace tmsang.domain
         public virtual string Email { get; protected set; }
         public virtual string Phone { get; protected set; }
         public virtual string Address { get; protected set; }
-        public virtual E_Mode Mode { get; protected set; } = E_Mode.Deactive;
+        public virtual E_Status AccountStatus { get; protected set; } = E_Status.Deactive;
 
         public virtual string Password { get; protected set; }
         public virtual byte[] Salt { get; protected set; }
@@ -42,7 +42,7 @@ namespace tmsang.domain
 
         public virtual void Activate()      // y nghia: protected set la vay - gom logic vao
         {
-            this.Mode = E_Mode.Active;            
+            this.AccountStatus = E_Status.Active;            
         }
 
         public virtual void ResetPassword(string hash, byte[] salt) {

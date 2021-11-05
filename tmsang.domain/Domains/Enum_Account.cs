@@ -1,6 +1,6 @@
 ﻿namespace tmsang.domain
 {
-    public enum E_AccountStatus
+    public enum E_AccountMode
     {
         Login = 1,
         ChangePassword = 2,
@@ -13,7 +13,7 @@
         SetBike = 13
     }
 
-    public enum E_Mode 
+    public enum E_Status
     { 
         Remove = -2,
         Lock = -1,

@@ -18,7 +18,7 @@ namespace tmsang.domain
         {
             get
             {
-                return p => p.Mode == E_Mode.Active
+                return p => p.AccountStatus == E_Status.Active
                             && (p.Email == this.email || p.Phone == this.phone);
             }
         }
