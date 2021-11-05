@@ -44,7 +44,12 @@ namespace tmsang.domain
             DomainEvents.Raise<R_DriverCreatedEvent>(new R_DriverCreatedEvent { R_Driver = user });
 
             return user;
-        }        
+        }
+
+        public virtual void Activate()      // y nghia: protected set la vay - gom logic vao
+        {
+            this.Mode = E_Mode.Active;
+        }
 
         public virtual void ResetPassword(string newPassword)
         {

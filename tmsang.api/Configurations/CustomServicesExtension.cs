@@ -41,13 +41,17 @@ namespace tmsang.api
             // ----------------------------------------------
             // DI: Application
             // ----------------------------------------------
-            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IAdminService, AdminService>();
+            services.AddScoped<IDriverService, DriverService>();
+            services.AddScoped<IGuestService, GuestService>();
 
             // ----------------------------------------------
             // DI: Domain
             // ----------------------------------------------
             // A. ACCOUNT
-            services.AddScoped<AccountDomainService>();
+            services.AddScoped<R_AdminDomainService>();
+            services.AddScoped<R_DriverDomainService>();
+            services.AddScoped<R_GuestDomainService>();
 
             services.AddScoped<Handles<R_AdminCreatedEvent>, DomainEventHandle<R_AdminCreatedEvent>>();         // event
             services.AddScoped<Handles<R_DriverCreatedEvent>, DomainEventHandle<R_DriverCreatedEvent>>();

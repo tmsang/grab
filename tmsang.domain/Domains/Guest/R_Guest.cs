@@ -84,6 +84,12 @@ namespace tmsang.domain
         // =========================================
         // C. Business & Logic
         // =========================================
+
+        public virtual void Activate()      // y nghia: protected set la vay - gom logic vao
+        {
+            this.Mode = E_Mode.Active;
+        }
+
         public virtual void ResetPassword(string newPassword)
         {
             this.Password = newPassword;

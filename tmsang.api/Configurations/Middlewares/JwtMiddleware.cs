@@ -11,17 +11,25 @@ namespace tmsang.api
     {
         private RequestDelegate _next;
         private IAuth _auth;
-        private AccountDomainService _accountDomainService;
+        private R_AdminDomainService _adminDomainService;
+        private R_DriverDomainService _driverDomainService;
+        private R_GuestDomainService _guestDomainService;
 
         public JwtMiddleware(RequestDelegate next)
         {
             _next = next;
         }
 
-        public async Task Invoke(HttpContext context, IAuth auth, AccountDomainService accountDomainService)
+        public async Task Invoke(
+            HttpContext context, IAuth auth,
+            R_AdminDomainService adminDomainService,
+            R_DriverDomainService driverDomainService,
+            R_GuestDomainService guestDomainService)
         {
             _auth = auth;
-            _accountDomainService = accountDomainService;
+            _adminDomainService = adminDomainService;
+            _driverDomainService = driverDomainService;
+            _guestDomainService = guestDomainService;
 
             var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
 
@@ -45,16 +53,16 @@ namespace tmsang.api
 
                 if (role == E_AccountType.Admin.ToString())
                 {
-                    user = _accountDomainService.GetAdminById(id);
+                    user = _adminDomainService.GetAdminById(id);
                 }
-                //else if (role == E_AccountType.Driver.ToString())
-                //{
-                //    user = _accountDomainService.GetDriverById(id);
-                //}
-                //else if (role == E_AccountType.Guest.ToString())
-                //{
-                //    user = _accountDomainService.GetGuestById(id);
-                //}
+                else if (role == E_AccountType.Driver.ToString())
+                {
+                    user = _driverDomainService.GetDriverById(id);
+                }
+                else if (role == E_AccountType.Guest.ToString())
+                {
+                    user = _guestDomainService.GetGuestById(id);
+                }
                 else {
                     throw new Exception("User is null in JwtMiddleware");
                 }

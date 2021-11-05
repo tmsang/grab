@@ -6,9 +6,9 @@ namespace tmsang.api
     [Route("api/admin")]
     public class AdminAccountController : Controller
     {
-        readonly IAccountService accountService;
+        readonly IAdminService accountService;
 
-        public AdminAccountController(IAccountService accountService)
+        public AdminAccountController(IAdminService accountService)
         {
             this.accountService = accountService;
         }
@@ -19,6 +19,19 @@ namespace tmsang.api
             try
             {
                 this.accountService.AdminRegister(registerDto);
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+        }
+
+        [HttpGet("active")]
+        public void Activate(string token)
+        {
+            try
+            {
+                this.accountService.AdminActivate(token);
             }
             catch (System.Exception)
             {

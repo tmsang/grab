@@ -40,6 +40,11 @@ namespace tmsang.domain
             return admin;
         }
 
+        public virtual void Activate()      // y nghia: protected set la vay - gom logic vao
+        {
+            this.Mode = E_Mode.Active;            
+        }
+
         public virtual void ResetPassword(string hash, byte[] salt) {
             this.Password = hash;
             this.Salt = salt;
