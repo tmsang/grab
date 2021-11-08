@@ -78,6 +78,10 @@ namespace tmsang.api
             }
         }
 
+        // =============================================
+        // Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlY2Q2NjcyYy0yNWIwLTRlOGEtODJiZS0wZDllMjc2YjFhNzciLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE2MzYxMDA5NjQsImV4cCI6MTYzNjE4NzM2NCwiaWF0IjoxNjM2MTAwOTY0LCJpc3MiOiJodHRwOi8vbXlzaXRlLmNvbSIsImF1ZCI6Imh0dHA6Ly9teWF1ZGllbmNlLmNvbSJ9.yipXjgOEROlIcnNv8FEodg19VaQB9V0SRz2jC0BGp-w
+        // Content-Type: application/x-www-form-urlencoded        
+        // =============================================
         [Authorize]
         [HttpPost("change")]
         public TokenDto ChangePassword(AdminChangePasswordDto changePasswordDto)

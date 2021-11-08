@@ -137,7 +137,7 @@ namespace tmsang.application
             {
                 throw new Exception("This account is not exists");
             }
-            // send ma SMS code
+            // send ma SMS code -> (Web will move to Page Reset Password)
             SendSmsCode(user.Phone);
         }
 
