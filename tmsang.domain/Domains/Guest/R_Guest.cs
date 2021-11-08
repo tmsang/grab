@@ -8,24 +8,7 @@ namespace tmsang.domain
     {
         // =========================================
         // A. Design Entity + Properties
-        // =========================================
-
-        // this private variable is core of Entity        
-        private List<R_Request> _requests = new List<R_Request>();
-        private List<R_Order> _orders = new List<R_Order>();
-
-        public virtual IEnumerable<R_Request> Requests
-        {
-            get
-            {
-                var requests = from request in _requests
-                               join order in _orders on request.OrderId equals order.Id
-                               where order.Id == this.Id
-                               select request;
-                return requests;
-            }
-        }
-
+        // =========================================        
         public virtual Guid Id { get; protected set; }
         public virtual string FullName { get; protected set; }
         public virtual string Email { get; protected set; }
@@ -35,6 +18,12 @@ namespace tmsang.domain
 
         public virtual string Password { get; protected set; }
         public virtual byte[] Salt { get; protected set; }
+
+        // relationship (1-n: 1)
+        public virtual IList<B_GuestHistory> Histories { get; protected set; }
+        public virtual IList<B_GuestPolicy> Policies { get; protected set; }
+        
+        public virtual IList<R_Request> Requests { get; protected set; }
 
         // =========================================
         // B. Events of guest

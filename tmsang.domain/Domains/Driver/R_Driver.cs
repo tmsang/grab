@@ -18,7 +18,13 @@ namespace tmsang.domain
         public virtual byte[] Salt { get; protected set; }
 
         // should make relationship, IList (allow Add) - but IEnumerable is not
+        public virtual IList<B_DriverHistory> Histories { get; set; } = new List<B_DriverHistory>();
+        public virtual IList<B_DriverPolicy> Policies { get; set; } = new List<B_DriverPolicy>();
+        public virtual IList<B_DriverFeePolicy> FeePolicies { get; set; } = new List<B_DriverFeePolicy>();
+        public virtual IList<B_DriverTrustLevel> TrustLevels { get; set; } = new List<B_DriverTrustLevel>();
         public virtual IList<B_DriverBike> Bikes { get; set; } = new List<B_DriverBike>();
+        
+        public virtual IList<R_Response> Responses { get; set; } = new List<R_Response>();
 
 
         public static R_Driver Create(string fullName, string personId, string personImage, string address, string phone, string email, string password, byte[] salt)

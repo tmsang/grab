@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace tmsang.domain
 {
@@ -13,6 +14,10 @@ namespace tmsang.domain
 
         public virtual string Password { get; protected set; }
         public virtual byte[] Salt { get; protected set; }
+
+        // relationship
+        public virtual IList<B_AdminHistory> Histories { get; protected set; }
+        public virtual IList<B_AdminPolicy> Policies { get; protected set; }
 
 
         public static R_Admin Create(

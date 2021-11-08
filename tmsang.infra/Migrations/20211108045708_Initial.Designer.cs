@@ -9,8 +9,8 @@ using tmsang.infra;
 namespace tmsang.infra.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20211105080019_NamingMode_Status")]
-    partial class NamingMode_Status
+    [Migration("20211108045708_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,6 +39,8 @@ namespace tmsang.infra.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AccountId");
+
                     b.ToTable("B_AdminHistories");
                 });
 
@@ -61,6 +63,8 @@ namespace tmsang.infra.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
 
                     b.ToTable("B_AdminPolicies");
                 });
@@ -92,15 +96,12 @@ namespace tmsang.infra.Migrations
                     b.Property<string>("PlateNo")
                         .HasColumnType("longtext");
 
-                    b.Property<Guid?>("R_DriverId")
-                        .HasColumnType("char(36)");
-
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("R_DriverId");
+                    b.HasIndex("AccountId");
 
                     b.ToTable("B_DriverBikes");
                 });
@@ -128,6 +129,8 @@ namespace tmsang.infra.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AccountId");
+
                     b.ToTable("B_DriverFeePolicies");
                 });
 
@@ -150,6 +153,8 @@ namespace tmsang.infra.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
 
                     b.ToTable("B_DriverHistories");
                 });
@@ -174,6 +179,8 @@ namespace tmsang.infra.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AccountId");
+
                     b.ToTable("B_DriverPolicies");
                 });
 
@@ -194,6 +201,8 @@ namespace tmsang.infra.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AccountId");
+
                     b.ToTable("B_DriverTrustLevels");
                 });
 
@@ -206,16 +215,18 @@ namespace tmsang.infra.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("longtext");
 
+                    b.Property<Guid>("EvaluationId")
+                        .HasColumnType("char(36)");
+
                     b.Property<DateTime>("HappenDate")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<Guid>("OrderId")
-                        .HasColumnType("char(36)");
 
                     b.Property<int>("OrderStatusId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EvaluationId");
 
                     b.ToTable("B_EvaluationHistories");
                 });
@@ -226,13 +237,12 @@ namespace tmsang.infra.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<Guid>("AccountId")
-                        .HasColumnType("char(36)");
-
                     b.Property<Guid>("GroupId")
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
 
                     b.ToTable("B_FeePolicyAccountInGroups");
                 });
@@ -257,6 +267,8 @@ namespace tmsang.infra.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AccountId");
+
                     b.ToTable("B_GuestHistories");
                 });
 
@@ -280,6 +292,8 @@ namespace tmsang.infra.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AccountId");
+
                     b.ToTable("B_GuestPolicies");
                 });
 
@@ -295,13 +309,15 @@ namespace tmsang.infra.Migrations
                     b.Property<DateTime>("HappenDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<Guid>("OrderId")
-                        .HasColumnType("char(36)");
-
                     b.Property<int>("OrderStatusId")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("PaymentId")
+                        .HasColumnType("char(36)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("PaymentId");
 
                     b.ToTable("B_PaymentHistories");
                 });
@@ -318,13 +334,15 @@ namespace tmsang.infra.Migrations
                     b.Property<DateTime>("HappenDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<Guid>("OrderId")
-                        .HasColumnType("char(36)");
-
                     b.Property<int>("OrderStatusId")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("RequestId")
+                        .HasColumnType("char(36)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("RequestId");
 
                     b.ToTable("B_RequestHistories");
                 });
@@ -341,13 +359,15 @@ namespace tmsang.infra.Migrations
                     b.Property<DateTime>("HappenDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<Guid>("OrderId")
-                        .HasColumnType("char(36)");
-
                     b.Property<int>("OrderStatusId")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("ResponseId")
+                        .HasColumnType("char(36)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ResponseId");
 
                     b.ToTable("B_ResponseHistories");
                 });
@@ -532,6 +552,9 @@ namespace tmsang.infra.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("longtext");
 
+                    b.Property<int?>("B_FeePolicyAccountInGroupId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Email")
                         .HasColumnType("longtext");
 
@@ -555,23 +578,25 @@ namespace tmsang.infra.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("B_FeePolicyAccountInGroupId");
+
                     b.ToTable("R_Drivers");
                 });
 
             modelBuilder.Entity("tmsang.domain.R_Evaluation", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("Note")
                         .HasColumnType("longtext");
 
-                    b.Property<Guid>("OrderId")
-                        .HasColumnType("char(36)");
-
                     b.Property<int>("Rating")
                         .HasColumnType("int");
+
+                    b.Property<Guid>("RequestId")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
@@ -584,16 +609,22 @@ namespace tmsang.infra.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<int>("GroupId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("GroupId")
+                        .HasColumnType("char(36)");
 
-                    b.Property<long>("LocationId")
+                    b.Property<long?>("LocationId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("PersonalPolicyTypeId")
+                    b.Property<int?>("PersonalPolicyTypeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("PersonalPolicyTypeId");
 
                     b.ToTable("R_FeePolicies");
                 });
@@ -661,37 +692,20 @@ namespace tmsang.infra.Migrations
                     b.ToTable("R_Locations");
                 });
 
-            modelBuilder.Entity("tmsang.domain.R_Order", b =>
+            modelBuilder.Entity("tmsang.domain.R_Payment", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("AccountId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<int>("OrderStatusId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("R_Orders");
-                });
-
-            modelBuilder.Entity("tmsang.domain.R_Payment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
                     b.Property<string>("CardNumber")
                         .HasColumnType("longtext");
 
-                    b.Property<Guid>("OrderId")
-                        .HasColumnType("char(36)");
-
                     b.Property<bool>("Paid")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<Guid>("RequestId")
+                        .HasColumnType("char(36)");
 
                     b.Property<int>("Type")
                         .HasColumnType("int");
@@ -716,10 +730,7 @@ namespace tmsang.infra.Migrations
                     b.Property<long?>("FromId")
                         .HasColumnType("bigint");
 
-                    b.Property<Guid>("OrderId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid?>("R_GuestId")
+                    b.Property<Guid>("GuestId")
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Reason")
@@ -735,7 +746,7 @@ namespace tmsang.infra.Migrations
 
                     b.HasIndex("FromId");
 
-                    b.HasIndex("R_GuestId");
+                    b.HasIndex("GuestId");
 
                     b.HasIndex("ToId");
 
@@ -744,9 +755,9 @@ namespace tmsang.infra.Migrations
 
             modelBuilder.Entity("tmsang.domain.R_Response", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("char(36)");
 
                     b.Property<Guid>("DriverId")
                         .HasColumnType("char(36)");
@@ -757,7 +768,7 @@ namespace tmsang.infra.Migrations
                     b.Property<double>("Fee")
                         .HasColumnType("double");
 
-                    b.Property<Guid>("OrderId")
+                    b.Property<Guid>("RequestId")
                         .HasColumnType("char(36)");
 
                     b.Property<DateTime>("Start")
@@ -768,14 +779,191 @@ namespace tmsang.infra.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DriverId");
+
                     b.ToTable("R_Responses");
+                });
+
+            modelBuilder.Entity("tmsang.domain.B_AdminHistory", b =>
+                {
+                    b.HasOne("tmsang.domain.R_Admin", "Admin")
+                        .WithMany("Histories")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Admin");
+                });
+
+            modelBuilder.Entity("tmsang.domain.B_AdminPolicy", b =>
+                {
+                    b.HasOne("tmsang.domain.R_Admin", "Admin")
+                        .WithMany("Policies")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Admin");
                 });
 
             modelBuilder.Entity("tmsang.domain.B_DriverBike", b =>
                 {
-                    b.HasOne("tmsang.domain.R_Driver", null)
+                    b.HasOne("tmsang.domain.R_Driver", "Driver")
                         .WithMany("Bikes")
-                        .HasForeignKey("R_DriverId");
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Driver");
+                });
+
+            modelBuilder.Entity("tmsang.domain.B_DriverFeePolicy", b =>
+                {
+                    b.HasOne("tmsang.domain.R_Driver", "Driver")
+                        .WithMany("FeePolicies")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Driver");
+                });
+
+            modelBuilder.Entity("tmsang.domain.B_DriverHistory", b =>
+                {
+                    b.HasOne("tmsang.domain.R_Driver", "Driver")
+                        .WithMany("Histories")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Driver");
+                });
+
+            modelBuilder.Entity("tmsang.domain.B_DriverPolicy", b =>
+                {
+                    b.HasOne("tmsang.domain.R_Driver", "Driver")
+                        .WithMany("Policies")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Driver");
+                });
+
+            modelBuilder.Entity("tmsang.domain.B_DriverTrustLevel", b =>
+                {
+                    b.HasOne("tmsang.domain.R_Driver", "Driver")
+                        .WithMany("TrustLevels")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Driver");
+                });
+
+            modelBuilder.Entity("tmsang.domain.B_EvaluationHistory", b =>
+                {
+                    b.HasOne("tmsang.domain.R_Evaluation", "Evaluation")
+                        .WithMany("Histories")
+                        .HasForeignKey("EvaluationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Evaluation");
+                });
+
+            modelBuilder.Entity("tmsang.domain.B_FeePolicyAccountInGroup", b =>
+                {
+                    b.HasOne("tmsang.domain.R_FeePolicyGroup", "Group")
+                        .WithMany("Users")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
+                });
+
+            modelBuilder.Entity("tmsang.domain.B_GuestHistory", b =>
+                {
+                    b.HasOne("tmsang.domain.R_Guest", "Guest")
+                        .WithMany("Histories")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Guest");
+                });
+
+            modelBuilder.Entity("tmsang.domain.B_GuestPolicy", b =>
+                {
+                    b.HasOne("tmsang.domain.R_Guest", "Guest")
+                        .WithMany("Policies")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Guest");
+                });
+
+            modelBuilder.Entity("tmsang.domain.B_PaymentHistory", b =>
+                {
+                    b.HasOne("tmsang.domain.R_Payment", "Payment")
+                        .WithMany("Histories")
+                        .HasForeignKey("PaymentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Payment");
+                });
+
+            modelBuilder.Entity("tmsang.domain.B_RequestHistory", b =>
+                {
+                    b.HasOne("tmsang.domain.R_Request", "Request")
+                        .WithMany("Histories")
+                        .HasForeignKey("RequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Request");
+                });
+
+            modelBuilder.Entity("tmsang.domain.B_ResponseHistory", b =>
+                {
+                    b.HasOne("tmsang.domain.R_Response", "Response")
+                        .WithMany("Histories")
+                        .HasForeignKey("ResponseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Response");
+                });
+
+            modelBuilder.Entity("tmsang.domain.R_Driver", b =>
+                {
+                    b.HasOne("tmsang.domain.B_FeePolicyAccountInGroup", null)
+                        .WithMany("Drivers")
+                        .HasForeignKey("B_FeePolicyAccountInGroupId");
+                });
+
+            modelBuilder.Entity("tmsang.domain.R_FeePolicy", b =>
+                {
+                    b.HasOne("tmsang.domain.R_FeePolicyGroup", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId");
+
+                    b.HasOne("tmsang.domain.R_Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId");
+
+                    b.HasOne("tmsang.domain.M_PersonalPolicyType", "PersonalPolicyType")
+                        .WithMany()
+                        .HasForeignKey("PersonalPolicyTypeId");
+
+                    b.Navigation("Group");
+
+                    b.Navigation("Location");
+
+                    b.Navigation("PersonalPolicyType");
                 });
 
             modelBuilder.Entity("tmsang.domain.R_Request", b =>
@@ -784,9 +972,11 @@ namespace tmsang.infra.Migrations
                         .WithMany()
                         .HasForeignKey("FromId");
 
-                    b.HasOne("tmsang.domain.R_Guest", null)
+                    b.HasOne("tmsang.domain.R_Guest", "Guest")
                         .WithMany("Requests")
-                        .HasForeignKey("R_GuestId");
+                        .HasForeignKey("GuestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("tmsang.domain.R_Location", "To")
                         .WithMany()
@@ -794,17 +984,81 @@ namespace tmsang.infra.Migrations
 
                     b.Navigation("From");
 
+                    b.Navigation("Guest");
+
                     b.Navigation("To");
+                });
+
+            modelBuilder.Entity("tmsang.domain.R_Response", b =>
+                {
+                    b.HasOne("tmsang.domain.R_Driver", "Driver")
+                        .WithMany("Responses")
+                        .HasForeignKey("DriverId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Driver");
+                });
+
+            modelBuilder.Entity("tmsang.domain.B_FeePolicyAccountInGroup", b =>
+                {
+                    b.Navigation("Drivers");
+                });
+
+            modelBuilder.Entity("tmsang.domain.R_Admin", b =>
+                {
+                    b.Navigation("Histories");
+
+                    b.Navigation("Policies");
                 });
 
             modelBuilder.Entity("tmsang.domain.R_Driver", b =>
                 {
                     b.Navigation("Bikes");
+
+                    b.Navigation("FeePolicies");
+
+                    b.Navigation("Histories");
+
+                    b.Navigation("Policies");
+
+                    b.Navigation("Responses");
+
+                    b.Navigation("TrustLevels");
+                });
+
+            modelBuilder.Entity("tmsang.domain.R_Evaluation", b =>
+                {
+                    b.Navigation("Histories");
+                });
+
+            modelBuilder.Entity("tmsang.domain.R_FeePolicyGroup", b =>
+                {
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("tmsang.domain.R_Guest", b =>
                 {
+                    b.Navigation("Histories");
+
+                    b.Navigation("Policies");
+
                     b.Navigation("Requests");
+                });
+
+            modelBuilder.Entity("tmsang.domain.R_Payment", b =>
+                {
+                    b.Navigation("Histories");
+                });
+
+            modelBuilder.Entity("tmsang.domain.R_Request", b =>
+                {
+                    b.Navigation("Histories");
+                });
+
+            modelBuilder.Entity("tmsang.domain.R_Response", b =>
+                {
+                    b.Navigation("Histories");
                 });
 #pragma warning restore 612, 618
         }

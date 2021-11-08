@@ -19,7 +19,7 @@ namespace tmsang.domain
         public void Handle(R_AdminCreatedEvent args)
         {
             var mixInfo = args.R_Admin.Id.ToString() + ";" + args.R_Admin.Email + ";" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            var activeAccountTokenLink = Singleton.Instance.UrlApi + "api/admin?token=" + auth.GenerateToken(mixInfo, E_AccountType.Admin.ToString(), 60 * 24 * 1);
+            var activeAccountTokenLink = Singleton.Instance.UrlApi + "api/admin/active?token=" + auth.GenerateToken(mixInfo, E_AccountType.Admin.ToString(), 60 * 24 * 1);
 
             var holder = new EmailHolder {
                 From = "sangnew2021@gmail.com",

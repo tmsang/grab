@@ -19,7 +19,7 @@ namespace tmsang.domain
         public void Handle(R_GuestCreatedEvent args)
         {
             var mixInfo = args.R_Guest.Id.ToString() + ";" + args.R_Guest.Email + ";" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            var activeAccountTokenLink = Singleton.Instance.UrlApi + "api/guest?token=" + auth.GenerateToken(mixInfo, E_AccountType.Guest.ToString(), 60 * 24 * 1);
+            var activeAccountTokenLink = Singleton.Instance.UrlApi + "api/guest/active?token=" + auth.GenerateToken(mixInfo, E_AccountType.Guest.ToString(), 60 * 24 * 1);
 
             var holder = new EmailHolder
             {

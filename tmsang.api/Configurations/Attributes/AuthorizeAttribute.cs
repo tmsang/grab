@@ -16,8 +16,16 @@ namespace tmsang.api
             if (role == E_AccountType.Admin.ToString())
             {
                 user = (R_Admin)context.HttpContext.Items["User"];
+            } 
+            else if (role == E_AccountType.Driver.ToString())
+            {
+                user = (R_Driver)context.HttpContext.Items["User"];
             }
-            
+            else if (role == E_AccountType.Guest.ToString())
+            {
+                user = (R_Guest)context.HttpContext.Items["User"];
+            }
+
             if (user == null)
             {
                 // not logged in

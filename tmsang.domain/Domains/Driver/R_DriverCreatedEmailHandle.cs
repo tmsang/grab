@@ -19,7 +19,7 @@ namespace tmsang.domain
         public void Handle(R_DriverCreatedEvent args)
         {
             var mixInfo = args.R_Driver.Id.ToString() + ";" + args.R_Driver.Email + ";" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            var activeAccountTokenLink = Singleton.Instance.UrlApi + "api/driver?token=" + auth.GenerateToken(mixInfo, E_AccountType.Driver.ToString(), 60 * 24 * 1);
+            var activeAccountTokenLink = Singleton.Instance.UrlApi + "api/driver/active?token=" + auth.GenerateToken(mixInfo, E_AccountType.Driver.ToString(), 60 * 24 * 1);
 
             var holder = new EmailHolder
             {
