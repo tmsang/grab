@@ -5,7 +5,7 @@ using tmsang.domain;
 
 namespace tmsang.infra
 {
-    public class MemoryRepository<T> : IRepository<T> where T : IAggregateRoot
+    public class MemoryRepository<T> : IRepository<T> where T : class, IAggregateRoot
     {
         private readonly IUnitOfWork _unitOfWork;
         protected static List<T> entities = new List<T>();
@@ -28,8 +28,8 @@ namespace tmsang.infra
 
         public T FindById(Guid id)
         {
-            return entities.Where(p => p.Id == id).FirstOrDefault();
-        }
+            return entities.Where(p => (Guid)p.Id == id).FirstOrDefault();
+        }        
 
         public T FindOne(ISpecification<T> spec)
         {

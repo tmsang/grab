@@ -8,27 +8,22 @@ namespace tmsang.domain
     {
         // =========================================
         // A. Design Entity + Properties
-        // =========================================
-
-        // this private variable is core of Entity        
-        private List<R_OrderRequest> _orderRequests = new List<R_OrderRequest>();
-        public virtual IEnumerable<R_OrderRequest> OrderRequests
-        {
-            get
-            {
-                return this._orderRequests.Where(p => p.GuestId == this.Id);
-            }
-        }
-
+        // =========================================        
         public virtual Guid Id { get; protected set; }
         public virtual string FullName { get; protected set; }
         public virtual string Email { get; protected set; }
         public virtual string Phone { get; protected set; }
 
-        public virtual E_Mode Mode { get; protected set; }
+        public virtual E_Status AccountStatus { get; protected set; }
 
         public virtual string Password { get; protected set; }
         public virtual byte[] Salt { get; protected set; }
+
+        // relationship (1-n: 1)
+        public virtual IList<B_GuestHistory> Histories { get; protected set; }
+        public virtual IList<B_GuestPolicy> Policies { get; protected set; }
+        
+        public virtual IList<R_Request> Requests { get; protected set; }
 
         // =========================================
         // B. Events of guest
@@ -78,6 +73,12 @@ namespace tmsang.domain
         // =========================================
         // C. Business & Logic
         // =========================================
+
+        public virtual void Activate()      // y nghia: protected set la vay - gom logic vao
+        {
+            this.AccountStatus = E_Status.Active;
+        }
+
         public virtual void ResetPassword(string newPassword)
         {
             this.Password = newPassword;

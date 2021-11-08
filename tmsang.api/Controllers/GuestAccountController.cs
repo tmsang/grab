@@ -6,9 +6,9 @@ namespace tmsang.api
     [Route("api/guest")]
     public class GuestAccountController : Controller
     {
-        readonly IAccountService accountService;
+        readonly IGuestService accountService;
 
-        public GuestAccountController(IAccountService accountService)
+        public GuestAccountController(IGuestService accountService)
         {
             this.accountService = accountService;
         }
@@ -19,6 +19,19 @@ namespace tmsang.api
             try
             {
                 this.accountService.GuestRegister(registerDto);
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+        }
+
+        [HttpGet("active")]
+        public void Activate(string token)
+        {
+            try
+            {
+                this.accountService.GuestActivate(token);
             }
             catch (System.Exception)
             {

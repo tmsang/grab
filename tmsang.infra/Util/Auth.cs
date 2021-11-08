@@ -21,7 +21,7 @@ namespace tmsang.domain
 
         }
 
-        public string GenerateToken(string userId, string role)
+        public string GenerateToken(string userId, string role, double expiredMinutes)
         {
             var mySecurityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(mySecret));
 
@@ -31,9 +31,9 @@ namespace tmsang.domain
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
-                    new Claim(ClaimTypes.Role, role),
+                    new Claim(ClaimTypes.Role, role),                    
                 }),
-                Expires = DateTime.UtcNow.AddDays(7),
+                Expires = DateTime.UtcNow.AddMinutes(expiredMinutes),
                 Issuer = myIssuer,
                 Audience = myAudience,
                 SigningCredentials = new SigningCredentials(mySecurityKey, SecurityAlgorithms.HmacSha256Signature)
@@ -69,6 +69,14 @@ namespace tmsang.domain
 
         public string GetClaim(string token, string claimType)
         {
+            // nameid   ecd6672c-25b0-4e8a-82be-0d9e276b1a77;sangnews2014@gmail.com;2021-11-04 13:10:55
+            // role     "Admin"
+            // nbf      1636006256
+            // exp      1636611056
+            // iat      1636006256
+            // iss      http://mysite.com
+            // aud      http://myaudience.com
+
             var tokenHandler = new JwtSecurityTokenHandler();
             var securityToken = tokenHandler.ReadToken(token) as JwtSecurityToken;
             var stringClaimValue = securityToken.Claims.First(claim => claim.Type == claimType).Value;

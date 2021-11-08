@@ -5,7 +5,7 @@ namespace tmsang.application
     public class RegisterDto
     {
         public string Email { get; set; }
-        public string Phone { get; set; }
+        public string Phone { get; set; }        
         public string Password { get; set; }
         public string SmsCode { get; set; }
     }
@@ -14,10 +14,12 @@ namespace tmsang.application
     {
         public string Serial { get; set; }          // mat ma de nhan dang admin - hardcode
         public string FullName { get; set; }
+        public string Address { get; set; }
 
         public void EmptyValidation() {
             if (string.IsNullOrEmpty(this.Email)) throw new Exception("Email value is null or empty");
             if (string.IsNullOrEmpty(this.Phone)) throw new Exception("Phone value is null or empty");
+            if (string.IsNullOrEmpty(this.Address)) throw new Exception("Address value is null or empty");
             if (string.IsNullOrEmpty(this.Password)) throw new Exception("Password value is null or empty");
             if (string.IsNullOrEmpty(this.Serial)) throw new Exception("Serial value is null or empty");
             if (string.IsNullOrEmpty(this.FullName)) throw new Exception("FullName value is null or empty");
@@ -28,8 +30,7 @@ namespace tmsang.application
     public class DriverRegisterDto : RegisterDto
     {
         // thong tin account
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string FullName { get; set; }        
         public DateTime Birthday { get; set; }
         public bool Male { get; set; }
         public string PersonalId { get; set; }      // chung minh nhan dan | can cuoc cong nhan
@@ -50,8 +51,8 @@ namespace tmsang.application
             if (string.IsNullOrEmpty(this.Email)) throw new Exception("Email value is null or empty");
             if (string.IsNullOrEmpty(this.Phone)) throw new Exception("Phone value is null or empty");
             if (string.IsNullOrEmpty(this.Password)) throw new Exception("Password value is null or empty");
-            if (string.IsNullOrEmpty(this.FirstName)) throw new Exception("FirstName value is null or empty");
-            if (string.IsNullOrEmpty(this.LastName)) throw new Exception("LastName value is null or empty");
+            if (string.IsNullOrEmpty(this.FullName)) throw new Exception("FullName value is null or empty");
+            
             if (this.Birthday >= DateTime.Now) throw new Exception("Birthday is invalid");
             if (string.IsNullOrEmpty(this.PersonalId)) throw new Exception("PersonalId value is null or empty");
             if (string.IsNullOrEmpty(this.Address)) throw new Exception("Address value is null or empty");

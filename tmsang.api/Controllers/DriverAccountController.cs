@@ -6,9 +6,9 @@ namespace tmsang.api
     [Route("api/driver")]
     public class DriverAccountController : Controller
     {
-        readonly IAccountService accountService;
+        readonly IDriverService accountService;
 
-        public DriverAccountController(IAccountService accountService)
+        public DriverAccountController(IDriverService accountService)
         {
             this.accountService = accountService;
         }
@@ -19,6 +19,19 @@ namespace tmsang.api
             try
             {
                 this.accountService.DriverRegister(registerDto);
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+        }
+
+        [HttpGet("active")]
+        public void Activate(string token)
+        {
+            try
+            {
+                this.accountService.DriverActivate(token);
             }
             catch (System.Exception)
             {

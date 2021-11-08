@@ -57,6 +57,11 @@ namespace tmsang.infra
             return table.Find(id);
         }
 
+        public T FindById(int id)
+        {
+            return table.Find(id);
+        }
+
         public T FindOne(ISpecification<T> spec)
         {
             return table.Where(spec.SpecExpression).FirstOrDefault();

@@ -6,7 +6,7 @@ namespace tmsang.domain
 {
     public interface IAuth
     {
-        string GenerateToken(string userId, string role);
+        string GenerateToken(string userId, string role, double expiredMinutes);
         bool ValidateCurrentToken(string token);
         string GetClaim(string token, string claimType);
         HashSalt EncryptPassword(string password);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace tmsang.domain
 {
@@ -11,10 +12,20 @@ namespace tmsang.domain
         public virtual string PersonalId { get; protected set; }
         public virtual string PersonalImage { get; protected set; }
         public virtual string Address { get; protected set; }
-        public virtual E_Mode Mode { get; protected set; } = E_Mode.Deactive;
+        public virtual E_Status AccountStatus { get; protected set; } = E_Status.Deactive;
 
         public virtual string Password { get; protected set; }
         public virtual byte[] Salt { get; protected set; }
+
+        // should make relationship, IList (allow Add) - but IEnumerable is not
+        public virtual IList<B_DriverHistory> Histories { get; set; } = new List<B_DriverHistory>();
+        public virtual IList<B_DriverPolicy> Policies { get; set; } = new List<B_DriverPolicy>();
+        public virtual IList<B_DriverFeePolicy> FeePolicies { get; set; } = new List<B_DriverFeePolicy>();
+        public virtual IList<B_DriverTrustLevel> TrustLevels { get; set; } = new List<B_DriverTrustLevel>();
+        public virtual IList<B_DriverBike> Bikes { get; set; } = new List<B_DriverBike>();
+        
+        public virtual IList<R_Response> Responses { get; set; } = new List<R_Response>();
+
 
         public static R_Driver Create(string fullName, string personId, string personImage, string address, string phone, string email, string password, byte[] salt)
         {
@@ -40,6 +51,12 @@ namespace tmsang.domain
 
             return user;
         }
+
+        public virtual void Activate()      // y nghia: protected set la vay - gom logic vao
+        {
+            this.AccountStatus = E_Status.Active;
+        }
+
         public virtual void ResetPassword(string newPassword)
         {
             this.Password = newPassword;
