@@ -23,7 +23,7 @@ namespace tmsang.api
 
             Singleton.Instance.RootPath = env.ContentRootPath;
 
-            Singleton.Instance.UrlApi = "https://localhost:44331/";
+            Singleton.Instance.UrlApi = config["CONFIG:API_URL"];        // "https://localhost:44331/";
             //Singleton.Instance.UrlApi = $"{http.HttpContext.Request.Scheme}://{http.HttpContext.Request.Host}{http.HttpContext.Request.PathBase}";
         }
     }
