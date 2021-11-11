@@ -13,6 +13,14 @@
         SetBike = 13
     }
 
+    public enum E_OrderStatus
+    {
+        Pending = 1,
+        Accepted = 2,
+        Starting = 1,        
+        Ending = 2
+    }
+
     public enum E_Status
     { 
         Remove = -2,

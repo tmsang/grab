@@ -36,7 +36,12 @@ namespace tmsang.api
 
             services.AddScoped<IRepository<R_Admin>, MyRepository<R_Admin>>();
             services.AddScoped<IRepository<R_Driver>, MyRepository<R_Driver>>();
-            services.AddScoped<IRepository<R_Guest>, MyRepository<R_Guest>>();            
+            services.AddScoped<IRepository<R_Guest>, MyRepository<R_Guest>>();
+            services.AddScoped<IRepository<R_Location>, MyRepository<R_Location>>();
+
+            services.AddScoped<IRepositoryNonRoot<M_RoutineCost>, MyRepositoryNonRoot<M_RoutineCost>>();
+            
+            
 
             // ----------------------------------------------
             // DI: Application
