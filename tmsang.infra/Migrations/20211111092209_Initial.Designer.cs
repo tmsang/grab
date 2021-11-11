@@ -9,7 +9,7 @@ using tmsang.infra;
 namespace tmsang.infra.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20211108045708_Initial")]
+    [Migration("20211111092209_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -384,8 +384,8 @@ namespace tmsang.infra.Migrations
                     b.Property<DateTime?>("From")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("Name")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -410,8 +410,8 @@ namespace tmsang.infra.Migrations
                     b.Property<DateTime?>("From")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("Name")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -436,8 +436,8 @@ namespace tmsang.infra.Migrations
                     b.Property<DateTime?>("From")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("Name")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -465,8 +465,8 @@ namespace tmsang.infra.Migrations
                     b.Property<DateTime?>("From")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("Name")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -494,8 +494,8 @@ namespace tmsang.infra.Migrations
                     b.Property<DateTime?>("From")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("Name")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -612,8 +612,8 @@ namespace tmsang.infra.Migrations
                     b.Property<Guid?>("GroupId")
                         .HasColumnType("char(36)");
 
-                    b.Property<long?>("LocationId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid?>("LocationId")
+                        .HasColumnType("char(36)");
 
                     b.Property<int?>("PersonalPolicyTypeId")
                         .HasColumnType("int");
@@ -674,9 +674,9 @@ namespace tmsang.infra.Migrations
 
             modelBuilder.Entity("tmsang.domain.R_Location", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("Address")
                         .HasColumnType("longtext");
@@ -727,8 +727,8 @@ namespace tmsang.infra.Migrations
                     b.Property<double>("Distance")
                         .HasColumnType("double");
 
-                    b.Property<long?>("FromId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid?>("FromId")
+                        .HasColumnType("char(36)");
 
                     b.Property<Guid>("GuestId")
                         .HasColumnType("char(36)");
@@ -739,8 +739,8 @@ namespace tmsang.infra.Migrations
                     b.Property<DateTime>("RequestDateTime")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<long?>("ToId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid?>("ToId")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 

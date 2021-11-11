@@ -57,9 +57,12 @@ namespace tmsang.domain
             this.AccountStatus = E_Status.Active;
         }
 
-        public virtual void ResetPassword(string newPassword)
+        public virtual void ResetPassword(string hash, byte[] salt)
         {
-            this.Password = newPassword;
+            this.Password = hash;
+            this.Salt = salt;
+
+            DomainEvents.Raise<R_DriverChangePasswordEvent>(new R_DriverChangePasswordEvent { R_Driver = this });
         }
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace tmsang.domain
+﻿namespace tmsang.domain
 {
     public class R_LocationDomainService
     {

@@ -154,8 +154,9 @@ namespace tmsang.application
             {
                 throw new Exception("SMS Code is invalid");
             }
-            // update password vao bang R_Admin
-            user.ResetPassword(resetPasswordDto.NewPassword);
+            // update password vao bang R_Guest
+            var hash = auth.EncryptPassword(resetPasswordDto.NewPassword);
+            user.ResetPassword(hash.Hash, hash.Salt);            
             this.unitOfWork.ForceBeginTransaction();
             this.guestAccountRepository.Update(user);
             // return token
@@ -177,7 +178,8 @@ namespace tmsang.application
                 throw new Exception("SMS Code is invalid");
             }
             // update password vao bang R_Admin
-            user.ResetPassword(changePasswordDto.NewPassword);
+            var hash = auth.EncryptPassword(changePasswordDto.NewPassword);
+            user.ResetPassword(hash.Hash, hash.Salt);            
             this.guestAccountRepository.Update(user);
             // return token
             return new TokenDto

@@ -9,5 +9,6 @@
         TokenDto AdminResetPassword(AdminResetPasswordDto resetPasswordDto);
         TokenDto AdminChangePassword(AdminChangePasswordDto changePasswordDto);
         void SendSmsCode(string phone);
+        string EncryptPassword(string password);
     }
 }

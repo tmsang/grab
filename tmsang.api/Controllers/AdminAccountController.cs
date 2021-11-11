@@ -108,5 +108,21 @@ namespace tmsang.api
                 throw;
             }
         }
+
+        // ===============================================
+        // Utility
+        // ===============================================
+        [HttpGet("encrypt")]
+        public string EncryptPassword(string password)
+        {
+            try
+            {
+                return this.accountService.EncryptPassword(password);
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+        }
     }
 }

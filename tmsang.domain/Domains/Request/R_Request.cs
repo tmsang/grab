@@ -58,7 +58,7 @@ namespace tmsang.domain
 
         public void AddHistories() {
             var history = B_RequestHistory.Create(this.Id, E_OrderStatus.Pending, DateTime.Now, "Create Request");
-
+            if (this.Histories == null) this.Histories = new List<B_RequestHistory>();
             this.Histories.Add(history);
         }
 
@@ -83,9 +83,9 @@ namespace tmsang.domain
                     var OriginAddress = dsResult.Tables["DistanceMatrixResponse"].Rows[0]["origin_address"].ToString();
                     var DestinationAddress = dsResult.Tables["DistanceMatrixResponse"].Rows[0]["destination_address"].ToString();
                     var duration = dsResult.Tables["duration"].Rows[0]["text"].ToString();
-                    var distance = dsResult.Tables["duration"].Rows[0]["value"].ToString() + dsResult.Tables["distance"].Rows[0]["text"].ToString();
+                    var distance = dsResult.Tables["distance"].Rows[0]["text"].ToString();
 
-                    double.TryParse(distance, out double result);
+                    double.TryParse(distance.Replace(" km", ""), out double result);
 
                     return result;
                 }

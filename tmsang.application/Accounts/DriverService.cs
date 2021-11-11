@@ -167,7 +167,8 @@ namespace tmsang.application
                 throw new Exception("SMS Code is invalid");
             }
             // update password vao bang R_Admin
-            user.ResetPassword(resetPasswordDto.NewPassword);
+            var hash = auth.EncryptPassword(resetPasswordDto.NewPassword);
+            user.ResetPassword(hash.Hash, hash.Salt);
             this.unitOfWork.ForceBeginTransaction();
             this.driverAccountRepository.Update(user);
             // return token
@@ -176,6 +177,7 @@ namespace tmsang.application
                 jwt = auth.GenerateToken(user.Id.ToString(), E_AccountType.Driver.ToString(), Constants.LOGIN_TOKEN_EXPIRED)
             };
         }
+
         public TokenDto DriverChangePassword(DriverChangePasswordDto changePasswordDto)
         {
             // validate input (required)
@@ -189,13 +191,14 @@ namespace tmsang.application
                 throw new Exception("SMS Code is invalid");
             }
             // update password vao bang R_Admin
-            user.ResetPassword(changePasswordDto.NewPassword);
+            var hash = auth.EncryptPassword(changePasswordDto.NewPassword);
+            user.ResetPassword(hash.Hash, hash.Salt);
             this.driverAccountRepository.Update(user);
             // return token
             return new TokenDto
             {
                 jwt = auth.GenerateToken(user.Id.ToString(), E_AccountType.Driver.ToString(), Constants.LOGIN_TOKEN_EXPIRED)
             };
-        }
+        }        
     }
 }

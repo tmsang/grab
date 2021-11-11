@@ -17,7 +17,8 @@ namespace tmsang.infra.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Status = table.Column<int>(type: "int", nullable: false),
                     From = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     To = table.Column<DateTime>(type: "datetime(6)", nullable: true),
@@ -35,7 +36,8 @@ namespace tmsang.infra.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Status = table.Column<int>(type: "int", nullable: false),
                     From = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     To = table.Column<DateTime>(type: "datetime(6)", nullable: true),
@@ -53,7 +55,8 @@ namespace tmsang.infra.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Status = table.Column<int>(type: "int", nullable: false),
                     From = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     To = table.Column<DateTime>(type: "datetime(6)", nullable: true),
@@ -72,7 +75,8 @@ namespace tmsang.infra.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Cost = table.Column<double>(type: "double", nullable: false),
-                    Name = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Status = table.Column<int>(type: "int", nullable: false),
                     From = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     To = table.Column<DateTime>(type: "datetime(6)", nullable: true),
@@ -91,7 +95,8 @@ namespace tmsang.infra.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Cost = table.Column<double>(type: "double", nullable: false),
-                    Name = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Status = table.Column<int>(type: "int", nullable: false),
                     From = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     To = table.Column<DateTime>(type: "datetime(6)", nullable: true),
@@ -183,8 +188,7 @@ namespace tmsang.infra.Migrations
                 name: "R_Locations",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     Address = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Latitude = table.Column<string>(type: "longtext", nullable: true)
@@ -360,7 +364,7 @@ namespace tmsang.infra.Migrations
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     GroupId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     PersonalPolicyTypeId = table.Column<int>(type: "int", nullable: true),
-                    LocationId = table.Column<long>(type: "bigint", nullable: true)
+                    LocationId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
                 },
                 constraints: table =>
                 {
@@ -391,8 +395,8 @@ namespace tmsang.infra.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    FromId = table.Column<long>(type: "bigint", nullable: true),
-                    ToId = table.Column<long>(type: "bigint", nullable: true),
+                    FromId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    ToId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     Distance = table.Column<double>(type: "double", nullable: false),
                     Cost = table.Column<double>(type: "double", nullable: false),
                     RequestDateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),

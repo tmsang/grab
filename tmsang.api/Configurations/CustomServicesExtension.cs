@@ -36,13 +36,8 @@ namespace tmsang.api
 
             services.AddScoped<IRepository<R_Admin>, MyRepository<R_Admin>>();
             services.AddScoped<IRepository<R_Driver>, MyRepository<R_Driver>>();
-            services.AddScoped<IRepository<R_Guest>, MyRepository<R_Guest>>();
-            services.AddScoped<IRepository<R_Location>, MyRepository<R_Location>>();
-
-            services.AddScoped<IRepositoryNonRoot<M_RoutineCost>, MyRepositoryNonRoot<M_RoutineCost>>();
-            
-            
-
+            services.AddScoped<IRepository<R_Guest>, MyRepository<R_Guest>>();            
+                        
             // ----------------------------------------------
             // DI: Application
             // ----------------------------------------------
@@ -73,11 +68,19 @@ namespace tmsang.api
             services.AddScoped<Handles<R_GuestChangePasswordEvent>, DomainEventHandle<R_GuestChangePasswordEvent>>();   // event
             services.AddScoped<Handles<R_GuestChangePasswordEvent>, R_GuestChangePasswordEmailHandle>();                // handle
 
-
             services.AddScoped<Handles<R_AccountSmsVerificationEvent>, DomainEventHandle<R_AccountSmsVerificationEvent>>();
             services.AddScoped<Handles<R_AccountSmsVerificationEvent>, R_AccountSmsVerificationHandle>();
 
-            // B. ORDER
+            // B. ORDER            
+            services.AddScoped<IRepository<R_Request>, MyRepository<R_Request>>();
+            services.AddScoped<IGuestOrderService, GuestOrderService>();
+
+            services.AddScoped<IRepository<R_Location>, MyRepository<R_Location>>();
+            services.AddScoped<IRepositoryNonRoot<M_RoutineCost>, MyRepositoryNonRoot<M_RoutineCost>>();
+            
+            services.AddScoped<R_LocationDomainService>();
+            services.AddScoped<R_GuestDomainService>();
+
             services.AddScoped<Handles<R_RequestsOfGuestEvent>, DomainEventHandle<R_RequestsOfGuestEvent>>();
 
             // C. Resolve cac service manual

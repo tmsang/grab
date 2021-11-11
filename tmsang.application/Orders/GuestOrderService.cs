@@ -4,19 +4,20 @@ using System;
 using System.Collections.Generic;
 using tmsang.domain;
 
-namespace tmsang.application.Orders
+namespace tmsang.application
 {
     public class GuestOrderService : IGuestOrderService
     {
         readonly IRepository<R_Request> requestRepository;
         readonly IRepository<R_Location> locationRepository;
-        readonly IRepositoryNonRoot<M_RoutineCost> routineCostRepository;
-
-        readonly IStorage storage;
-        readonly IAuth auth;
-
+        readonly IRepositoryNonRoot<M_RoutineCost> routineCostRepository;        
         readonly R_LocationDomainService locationDomainService;
         readonly R_GuestDomainService accountDomainService;
+
+        readonly IHubContext<SignalrHub, IHubClient> signalrHub;
+
+        readonly IStorage storage;
+        readonly IAuth auth;        
         readonly IHttpContextAccessor http;
         readonly IUnitOfWork unitOfWork;
 
@@ -24,9 +25,11 @@ namespace tmsang.application.Orders
             IRepository<R_Request> requestRepository,
             IRepository<R_Location> locationRepository,
             IRepositoryNonRoot<M_RoutineCost> routineCostRepository,
-
             R_LocationDomainService locationDomainService,
             R_GuestDomainService accountDomainService,
+
+            IHubContext<SignalrHub, IHubClient> signalrHub,
+
             IStorage storage,
             IAuth auth,
             IHttpContextAccessor http,
@@ -35,12 +38,14 @@ namespace tmsang.application.Orders
             this.requestRepository = requestRepository;
             this.locationRepository = locationRepository;
             this.routineCostRepository = routineCostRepository;
-
+            this.locationDomainService = locationDomainService;
             this.accountDomainService = accountDomainService;
+
+            this.signalrHub = signalrHub;
+
             this.storage = storage;
             this.auth = auth;
             this.http = http;
-
             this.unitOfWork = unitOfWork;
         }
 
@@ -69,12 +74,13 @@ namespace tmsang.application.Orders
             this.requestRepository.Add(request);
 
             // signal-R to Driver
-            
-        }
-
-        public void send(string message) { 
-            
-        }
+            var msg = new MessageInstance {
+                From = "sangthach",
+                Message = "abc.....",
+                Timestamp = DateTime.Now.ToString()
+            };
+            signalrHub.Clients.All.BroadcastMessage(msg);
+        }        
 
         public void Cancel(string requestId)
         {
@@ -90,5 +96,5 @@ namespace tmsang.application.Orders
         {
             throw new NotImplementedException();
         }
-    }
+    }    
 }

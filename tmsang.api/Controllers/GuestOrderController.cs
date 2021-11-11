@@ -4,6 +4,7 @@ using tmsang.application;
 
 namespace tmsang.api
 {
+    [Authorize]
     [Route("api/guest/order")]
     public class GuestOrderController: Controller
     {

@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
 using System.IO;
+using tmsang.application;
 using tmsang.domain;
 using tmsang.infra;
 
@@ -50,7 +51,9 @@ namespace tmsang.api
 
             //services.AddHttpContextAccessor();
             services.AddGrabCustomServices(Configuration);
+
             services.AddSignalR();
+            //services.AddSignalR(options => { options.KeepAliveInterval = TimeSpan.FromSeconds(5); }).AddMessagePackProtocol();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,7 +86,7 @@ namespace tmsang.api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHub<ChatHub>("/chatHub");
+                endpoints.MapHub<SignalrHub>("/signalr");
             });
 
             // toi can mot cai class, luc ban dau init chay se load lieu vao day + sau khi dang ky service trong container

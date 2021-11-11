@@ -192,5 +192,11 @@ namespace tmsang.application
             };
         }
 
+        public string EncryptPassword(string password)
+        {
+            var hash = auth.EncryptPassword(password);
+
+            return hash.Hash;
+        }
     }
 }

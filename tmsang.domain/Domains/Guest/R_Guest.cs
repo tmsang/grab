@@ -77,11 +77,14 @@ namespace tmsang.domain
         public virtual void Activate()      // y nghia: protected set la vay - gom logic vao
         {
             this.AccountStatus = E_Status.Active;
-        }
+        }        
 
-        public virtual void ResetPassword(string newPassword)
+        public virtual void ResetPassword(string hash, byte[] salt)
         {
-            this.Password = newPassword;
+            this.Password = hash;
+            this.Salt = salt;
+
+            DomainEvents.Raise<R_GuestChangePasswordEvent>(new R_GuestChangePasswordEvent { R_Guest = this });
         }
     }
 }
