@@ -139,8 +139,7 @@ namespace tmsang.infra.Migrations
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     Rating = table.Column<int>(type: "int", nullable: false),
                     Note = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    RequestId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
@@ -199,6 +198,20 @@ namespace tmsang.infra.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_R_Locations", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "R_Orders",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    GuestId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_R_Orders", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -358,6 +371,32 @@ namespace tmsang.infra.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "R_Requests",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    FromLocationId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    ToLocationId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Distance = table.Column<double>(type: "double", nullable: false),
+                    Cost = table.Column<double>(type: "double", nullable: false),
+                    RequestDateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Reason = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    R_GuestId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_R_Requests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_R_Requests_R_Guests_R_GuestId",
+                        column: x => x.R_GuestId,
+                        principalTable: "R_Guests",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "R_FeePolicies",
                 columns: table => new
                 {
@@ -384,44 +423,6 @@ namespace tmsang.infra.Migrations
                     table.ForeignKey(
                         name: "FK_R_FeePolicies_R_Locations_LocationId",
                         column: x => x.LocationId,
-                        principalTable: "R_Locations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "R_Requests",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    FromId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    ToId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    Distance = table.Column<double>(type: "double", nullable: false),
-                    Cost = table.Column<double>(type: "double", nullable: false),
-                    RequestDateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Reason = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    GuestId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_R_Requests", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_R_Requests_R_Guests_GuestId",
-                        column: x => x.GuestId,
-                        principalTable: "R_Guests",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_R_Requests_R_Locations_FromId",
-                        column: x => x.FromId,
-                        principalTable: "R_Locations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_R_Requests_R_Locations_ToId",
-                        column: x => x.ToId,
                         principalTable: "R_Locations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -776,19 +777,9 @@ namespace tmsang.infra.Migrations
                 column: "PersonalPolicyTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_R_Requests_FromId",
+                name: "IX_R_Requests_R_GuestId",
                 table: "R_Requests",
-                column: "FromId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_R_Requests_GuestId",
-                table: "R_Requests",
-                column: "GuestId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_R_Requests_ToId",
-                table: "R_Requests",
-                column: "ToId");
+                column: "R_GuestId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_R_Responses_DriverId",
@@ -853,6 +844,9 @@ namespace tmsang.infra.Migrations
                 name: "R_FeePolicies");
 
             migrationBuilder.DropTable(
+                name: "R_Orders");
+
+            migrationBuilder.DropTable(
                 name: "R_Admins");
 
             migrationBuilder.DropTable(
@@ -871,10 +865,10 @@ namespace tmsang.infra.Migrations
                 name: "M_PersonalPolicyTypes");
 
             migrationBuilder.DropTable(
-                name: "R_Guests");
+                name: "R_Locations");
 
             migrationBuilder.DropTable(
-                name: "R_Locations");
+                name: "R_Guests");
 
             migrationBuilder.DropTable(
                 name: "R_Drivers");

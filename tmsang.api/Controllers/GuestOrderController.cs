@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using tmsang.application;
 
@@ -22,22 +23,22 @@ namespace tmsang.api
             {
                 this.orderService.Book(bookDto);
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
         [HttpPost("cancel-by-client")]
-        public void Cancel(string requestId)
+        public void Cancel(string requestId, string reason)
         {
             try
             {
-                this.orderService.Cancel(requestId);
+                this.orderService.Cancel(requestId, reason);
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -48,22 +49,22 @@ namespace tmsang.api
             {
                 this.orderService.Evaluable(evaluableDto);
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
         [HttpGet("transaction-histories")]
-        public IList<TransactionHistoriesDto> TransactionHistories(string accountId)
+        public IEnumerable<TransactionHistoriesDto> TransactionHistories()
         {
             try
             {
-                return this.orderService.TransactionHistories(accountId);
+                return this.orderService.TransactionHistories();
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
     }

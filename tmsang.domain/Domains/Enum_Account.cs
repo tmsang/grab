@@ -17,8 +17,14 @@
     {
         Pending = 1,
         Accepted = 2,
-        Starting = 1,        
-        Ending = 2
+        Starting = 3,        
+        Ending = 4,
+        Evaluation = 5,
+
+        CancelByUser = 10,
+        CancelByDriver = 11,
+        CancelByAdmin = 12,
+        CancelBySystem = 13
     }
 
     public enum E_Status

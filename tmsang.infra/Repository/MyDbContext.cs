@@ -29,6 +29,7 @@ namespace tmsang.infra
         public DbSet<B_GuestPolicy> GuestPolicies { get; set; }
 
         // Order                
+        public DbSet<R_Order> Orders { get; set; }
         public DbSet<R_Request> Requests { get; set; }
         public DbSet<B_RequestHistory> RequestHistories { get; set; }
         public DbSet<R_Response> Responses { get; set; }
@@ -135,20 +136,10 @@ namespace tmsang.infra
                 .HasForeignKey(p => p.AccountId);
 
             // Order
-            //modelBuilder.Entity<R_Order>()
-            //    .ToTable("R_Orders")
-            //    .HasOne(p => p.Guest)
-            //    .WithMany(p => p.Orders)
-            //    .HasForeignKey(p => p.AccountId);
+            modelBuilder.Entity<R_Order>().ToTable("R_Orders");
 
             // request (1-n guest-request)
-            modelBuilder.Entity<R_Request>()
-                .ToTable("R_Requests")
-                .HasOne(p => p.Guest)
-                .WithMany(p => p.Requests)
-                .HasForeignKey(p => p.GuestId);
-
-            // request (1-n request-history)
+            modelBuilder.Entity<R_Request>().ToTable("R_Requests");                                                            
             modelBuilder.Entity<B_RequestHistory>()
                 .ToTable("B_RequestHistories")
                 .HasOne(p => p.Request)
@@ -156,13 +147,7 @@ namespace tmsang.infra
                 .HasForeignKey(p => p.RequestId);
 
             // response (1-n driver-response)
-            modelBuilder.Entity<R_Response>()
-                .ToTable("R_Responses")
-                .HasOne(p => p.Driver)
-                .WithMany(p => p.Responses)
-                .HasForeignKey(p => p.DriverId);
-
-            // response (1-n response-history)
+            modelBuilder.Entity<R_Response>().ToTable("R_Responses");                            
             modelBuilder.Entity<B_ResponseHistory>()
                 .ToTable("B_ResponseHistories")
                 .HasOne(p => p.Response)
@@ -170,18 +155,14 @@ namespace tmsang.infra
                 .HasForeignKey(p => p.ResponseId);
 
             
-            modelBuilder.Entity<R_Payment>().ToTable("R_Payments");
-
-            // payments (1-n payment-history)
+            modelBuilder.Entity<R_Payment>().ToTable("R_Payments");            
             modelBuilder.Entity<B_PaymentHistory>()
                 .ToTable("B_PaymentHistories")
                 .HasOne(p => p.Payment)
                 .WithMany(p => p.Histories)
                 .HasForeignKey(p => p.PaymentId);
             
-            modelBuilder.Entity<R_Evaluation>().ToTable("R_Evaluations");
-
-            // evaluable (1-n evaluation-history)
+            modelBuilder.Entity<R_Evaluation>().ToTable("R_Evaluations");            
             modelBuilder.Entity<B_EvaluationHistory>()
                 .ToTable("B_EvaluationHistories")
                 .HasOne(p => p.Evaluation)
@@ -190,6 +171,7 @@ namespace tmsang.infra
 
             // fee policy (use convention)
             modelBuilder.Entity<R_FeePolicy>().ToTable("R_FeePolicies");
+
             modelBuilder.Entity<R_FeePolicyGroup>().ToTable("R_FeePolicyGroups");
 
             modelBuilder.Entity<B_FeePolicyAccountInGroup>()

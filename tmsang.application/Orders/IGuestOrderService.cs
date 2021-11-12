@@ -5,8 +5,8 @@ namespace tmsang.application
     public interface IGuestOrderService
     {
         void Book(BookDto bookDto);
-        void Cancel(string requestId);
+        void Cancel(string requestId, string reason);
         void Evaluable(EvaluableDto evaluableDto);
-        IList<TransactionHistoriesDto> TransactionHistories(string accountId);
+        IEnumerable<TransactionHistoriesDto> TransactionHistories();
     }
 }

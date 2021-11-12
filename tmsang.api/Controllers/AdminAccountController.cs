@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using tmsang.application;
 
 namespace tmsang.api
@@ -20,9 +21,9 @@ namespace tmsang.api
             {
                 this.accountService.AdminRegister(registerDto);
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -33,9 +34,9 @@ namespace tmsang.api
             {
                 this.accountService.AdminActivate(token);
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -46,9 +47,9 @@ namespace tmsang.api
             {
                 return this.accountService.AdminLogin(loginDto);
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -59,9 +60,9 @@ namespace tmsang.api
             {
                 this.accountService.AdminForgotPassword(email);
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -72,9 +73,9 @@ namespace tmsang.api
             {
                 return this.accountService.AdminResetPassword(resetPasswordDto);
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -90,9 +91,9 @@ namespace tmsang.api
             {
                 return this.accountService.AdminChangePassword(changePasswordDto);
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -103,9 +104,9 @@ namespace tmsang.api
             {
                 this.accountService.SendSmsCode(phone);
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -119,9 +120,9 @@ namespace tmsang.api
             {
                 return this.accountService.EncryptPassword(password);
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
     }

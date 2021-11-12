@@ -12,42 +12,37 @@ namespace tmsang.domain
     {
         public virtual Guid Id { get; protected set; }        
 
-        public virtual R_Location From { get; protected set; }
-        public virtual R_Location To { get; protected set; }
+        // NOT: set relatioship to Location
+        public virtual Guid FromLocationId { get; protected set; }
+        public virtual Guid ToLocationId { get; protected set; }
 
         public virtual double Distance { get; protected set; }
         public virtual double Cost { get; protected set; }
 
         public virtual DateTime RequestDateTime { get; protected set; }
         public virtual string Reason { get; protected set; }
-
-        // relationship (1-n: n)        
-        public virtual Guid GuestId { get; protected set; }
-        public virtual R_Guest Guest { get; protected set; }
-
-        // relationship (1-n: 1)
+                 
+        // YES: set relationship to Histories (1-n: 1)
         public virtual IList<B_RequestHistory> Histories { get; protected set; }
 
 
-        public static R_Request Create(Guid accountId, R_Location from, R_Location to, double routineCost)
-        {
-            return Create(Guid.NewGuid(), accountId, from, to, routineCost);
-        }
-        public static R_Request Create(Guid id, Guid accountId, R_Location from, R_Location to, double routineCost)
+        // ===========================================================
+        // METHODS
+        // ===========================================================
+        public static R_Request Create(Guid orderId, R_Location from, R_Location to, double routineCost)
         {
             var distance = CalculateDistance(from, to);
             var cost = CalculateCost(distance, routineCost);
 
             var request = new R_Request
             {
-                Id = id,
-                From = from,
-                To = to,
+                Id = orderId,
+                FromLocationId = from.Id,
+                ToLocationId = to.Id,
                 Distance = distance,
                 Cost = cost,
 
-                RequestDateTime = DateTime.Now,                
-                GuestId = accountId
+                RequestDateTime = DateTime.Now
             };
 
             // add event sourcing
@@ -56,11 +51,18 @@ namespace tmsang.domain
             return request;
         }
 
-        public void AddHistories() {
-            var history = B_RequestHistory.Create(this.Id, E_OrderStatus.Pending, DateTime.Now, "Create Request");
+        public void AddHistories(E_OrderStatus status, string description) {
+            var history = B_RequestHistory.Create(this.Id, status, DateTime.Now, description);
+
             if (this.Histories == null) this.Histories = new List<B_RequestHistory>();
+
             this.Histories.Add(history);
         }
+
+        public void UpdateReason(string reason) {
+            this.Reason = reason;
+        }
+
 
         private static double CalculateCost(double distance, double routineCost)
         {            

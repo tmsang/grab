@@ -593,9 +593,6 @@ namespace tmsang.infra.Migrations
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("RequestId")
-                        .HasColumnType("char(36)");
-
                     b.HasKey("Id");
 
                     b.ToTable("R_Evaluations");
@@ -690,6 +687,23 @@ namespace tmsang.infra.Migrations
                     b.ToTable("R_Locations");
                 });
 
+            modelBuilder.Entity("tmsang.domain.R_Order", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("GuestId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("R_Orders");
+                });
+
             modelBuilder.Entity("tmsang.domain.R_Payment", b =>
                 {
                     b.Property<Guid>("Id")
@@ -725,10 +739,10 @@ namespace tmsang.infra.Migrations
                     b.Property<double>("Distance")
                         .HasColumnType("double");
 
-                    b.Property<Guid?>("FromId")
+                    b.Property<Guid>("FromLocationId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("GuestId")
+                    b.Property<Guid?>("R_GuestId")
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Reason")
@@ -737,16 +751,12 @@ namespace tmsang.infra.Migrations
                     b.Property<DateTime>("RequestDateTime")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<Guid?>("ToId")
+                    b.Property<Guid>("ToLocationId")
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FromId");
-
-                    b.HasIndex("GuestId");
-
-                    b.HasIndex("ToId");
+                    b.HasIndex("R_GuestId");
 
                     b.ToTable("R_Requests");
                 });
@@ -966,25 +976,9 @@ namespace tmsang.infra.Migrations
 
             modelBuilder.Entity("tmsang.domain.R_Request", b =>
                 {
-                    b.HasOne("tmsang.domain.R_Location", "From")
-                        .WithMany()
-                        .HasForeignKey("FromId");
-
-                    b.HasOne("tmsang.domain.R_Guest", "Guest")
+                    b.HasOne("tmsang.domain.R_Guest", null)
                         .WithMany("Requests")
-                        .HasForeignKey("GuestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("tmsang.domain.R_Location", "To")
-                        .WithMany()
-                        .HasForeignKey("ToId");
-
-                    b.Navigation("From");
-
-                    b.Navigation("Guest");
-
-                    b.Navigation("To");
+                        .HasForeignKey("R_GuestId");
                 });
 
             modelBuilder.Entity("tmsang.domain.R_Response", b =>

@@ -72,7 +72,11 @@ namespace tmsang.api
             services.AddScoped<Handles<R_AccountSmsVerificationEvent>, R_AccountSmsVerificationHandle>();
 
             // B. ORDER            
+            services.AddScoped<IRepository<R_Order>, MyRepository<R_Order>>();
             services.AddScoped<IRepository<R_Request>, MyRepository<R_Request>>();
+            services.AddScoped<IRepository<R_Response>, MyRepository<R_Response>>();
+            services.AddScoped<IRepository<R_Evaluation>, MyRepository<R_Evaluation>>();
+
             services.AddScoped<IGuestOrderService, GuestOrderService>();
 
             services.AddScoped<IRepository<R_Location>, MyRepository<R_Location>>();

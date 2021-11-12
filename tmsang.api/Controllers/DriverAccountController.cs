@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using tmsang.application;
 
 namespace tmsang.api
@@ -20,9 +21,9 @@ namespace tmsang.api
             {
                 this.accountService.DriverRegister(registerDto);
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -33,9 +34,9 @@ namespace tmsang.api
             {
                 this.accountService.DriverActivate(token);
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -46,9 +47,9 @@ namespace tmsang.api
             {
                 return this.accountService.DriverLogin(loginDto);
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -59,9 +60,9 @@ namespace tmsang.api
             {
                 this.accountService.DriverForgotPassword(email);
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -72,9 +73,9 @@ namespace tmsang.api
             {
                 return this.accountService.DriverResetPassword(resetPasswordDto);
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -86,9 +87,9 @@ namespace tmsang.api
             {
                 return this.accountService.DriverChangePassword(changePasswordDto);
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -99,9 +100,9 @@ namespace tmsang.api
             {
                 this.accountService.SendSmsCode(phone);
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
     }
