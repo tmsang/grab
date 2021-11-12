@@ -91,6 +91,7 @@ namespace tmsang.application
             request.AddHistories(E_OrderStatus.Pending, "Create Request");
 
             this.unitOfWork.ForceBeginTransaction();
+            this.orderRepository.Add(order);
             this.requestRepository.Add(request);
 
             // TODO: signal-R to Driver + Admin
@@ -123,8 +124,7 @@ namespace tmsang.application
             request.UpdateReason(reason);
             request.AddHistories(E_OrderStatus.CancelByUser, "User cancelled this request");
 
-            this.unitOfWork.ForceBeginTransaction();
-            this.requestRepository.Update(request);
+            this.unitOfWork.ForceBeginTransaction();            
 
             // TODO: signal-R to Driver + Admin
             var msg = new MessageInstance
@@ -144,7 +144,7 @@ namespace tmsang.application
             // check valid status
             var orderId = Guid.Parse(evaluableDto.RequestId);
             R_Order order = this.orderRepository.FindOne(new R_OrderGetSpec(orderId));
-            if (order.Status != E_OrderStatus.Pending) 
+            if (order.Status != E_OrderStatus.Ending) 
             {
                 throw new Exception("Your Booking has not finished yet, so cannot evaluate");
             }
@@ -173,7 +173,7 @@ namespace tmsang.application
             // [R_Order, R_Request, R_Response, R_Evaluation] - Root: R_Request
 
             var user = (R_Guest)http.HttpContext.Items["User"];
-            
+
             var orders = this.orderRepository.Find(new R_OrderGetByAccountIdSpec(user.Id));
 
             var requests = this.requestRepository.Find(new R_RequestGetByOrderIdSpec(orders));
@@ -186,13 +186,14 @@ namespace tmsang.application
 
             var drivers = this.driverRepository.Find(new R_DriverGetByResponsesSpec(responses));
 
-            var result = from order in orders
-                         join request in requests on order.Id equals request.Id
-                         join response in responses on order.Id equals response.Id
-                         join evaluation in evalations on order.Id equals evaluation.Id
-                         
-                         select new TransactionHistoriesDto
-                         { 
+            
+            var result = (from order in orders
+                          join request in requests on order.Id equals request.Id
+                          join response in responses on order.Id equals response.Id
+                          join evaluation in evalations on order.Id equals evaluation.Id
+                          
+                          select new TransactionHistoriesDto
+                          { 
                              OrderId = order.Id,
                              Status = order.Status,
 
@@ -210,8 +211,8 @@ namespace tmsang.application
 
                              Rating = evaluation.Rating,
                              Note = evaluation.Note
-                         };
-
+                          });
+            
             return result;
         }
     }    

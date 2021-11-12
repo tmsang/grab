@@ -81,7 +81,8 @@ namespace tmsang.domain
                 using (StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
                 {
                     DataSet dsResult = new DataSet();
-                    dsResult.ReadXml(reader);
+                    dsResult.ReadXml(reader);                    
+
                     var OriginAddress = dsResult.Tables["DistanceMatrixResponse"].Rows[0]["origin_address"].ToString();
                     var DestinationAddress = dsResult.Tables["DistanceMatrixResponse"].Rows[0]["destination_address"].ToString();
                     var duration = dsResult.Tables["duration"].Rows[0]["text"].ToString();

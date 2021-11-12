@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using tmsang.domain;
@@ -189,7 +190,37 @@ namespace tmsang.infra
 
             // common
             modelBuilder.Entity<R_Location>().ToTable("R_Locations");
+
+
+
+            // ==========================================
+            // SEED DATA
+            // ==========================================
+            var year = DateTime.Now.Year;
+
+            modelBuilder.Entity<M_RoutineCost>().HasData(
+                M_RoutineCost.Create(
+                    1, $"RoutineCost - 10/{year}", 
+                    new DateTime(year, 10, 1), 
+                    new DateTime(year, 10, DateTime.DaysInMonth(year, 10)), 
+                    E_Status.Active, 
+                    8000),
+                M_RoutineCost.Create(
+                    2, $"RoutineCost - 11/{year}",
+                    new DateTime(year, 11, 1),
+                    new DateTime(year, 11, DateTime.DaysInMonth(year, 11)),
+                    E_Status.Active,
+                    5000),
+                M_RoutineCost.Create(
+                    3, $"RoutineCost - 12/{year}",
+                    new DateTime(year, 12, 1),
+                    new DateTime(year, 12, DateTime.DaysInMonth(year, 12)),
+                    E_Status.Active,
+                    7000)
+            );
+
         }
+
 
     }
 }
