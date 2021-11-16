@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using tmsang.domain;
+using System.Threading.Tasks;
 
 namespace tmsang.application
 {
@@ -66,7 +67,7 @@ namespace tmsang.application
             this.unitOfWork = unitOfWork;
         }
 
-        public void Book(BookDto bookDto)
+        public async Task Book(BookDto bookDto)
         {
             // validate input
             bookDto.EmptyValidation();
@@ -100,10 +101,10 @@ namespace tmsang.application
                 Message = "abc.....",
                 Timestamp = DateTime.Now.ToString()
             };
-            signalrHub.Clients.All.BroadcastMessage(msg);
+            await signalrHub.Clients.All.BroadcastMessage(msg);
         }        
 
-        public void Cancel(string requestId, string reason)
+        public async Task Cancel(string requestId, string reason)
         {
             // validate input & validate status Request before Driver accept the request
             if (string.IsNullOrEmpty(requestId)) 
@@ -133,10 +134,10 @@ namespace tmsang.application
                 Message = "abc.....",
                 Timestamp = DateTime.Now.ToString()
             };
-            signalrHub.Clients.All.BroadcastMessage(msg);
+            await signalrHub.Clients.All.BroadcastMessage(msg);
         }
 
-        public void Evaluable(EvaluableDto evaluableDto)
+        public async Task Evaluable(EvaluableDto evaluableDto)
         {
             // validate input
             evaluableDto.EmptyValidation();
@@ -164,10 +165,10 @@ namespace tmsang.application
                 Message = "abc.....",
                 Timestamp = DateTime.Now.ToString()
             };
-            signalrHub.Clients.All.BroadcastMessage(msg);
+            await signalrHub.Clients.All.BroadcastMessage(msg);
         }
 
-        public IEnumerable<GuestTransactionHistoriesDto> TransactionHistories()
+        public async Task<IEnumerable<GuestTransactionHistoriesDto>> TransactionHistories()
         {
             // query list transactions by accountId: 
             // [R_Order, R_Request, R_Response, R_Evaluation] - Root: R_Request
