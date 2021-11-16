@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using tmsang.infra;
 
 namespace tmsang.infra.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211115092901_ChangeFeePolicy")]
+    partial class ChangeFeePolicy
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -235,9 +237,6 @@ namespace tmsang.infra.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<Guid>("DriverId")
-                        .HasColumnType("char(36)");
-
                     b.Property<Guid>("GroupId")
                         .HasColumnType("char(36)");
 
@@ -246,14 +245,6 @@ namespace tmsang.infra.Migrations
                     b.HasIndex("GroupId");
 
                     b.ToTable("B_FeePolicyAccountInGroups");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DriverId = new Guid("9ad9d9f3-a26f-4454-944f-ef0369243b1c"),
-                            GroupId = new Guid("e8b73f2b-e37a-4b06-92ca-7729849a1431")
-                        });
                 });
 
             modelBuilder.Entity("tmsang.domain.B_GuestHistory", b =>
@@ -491,7 +482,7 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 1,
-                            ChangedDate = new DateTime(2021, 11, 16, 8, 46, 46, 185, DateTimeKind.Local).AddTicks(5556),
+                            ChangedDate = new DateTime(2021, 11, 15, 16, 29, 1, 27, DateTimeKind.Local).AddTicks(3824),
                             Cost = 8000.0,
                             From = new DateTime(2021, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "RoutineCost - 10/2021",
@@ -501,7 +492,7 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 2,
-                            ChangedDate = new DateTime(2021, 11, 16, 8, 46, 46, 185, DateTimeKind.Local).AddTicks(6624),
+                            ChangedDate = new DateTime(2021, 11, 15, 16, 29, 1, 27, DateTimeKind.Local).AddTicks(4931),
                             Cost = 5000.0,
                             From = new DateTime(2021, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "RoutineCost - 11/2021",
@@ -511,7 +502,7 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 3,
-                            ChangedDate = new DateTime(2021, 11, 16, 8, 46, 46, 185, DateTimeKind.Local).AddTicks(6632),
+                            ChangedDate = new DateTime(2021, 11, 15, 16, 29, 1, 27, DateTimeKind.Local).AddTicks(4940),
                             Cost = 7000.0,
                             From = new DateTime(2021, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "RoutineCost - 12/2021",
@@ -547,38 +538,6 @@ namespace tmsang.infra.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("M_TaxVAT");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ChangedDate = new DateTime(2021, 11, 16, 8, 46, 46, 187, DateTimeKind.Local).AddTicks(426),
-                            Cost = 0.02,
-                            From = new DateTime(2021, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Tax - 10/2021",
-                            Status = 1,
-                            To = new DateTime(2021, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ChangedDate = new DateTime(2021, 11, 16, 8, 46, 46, 187, DateTimeKind.Local).AddTicks(1015),
-                            Cost = 0.050000000000000003,
-                            From = new DateTime(2021, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Tax - 11/2021",
-                            Status = 1,
-                            To = new DateTime(2021, 11, 30, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ChangedDate = new DateTime(2021, 11, 16, 8, 46, 46, 187, DateTimeKind.Local).AddTicks(1022),
-                            Cost = 0.10000000000000001,
-                            From = new DateTime(2021, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Tax - 12/2021",
-                            Status = 1,
-                            To = new DateTime(2021, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
                 });
 
             modelBuilder.Entity("tmsang.domain.R_Admin", b =>
@@ -625,6 +584,9 @@ namespace tmsang.infra.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("longtext");
 
+                    b.Property<int?>("B_FeePolicyAccountInGroupId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Email")
                         .HasColumnType("longtext");
 
@@ -647,6 +609,8 @@ namespace tmsang.infra.Migrations
                         .HasColumnType("longblob");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("B_FeePolicyAccountInGroupId");
 
                     b.ToTable("R_Drivers");
                 });
@@ -686,36 +650,6 @@ namespace tmsang.infra.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("R_FeePolicies");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("b154ed11-db90-4f38-aad1-1873a77807dd"),
-                            Cost = 0.10000000000000001,
-                            GroupId = new Guid("e8b73f2b-e37a-4b06-92ca-7729849a1431"),
-                            ProvinceOrCity = "Ho Chi Minh"
-                        },
-                        new
-                        {
-                            Id = new Guid("963052af-e5a2-43fc-87b1-bb4561872920"),
-                            Cost = 0.25,
-                            GroupId = new Guid("e8b73f2b-e37a-4b06-92ca-7729849a1431"),
-                            ProvinceOrCity = "Tay Nguyen"
-                        },
-                        new
-                        {
-                            Id = new Guid("522d9619-567d-4242-a8b2-46fe37cf993b"),
-                            Cost = 0.10000000000000001,
-                            GroupId = new Guid("e8b73f2b-e37a-4b06-92ca-7729849a1431"),
-                            ProvinceOrCity = "Binh Duong"
-                        },
-                        new
-                        {
-                            Id = new Guid("f508176b-7884-490b-8c2e-bf9f11322f9d"),
-                            Cost = 0.050000000000000003,
-                            GroupId = new Guid("e8b73f2b-e37a-4b06-92ca-7729849a1431"),
-                            ProvinceOrCity = "Ca Mau"
-                        });
                 });
 
             modelBuilder.Entity("tmsang.domain.R_FeePolicyGroup", b =>
@@ -730,23 +664,6 @@ namespace tmsang.infra.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("R_FeePolicyGroups");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("e8b73f2b-e37a-4b06-92ca-7729849a1431"),
-                            Name = "Normal"
-                        },
-                        new
-                        {
-                            Id = new Guid("a1d84449-8e29-4e53-86b4-9cee49f0c604"),
-                            Name = "Wounded"
-                        },
-                        new
-                        {
-                            Id = new Guid("7ce984a8-a557-473c-b617-2d08ce3ce278"),
-                            Name = "Poor"
-                        });
                 });
 
             modelBuilder.Entity("tmsang.domain.R_Guest", b =>
@@ -1060,6 +977,13 @@ namespace tmsang.infra.Migrations
                     b.Navigation("Response");
                 });
 
+            modelBuilder.Entity("tmsang.domain.R_Driver", b =>
+                {
+                    b.HasOne("tmsang.domain.B_FeePolicyAccountInGroup", null)
+                        .WithMany("Drivers")
+                        .HasForeignKey("B_FeePolicyAccountInGroupId");
+                });
+
             modelBuilder.Entity("tmsang.domain.R_Request", b =>
                 {
                     b.HasOne("tmsang.domain.R_Guest", null)
@@ -1076,6 +1000,11 @@ namespace tmsang.infra.Migrations
                         .IsRequired();
 
                     b.Navigation("Driver");
+                });
+
+            modelBuilder.Entity("tmsang.domain.B_FeePolicyAccountInGroup", b =>
+                {
+                    b.Navigation("Drivers");
                 });
 
             modelBuilder.Entity("tmsang.domain.R_Admin", b =>

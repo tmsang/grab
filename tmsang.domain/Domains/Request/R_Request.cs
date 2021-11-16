@@ -71,6 +71,7 @@ namespace tmsang.domain
 
         private static double CalculateDistance(R_Location from, R_Location to)
         {
+            
             string url = "https://maps.googleapis.com/maps/api/distancematrix/xml?origins=" 
                 + from.Address + "&destinations=" + to.Address
                 + "&key=" + Singleton.Instance.GoogleApiKey;
@@ -93,6 +94,10 @@ namespace tmsang.domain
                     return result;
                 }
             }
+            
+
+            //var distanceMatrix = await Util.GetDistanceMatrix(from.Address, to.Address);
+            //return distanceMatrix.Distance;
         }
     }
 }

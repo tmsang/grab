@@ -31,8 +31,7 @@ namespace tmsang.api
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddScoped<IStorage, Storage>();
-            services.AddScoped<IAuth, Auth>();
-            services.AddScoped<IUtil, Util>();
+            services.AddScoped<IAuth, Auth>();            
 
             services.AddScoped<IRepository<R_Admin>, MyRepository<R_Admin>>();
             services.AddScoped<IRepository<R_Driver>, MyRepository<R_Driver>>();
@@ -77,13 +76,19 @@ namespace tmsang.api
             services.AddScoped<IRepository<R_Response>, MyRepository<R_Response>>();
             services.AddScoped<IRepository<R_Evaluation>, MyRepository<R_Evaluation>>();
 
+            services.AddScoped<IRepository<R_FeePolicy>, MyRepository<R_FeePolicy>>();
+            services.AddScoped<IRepository<R_FeePolicyGroup>, MyRepository<R_FeePolicyGroup>>();
+
             services.AddScoped<IGuestOrderService, GuestOrderService>();
+            services.AddScoped<IDriverOrderService, DriverOrderService>();
 
             services.AddScoped<IRepository<R_Location>, MyRepository<R_Location>>();
             services.AddScoped<IRepositoryNonRoot<M_RoutineCost>, MyRepositoryNonRoot<M_RoutineCost>>();
-            
+            services.AddScoped<IRepositoryNonRoot<M_TaxVAT>, MyRepositoryNonRoot<M_TaxVAT>>();
+
             services.AddScoped<R_LocationDomainService>();
             services.AddScoped<R_GuestDomainService>();
+            services.AddScoped<R_FeePolicyDomainService>();
 
             services.AddScoped<Handles<R_RequestsOfGuestEvent>, DomainEventHandle<R_RequestsOfGuestEvent>>();
 

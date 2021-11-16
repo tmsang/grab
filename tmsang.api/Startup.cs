@@ -8,7 +8,6 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.IO;
 using tmsang.application;
-using tmsang.domain;
 using tmsang.infra;
 
 namespace tmsang.api
@@ -82,6 +81,7 @@ namespace tmsang.api
 
             // custom jwt auth middleware
             app.UseMiddleware<JwtMiddleware>();
+            // app.ConfigureExceptionHandler();                 // TODO
 
             app.UseEndpoints(endpoints =>
             {

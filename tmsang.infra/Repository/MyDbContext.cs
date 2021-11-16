@@ -219,6 +219,48 @@ namespace tmsang.infra
                     7000)
             );
 
+            modelBuilder.Entity<M_TaxVAT>().HasData(
+                M_TaxVAT.Create(
+                    1, $"Tax - 10/{year}",
+                    new DateTime(year, 10, 1),
+                    new DateTime(year, 10, DateTime.DaysInMonth(year, 10)),
+                    E_Status.Active,
+                    0.02),
+                M_TaxVAT.Create(
+                    2, $"Tax - 11/{year}",
+                    new DateTime(year, 11, 1),
+                    new DateTime(year, 11, DateTime.DaysInMonth(year, 11)),
+                    E_Status.Active,
+                    0.05),
+                M_TaxVAT.Create(
+                    3, $"Tax - 12/{year}",
+                    new DateTime(year, 12, 1),
+                    new DateTime(year, 12, DateTime.DaysInMonth(year, 12)),
+                    E_Status.Active,
+                    0.1)
+            );
+
+            // group
+            var normalGroupPolicy = R_FeePolicyGroup.Create("Normal");
+            var woundedGroupPolicy = R_FeePolicyGroup.Create("Wounded");
+            var poorGroupPolicy = R_FeePolicyGroup.Create("Poor");
+            modelBuilder.Entity<R_FeePolicyGroup>().HasData(
+                normalGroupPolicy, woundedGroupPolicy, poorGroupPolicy
+            );
+
+            // user -> group
+            var driverId = Guid.Parse("9ad9d9f3-a26f-4454-944f-ef0369243b1c");
+            modelBuilder.Entity<B_FeePolicyAccountInGroup>().HasData(
+                B_FeePolicyAccountInGroup.Create(1, normalGroupPolicy.Id, driverId)
+            );
+
+            // fee - cost
+            modelBuilder.Entity<R_FeePolicy>().HasData(
+                R_FeePolicy.Create("Ho Chi Minh", normalGroupPolicy.Id, 0.1),
+                R_FeePolicy.Create("Tay Nguyen", normalGroupPolicy.Id, 0.25),
+                R_FeePolicy.Create("Binh Duong", normalGroupPolicy.Id, 0.1),
+                R_FeePolicy.Create("Ca Mau", normalGroupPolicy.Id, 0.05)
+            );
         }
 
 

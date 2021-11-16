@@ -17,8 +17,8 @@
     {
         Pending = 1,
         Accepted = 2,
-        Starting = 3,        
-        Ending = 4,
+        Started = 3,        
+        Ended = 4,
         Evaluation = 5,
 
         CancelByUser = 10,

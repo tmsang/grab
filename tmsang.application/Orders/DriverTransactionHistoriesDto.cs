@@ -3,7 +3,7 @@ using tmsang.domain;
 
 namespace tmsang.application
 {
-    public class TransactionHistoriesDto
+    public class DriverTransactionHistoriesDto
     {
         public Guid OrderId { get; set; }
         public E_OrderStatus Status { get; set; }
@@ -17,10 +17,8 @@ namespace tmsang.application
 
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
-        public string DriverName { get; set; }
-        public string DriverPhone { get; set; }
-
-        public int Rating { get; set; }
-        public string Note { get; set; }
+        public string GuestName { get; set; }
+        public string GuestPhone { get; set; }
+                
     }
 }

@@ -7,6 +7,6 @@ namespace tmsang.application
         void Book(BookDto bookDto);
         void Cancel(string requestId, string reason);
         void Evaluable(EvaluableDto evaluableDto);
-        IEnumerable<TransactionHistoriesDto> TransactionHistories();
+        IEnumerable<GuestTransactionHistoriesDto> TransactionHistories();
     }
 }

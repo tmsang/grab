@@ -144,7 +144,7 @@ namespace tmsang.application
             // check valid status
             var orderId = Guid.Parse(evaluableDto.RequestId);
             R_Order order = this.orderRepository.FindOne(new R_OrderGetSpec(orderId));
-            if (order.Status != E_OrderStatus.Ending) 
+            if (order.Status != E_OrderStatus.Ended) 
             {
                 throw new Exception("Your Booking has not finished yet, so cannot evaluate");
             }
@@ -167,7 +167,7 @@ namespace tmsang.application
             signalrHub.Clients.All.BroadcastMessage(msg);
         }
 
-        public IEnumerable<TransactionHistoriesDto> TransactionHistories()
+        public IEnumerable<GuestTransactionHistoriesDto> TransactionHistories()
         {
             // query list transactions by accountId: 
             // [R_Order, R_Request, R_Response, R_Evaluation] - Root: R_Request
@@ -192,7 +192,7 @@ namespace tmsang.application
                           join response in responses on order.Id equals response.Id
                           join evaluation in evalations on order.Id equals evaluation.Id
                           
-                          select new TransactionHistoriesDto
+                          select new GuestTransactionHistoriesDto
                           { 
                              OrderId = order.Id,
                              Status = order.Status,

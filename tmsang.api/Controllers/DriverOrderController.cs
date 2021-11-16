@@ -5,23 +5,29 @@ using tmsang.application;
 
 namespace tmsang.api
 {
-    [Authorize]
-    [Route("api/guest/order")]
-    public class GuestOrderController: Controller
-    {
-        readonly IGuestOrderService orderService;
 
-        public GuestOrderController(IGuestOrderService orderService)
+    // ===================================================
+    // Driver just accept Booking - khong cho phep huy, khong cho so sanh gia, khoang cach
+    // Driver chi nhan hay khong nhan mot cai Book
+    // ===================================================
+
+    [Authorize]
+    [Route("api/driver/order")]
+    public class DriverOrderController : Controller
+    {
+        readonly IDriverOrderService orderService;
+
+        public DriverOrderController(IDriverOrderService orderService)
         {
             this.orderService = orderService;
         }
 
-        [HttpPost("book")]
-        public void Book(BookDto bookDto)
+        [HttpPost("accept")]
+        public void AcceptBooking(Guid orderId)
         {
             try
             {
-                this.orderService.Book(bookDto);
+                this.orderService.AcceptAsync(orderId);
             }
             catch (Exception ex)
             {
@@ -29,12 +35,12 @@ namespace tmsang.api
             }
         }
 
-        [HttpPost("cancel-by-client")]
-        public void Cancel(string requestId, string reason)
+        [HttpPost("start")]
+        public void Start(Guid orderId)
         {
             try
             {
-                this.orderService.Cancel(requestId, reason);
+                this.orderService.Start(orderId);
             }
             catch (Exception ex)
             {
@@ -42,12 +48,12 @@ namespace tmsang.api
             }
         }
 
-        [HttpPost("evaluable")]
-        public void Evaluable(EvaluableDto evaluableDto)
+        [HttpPost("end")]
+        public void End(Guid orderId)
         {
             try
             {
-                this.orderService.Evaluable(evaluableDto);
+                this.orderService.End(orderId);
             }
             catch (Exception ex)
             {
@@ -56,7 +62,7 @@ namespace tmsang.api
         }
 
         [HttpGet("transaction-histories")]
-        public IEnumerable<GuestTransactionHistoriesDto> TransactionHistories()
+        public IEnumerable<DriverTransactionHistoriesDto> TransactionHistories()
         {
             try
             {

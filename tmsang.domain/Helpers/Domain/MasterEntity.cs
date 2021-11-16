@@ -2,7 +2,7 @@
 
 namespace tmsang.domain
 {
-    public abstract class MasterEntity
+    public abstract class MasterEntity: INonAggregateRoot
     {
         public virtual int Id { get; protected set; }
         public virtual string Name { get; protected set; }
