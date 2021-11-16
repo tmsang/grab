@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using tmsang.application;
 
 namespace tmsang.api
@@ -23,11 +24,11 @@ namespace tmsang.api
         }
 
         [HttpPost("accept")]
-        public void AcceptBooking(Guid orderId)
+        public async Task AcceptBookingAsync(Guid orderId)
         {
             try
             {
-                this.orderService.AcceptAsync(orderId);
+                await this.orderService.AcceptAsync(orderId);
             }
             catch (Exception ex)
             {
@@ -36,11 +37,11 @@ namespace tmsang.api
         }
 
         [HttpPost("start")]
-        public void Start(Guid orderId)
+        public async Task StartAsync(Guid orderId)
         {
             try
             {
-                this.orderService.Start(orderId);
+                await this.orderService.Start(orderId);
             }
             catch (Exception ex)
             {
@@ -49,11 +50,11 @@ namespace tmsang.api
         }
 
         [HttpPost("end")]
-        public void End(Guid orderId)
+        public async Task EndAsync(Guid orderId)
         {
             try
             {
-                this.orderService.End(orderId);
+                await this.orderService.End(orderId);
             }
             catch (Exception ex)
             {
@@ -62,11 +63,11 @@ namespace tmsang.api
         }
 
         [HttpGet("transaction-histories")]
-        public IEnumerable<DriverTransactionHistoriesDto> TransactionHistories()
+        public async Task<IEnumerable<DriverTransactionHistoriesDto>> TransactionHistoriesAsync()
         {
             try
             {
-                return this.orderService.TransactionHistories();
+                return await this.orderService.TransactionHistories();
             }
             catch (Exception ex)
             {

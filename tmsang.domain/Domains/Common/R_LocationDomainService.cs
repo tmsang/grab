@@ -26,7 +26,7 @@ namespace tmsang.domain
             return location;
         }
 
-        public R_Location AddIfNotExistsAsync(string address) {
+        public R_Location AddIfNotExists(string address) {
             // check if exists
             var location = this.locationRepository.FindOne(new R_LocationGetSpec(address));
             if (location != null)

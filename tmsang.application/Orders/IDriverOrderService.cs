@@ -6,9 +6,9 @@ namespace tmsang.application
 {
     public interface IDriverOrderService
     {
-        void AcceptAsync(Guid orderId);
-        void Start(Guid orderId);
-        void End(Guid orderId);
-        IEnumerable<DriverTransactionHistoriesDto> TransactionHistories();
+        Task AcceptAsync(Guid orderId);
+        Task Start(Guid orderId);
+        Task End(Guid orderId);
+        Task<IEnumerable<DriverTransactionHistoriesDto>> TransactionHistories();
     }
 }

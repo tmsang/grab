@@ -72,7 +72,7 @@ namespace tmsang.application
         }
 
 
-        public void AcceptAsync(Guid orderId)
+        public async Task AcceptAsync(Guid orderId)
         {
             // Change status - Order: Accepted
             var order = this.orderRepository.FindOne(new R_OrderGetSpec(orderId));
@@ -84,7 +84,7 @@ namespace tmsang.application
 
             // Add record R_Response: [start(null), end(null), fee, tax]
             var user = (R_Driver)http.HttpContext.Items["User"];
-            var location = this.locationDomainService.AddIfNotExistsAsync(user.Address);
+            var location = this.locationDomainService.AddIfNotExists(user.Address);
             if (location == null)
             {
                 throw new Exception("There are error with google map - or driver location can not analyze...");
@@ -107,10 +107,10 @@ namespace tmsang.application
                 Message = "abc.....",
                 Timestamp = DateTime.Now.ToString()
             };
-            signalrHub.Clients.All.BroadcastMessage(msg);
+            await signalrHub.Clients.All.BroadcastMessage(msg);
         }
 
-        public void Start(Guid orderId)
+        public async Task Start(Guid orderId)
         {
             // Change status - Order: Started
             var order = this.orderRepository.FindOne(new R_OrderGetSpec(orderId));
@@ -134,10 +134,10 @@ namespace tmsang.application
                 Message = "abc.....",
                 Timestamp = DateTime.Now.ToString()
             };
-            signalrHub.Clients.All.BroadcastMessage(msg);
+            await signalrHub.Clients.All.BroadcastMessage(msg);
         }
 
-        public void End(Guid orderId)
+        public async Task End(Guid orderId)
         {
             // Change status - Order: Ended
             var order = this.orderRepository.FindOne(new R_OrderGetSpec(orderId));
@@ -161,11 +161,11 @@ namespace tmsang.application
                 Message = "abc.....",
                 Timestamp = DateTime.Now.ToString()
             };
-            signalrHub.Clients.All.BroadcastMessage(msg);
+            await signalrHub.Clients.All.BroadcastMessage(msg);
         }
 
 
-        public IEnumerable<DriverTransactionHistoriesDto> TransactionHistories()
+        public async Task<IEnumerable<DriverTransactionHistoriesDto>> TransactionHistories()
         {
             // list Client
             var user = (R_Driver)http.HttpContext.Items["User"];
