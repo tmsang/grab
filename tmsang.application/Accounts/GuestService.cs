@@ -154,6 +154,12 @@ namespace tmsang.application
             {
                 throw new Exception("SMS Code is invalid");
             }
+            // doi chieu password -va kiem tra password hop le
+            var isPasswordMatched = auth.VerifyPassword(resetPasswordDto.OldPassword, user.Salt, user.Password);
+            if (!isPasswordMatched)
+            {
+                throw new Exception("Old Password is invalid");
+            }
             // update password vao bang R_Guest
             var hash = auth.EncryptPassword(resetPasswordDto.NewPassword);
             user.ResetPassword(hash.Hash, hash.Salt);            

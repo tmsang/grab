@@ -87,7 +87,7 @@ namespace tmsang.application
             // create request -> requestId  
             var order = R_Order.Create(user.Id, E_OrderStatus.Pending);
 
-            var request = R_Request.Create(order.Id, fromLocation, toLocation, routineCost.Cost);
+            var request = await R_Request.CreateAsync(order.Id, fromLocation, toLocation, routineCost.Cost);
             
             request.AddHistories(E_OrderStatus.Pending, "Create Request");
 

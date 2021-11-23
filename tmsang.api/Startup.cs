@@ -39,9 +39,12 @@ namespace tmsang.api
             // add Cors
             services.AddCors();
 
-            services.AddControllers(options => {
-                options.Filters.Add(typeof(UnitOfWorkTransactionFilter));
-            });
+            services
+                .AddControllers(options => {
+                    options.Filters.Add(typeof(UnitOfWorkTransactionFilter));
+                }).AddJsonOptions(options => {
+                    options.JsonSerializerOptions.PropertyNamingPolicy = null;          // camelCase
+                });
 
             services.AddSwaggerGen(c =>
             {

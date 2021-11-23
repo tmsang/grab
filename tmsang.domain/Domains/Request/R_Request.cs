@@ -4,6 +4,7 @@ using System.Data;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace tmsang.domain
 {
@@ -29,9 +30,9 @@ namespace tmsang.domain
         // ===========================================================
         // METHODS
         // ===========================================================
-        public static R_Request Create(Guid orderId, R_Location from, R_Location to, double routineCost)
+        public static async Task<R_Request> CreateAsync(Guid orderId, R_Location from, R_Location to, double routineCost)
         {
-            var distance = CalculateDistance(from, to);
+            var distance = await CalculateDistanceAsync(from, to);
             var cost = CalculateCost(distance, routineCost);
 
             var request = new R_Request
@@ -69,9 +70,9 @@ namespace tmsang.domain
             return routineCost * distance;            
         }
 
-        private static double CalculateDistance(R_Location from, R_Location to)
+        private static async Task<double> CalculateDistanceAsync(R_Location from, R_Location to)
         {
-            
+            /*
             string url = "https://maps.googleapis.com/maps/api/distancematrix/xml?origins=" 
                 + from.Address + "&destinations=" + to.Address
                 + "&key=" + Singleton.Instance.GoogleApiKey;
@@ -94,10 +95,10 @@ namespace tmsang.domain
                     return result;
                 }
             }
-            
+            */
 
-            //var distanceMatrix = await Util.GetDistanceMatrix(from.Address, to.Address);
-            //return distanceMatrix.Distance;
+            var distanceMatrix = await Util.GetDistanceMatrixAsync(from.Address, to.Address);
+            return distanceMatrix.Distance;
         }
     }
 }
