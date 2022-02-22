@@ -105,5 +105,19 @@ namespace tmsang.api
                 throw ex;
             }
         }
+
+        [Authorize]
+        [HttpPost("push-position")]
+        public void PushPosition(string lat, string lng)
+        {
+            try
+            {
+                this.accountService.PushPosition(lat, lng);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

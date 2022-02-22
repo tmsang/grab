@@ -133,6 +133,34 @@ namespace tmsang.infra.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "R_Drivers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    FullName = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Email = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Phone = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PersonalId = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PersonalImage = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Address = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    AccountStatus = table.Column<int>(type: "int", nullable: false),
+                    Password = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Salt = table.Column<byte[]>(type: "longblob", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_R_Drivers", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "R_Evaluations",
                 columns: table => new
                 {
@@ -144,6 +172,22 @@ namespace tmsang.infra.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_R_Evaluations", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "R_FeePolicies",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    GroupId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    ProvinceOrCity = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Cost = table.Column<double>(type: "double", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_R_FeePolicies", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -193,6 +237,8 @@ namespace tmsang.infra.Migrations
                     Latitude = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Longtitude = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ProvinceOrCity = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
@@ -280,239 +326,6 @@ namespace tmsang.infra.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "B_EvaluationHistories",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    OrderStatusId = table.Column<int>(type: "int", nullable: false),
-                    HappenDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Description = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    EvaluationId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_B_EvaluationHistories", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_B_EvaluationHistories_R_Evaluations_EvaluationId",
-                        column: x => x.EvaluationId,
-                        principalTable: "R_Evaluations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "B_FeePolicyAccountInGroups",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    GroupId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_B_FeePolicyAccountInGroups", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_B_FeePolicyAccountInGroups_R_FeePolicyGroups_GroupId",
-                        column: x => x.GroupId,
-                        principalTable: "R_FeePolicyGroups",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "B_GuestHistories",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    AccountStatusId = table.Column<int>(type: "int", nullable: false),
-                    HappenDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Description = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    AccountId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_B_GuestHistories", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_B_GuestHistories_R_Guests_AccountId",
-                        column: x => x.AccountId,
-                        principalTable: "R_Guests",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "B_GuestPolicies",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    From = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    To = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    AccountId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_B_GuestPolicies", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_B_GuestPolicies_R_Guests_AccountId",
-                        column: x => x.AccountId,
-                        principalTable: "R_Guests",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "R_Requests",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    FromLocationId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    ToLocationId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    Distance = table.Column<double>(type: "double", nullable: false),
-                    Cost = table.Column<double>(type: "double", nullable: false),
-                    RequestDateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Reason = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    R_GuestId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_R_Requests", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_R_Requests_R_Guests_R_GuestId",
-                        column: x => x.R_GuestId,
-                        principalTable: "R_Guests",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "R_FeePolicies",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    GroupId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    PersonalPolicyTypeId = table.Column<int>(type: "int", nullable: true),
-                    LocationId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_R_FeePolicies", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_R_FeePolicies_M_PersonalPolicyTypes_PersonalPolicyTypeId",
-                        column: x => x.PersonalPolicyTypeId,
-                        principalTable: "M_PersonalPolicyTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_R_FeePolicies_R_FeePolicyGroups_GroupId",
-                        column: x => x.GroupId,
-                        principalTable: "R_FeePolicyGroups",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_R_FeePolicies_R_Locations_LocationId",
-                        column: x => x.LocationId,
-                        principalTable: "R_Locations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "B_PaymentHistories",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    OrderStatusId = table.Column<int>(type: "int", nullable: false),
-                    HappenDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Description = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    PaymentId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_B_PaymentHistories", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_B_PaymentHistories_R_Payments_PaymentId",
-                        column: x => x.PaymentId,
-                        principalTable: "R_Payments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "R_Drivers",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    FullName = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Email = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Phone = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    PersonalId = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    PersonalImage = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Address = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    AccountStatus = table.Column<int>(type: "int", nullable: false),
-                    Password = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Salt = table.Column<byte[]>(type: "longblob", nullable: true),
-                    B_FeePolicyAccountInGroupId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_R_Drivers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_R_Drivers_B_FeePolicyAccountInGroups_B_FeePolicyAccountInGro~",
-                        column: x => x.B_FeePolicyAccountInGroupId,
-                        principalTable: "B_FeePolicyAccountInGroups",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "B_RequestHistories",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    OrderStatusId = table.Column<int>(type: "int", nullable: false),
-                    HappenDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Description = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    RequestId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_B_RequestHistories", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_B_RequestHistories_R_Requests_RequestId",
-                        column: x => x.RequestId,
-                        principalTable: "R_Requests",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "B_DriverBikes",
                 columns: table => new
                 {
@@ -594,6 +407,29 @@ namespace tmsang.infra.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "B_DriverLocations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Lat = table.Column<double>(type: "double", nullable: false),
+                    Lng = table.Column<double>(type: "double", nullable: false),
+                    Date = table.Column<long>(type: "bigint", nullable: false),
+                    AccountId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_B_DriverLocations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_B_DriverLocations_R_Drivers_AccountId",
+                        column: x => x.AccountId,
+                        principalTable: "R_Drivers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "B_DriverPolicies",
                 columns: table => new
                 {
@@ -647,7 +483,7 @@ namespace tmsang.infra.Migrations
                     End = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     Fee = table.Column<double>(type: "double", nullable: false),
                     Tax = table.Column<double>(type: "double", nullable: false),
-                    RequestId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    OrderId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     DriverId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
                 },
                 constraints: table =>
@@ -657,6 +493,171 @@ namespace tmsang.infra.Migrations
                         name: "FK_R_Responses_R_Drivers_DriverId",
                         column: x => x.DriverId,
                         principalTable: "R_Drivers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "B_EvaluationHistories",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    OrderStatusId = table.Column<int>(type: "int", nullable: false),
+                    HappenDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Description = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    EvaluationId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_B_EvaluationHistories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_B_EvaluationHistories_R_Evaluations_EvaluationId",
+                        column: x => x.EvaluationId,
+                        principalTable: "R_Evaluations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "B_FeePolicyAccountInGroups",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    GroupId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    DriverId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_B_FeePolicyAccountInGroups", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_B_FeePolicyAccountInGroups_R_FeePolicyGroups_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "R_FeePolicyGroups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "B_GuestHistories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    AccountStatusId = table.Column<int>(type: "int", nullable: false),
+                    HappenDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Description = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    AccountId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_B_GuestHistories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_B_GuestHistories_R_Guests_AccountId",
+                        column: x => x.AccountId,
+                        principalTable: "R_Guests",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "B_GuestLocations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Lat = table.Column<double>(type: "double", nullable: false),
+                    Lng = table.Column<double>(type: "double", nullable: false),
+                    Date = table.Column<long>(type: "bigint", nullable: false),
+                    AccountId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_B_GuestLocations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_B_GuestLocations_R_Guests_AccountId",
+                        column: x => x.AccountId,
+                        principalTable: "R_Guests",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "B_GuestPolicies",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    From = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    To = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    AccountId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_B_GuestPolicies", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_B_GuestPolicies_R_Guests_AccountId",
+                        column: x => x.AccountId,
+                        principalTable: "R_Guests",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "R_Requests",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    FromLocationId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    ToLocationId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Distance = table.Column<double>(type: "double", nullable: false),
+                    Cost = table.Column<double>(type: "double", nullable: false),
+                    RequestDateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Reason = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    R_GuestId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_R_Requests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_R_Requests_R_Guests_R_GuestId",
+                        column: x => x.R_GuestId,
+                        principalTable: "R_Guests",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "B_PaymentHistories",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    OrderStatusId = table.Column<int>(type: "int", nullable: false),
+                    HappenDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Description = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PaymentId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_B_PaymentHistories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_B_PaymentHistories_R_Payments_PaymentId",
+                        column: x => x.PaymentId,
+                        principalTable: "R_Payments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
@@ -686,6 +687,94 @@ namespace tmsang.infra.Migrations
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
+            migrationBuilder.CreateTable(
+                name: "B_RequestHistories",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    OrderStatusId = table.Column<int>(type: "int", nullable: false),
+                    HappenDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Description = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    RequestId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_B_RequestHistories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_B_RequestHistories_R_Requests_RequestId",
+                        column: x => x.RequestId,
+                        principalTable: "R_Requests",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.InsertData(
+                table: "M_RoutineCosts",
+                columns: new[] { "Id", "ChangedDate", "Cost", "From", "Name", "Status", "To" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2022, 2, 21, 17, 12, 49, 665, DateTimeKind.Local).AddTicks(9269), 8000.0, new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 01/2022", 1, new DateTime(2022, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 12, new DateTime(2022, 2, 21, 17, 12, 49, 666, DateTimeKind.Local).AddTicks(706), 7000.0, new DateTime(2022, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 12/2022", 1, new DateTime(2022, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 11, new DateTime(2022, 2, 21, 17, 12, 49, 666, DateTimeKind.Local).AddTicks(700), 5000.0, new DateTime(2022, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 11/2022", 1, new DateTime(2022, 11, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 10, new DateTime(2022, 2, 21, 17, 12, 49, 666, DateTimeKind.Local).AddTicks(694), 8000.0, new DateTime(2022, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 10/2022", 1, new DateTime(2022, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 8, new DateTime(2022, 2, 21, 17, 12, 49, 666, DateTimeKind.Local).AddTicks(682), 5000.0, new DateTime(2022, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 08/2022", 1, new DateTime(2022, 8, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 7, new DateTime(2022, 2, 21, 17, 12, 49, 666, DateTimeKind.Local).AddTicks(676), 8000.0, new DateTime(2022, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 07/2022", 1, new DateTime(2022, 7, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 9, new DateTime(2022, 2, 21, 17, 12, 49, 666, DateTimeKind.Local).AddTicks(688), 7000.0, new DateTime(2022, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 09/2022", 1, new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 5, new DateTime(2022, 2, 21, 17, 12, 49, 666, DateTimeKind.Local).AddTicks(660), 5000.0, new DateTime(2022, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 05/2022", 1, new DateTime(2022, 5, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 4, new DateTime(2022, 2, 21, 17, 12, 49, 666, DateTimeKind.Local).AddTicks(654), 8000.0, new DateTime(2022, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 04/2022", 1, new DateTime(2022, 4, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 3, new DateTime(2022, 2, 21, 17, 12, 49, 666, DateTimeKind.Local).AddTicks(648), 7000.0, new DateTime(2022, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 03/2022", 1, new DateTime(2022, 3, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, new DateTime(2022, 2, 21, 17, 12, 49, 666, DateTimeKind.Local).AddTicks(641), 5000.0, new DateTime(2022, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 02/2022", 1, new DateTime(2022, 2, 28, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 6, new DateTime(2022, 2, 21, 17, 12, 49, 666, DateTimeKind.Local).AddTicks(670), 7000.0, new DateTime(2022, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 06/2022", 1, new DateTime(2022, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "M_TaxVAT",
+                columns: new[] { "Id", "ChangedDate", "Cost", "From", "Name", "Status", "To" },
+                values: new object[,]
+                {
+                    { 8, new DateTime(2022, 2, 21, 17, 12, 49, 667, DateTimeKind.Local).AddTicks(9025), 0.050000000000000003, new DateTime(2022, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 08/2022", 1, new DateTime(2022, 8, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 12, new DateTime(2022, 2, 21, 17, 12, 49, 667, DateTimeKind.Local).AddTicks(9047), 0.10000000000000001, new DateTime(2022, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 12/2022", 1, new DateTime(2022, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 11, new DateTime(2022, 2, 21, 17, 12, 49, 667, DateTimeKind.Local).AddTicks(9041), 0.050000000000000003, new DateTime(2022, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 11/2022", 1, new DateTime(2022, 11, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 10, new DateTime(2022, 2, 21, 17, 12, 49, 667, DateTimeKind.Local).AddTicks(9036), 0.02, new DateTime(2022, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 10/2022", 1, new DateTime(2022, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 9, new DateTime(2022, 2, 21, 17, 12, 49, 667, DateTimeKind.Local).AddTicks(9030), 0.10000000000000001, new DateTime(2022, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 09/2022", 1, new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 7, new DateTime(2022, 2, 21, 17, 12, 49, 667, DateTimeKind.Local).AddTicks(9020), 0.02, new DateTime(2022, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 07/2022", 1, new DateTime(2022, 7, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 4, new DateTime(2022, 2, 21, 17, 12, 49, 667, DateTimeKind.Local).AddTicks(9004), 0.02, new DateTime(2022, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 04/2022", 1, new DateTime(2022, 4, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 5, new DateTime(2022, 2, 21, 17, 12, 49, 667, DateTimeKind.Local).AddTicks(9009), 0.050000000000000003, new DateTime(2022, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 05/2022", 1, new DateTime(2022, 5, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 3, new DateTime(2022, 2, 21, 17, 12, 49, 667, DateTimeKind.Local).AddTicks(8997), 0.10000000000000001, new DateTime(2022, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 03/2022", 1, new DateTime(2022, 3, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, new DateTime(2022, 2, 21, 17, 12, 49, 667, DateTimeKind.Local).AddTicks(8989), 0.050000000000000003, new DateTime(2022, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 02/2022", 1, new DateTime(2022, 2, 28, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 1, new DateTime(2022, 2, 21, 17, 12, 49, 667, DateTimeKind.Local).AddTicks(8348), 0.02, new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 01/2022", 1, new DateTime(2022, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 6, new DateTime(2022, 2, 21, 17, 12, 49, 667, DateTimeKind.Local).AddTicks(9015), 0.10000000000000001, new DateTime(2022, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 06/2022", 1, new DateTime(2022, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "R_FeePolicies",
+                columns: new[] { "Id", "Cost", "GroupId", "ProvinceOrCity" },
+                values: new object[,]
+                {
+                    { new Guid("2b1610fc-30fa-4664-aa8e-a251baad1c43"), 0.10000000000000001, new Guid("1156d402-59d7-401d-a756-1f3409ab5ccc"), "Ho Chi Minh" },
+                    { new Guid("9ef8909a-f862-40ff-9e08-f76f7b3f8f81"), 0.25, new Guid("1156d402-59d7-401d-a756-1f3409ab5ccc"), "Tay Nguyen" },
+                    { new Guid("ecaeff73-2603-4f03-99c6-2ea30989c530"), 0.10000000000000001, new Guid("1156d402-59d7-401d-a756-1f3409ab5ccc"), "Binh Duong" },
+                    { new Guid("6f90b7a9-bb83-4240-9ba9-21a4acccd053"), 0.050000000000000003, new Guid("1156d402-59d7-401d-a756-1f3409ab5ccc"), "Ca Mau" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "R_FeePolicyGroups",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { new Guid("8e81fdb7-1450-4f04-9dc4-a24860fa8f2e"), "Wounded" },
+                    { new Guid("1156d402-59d7-401d-a756-1f3409ab5ccc"), "Normal" },
+                    { new Guid("be11e902-4002-48cf-a4f2-c158b50948ea"), "Poor" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "B_FeePolicyAccountInGroups",
+                columns: new[] { "Id", "DriverId", "GroupId" },
+                values: new object[] { 1, new Guid("9ad9d9f3-a26f-4454-944f-ef0369243b1c"), new Guid("1156d402-59d7-401d-a756-1f3409ab5ccc") });
+
             migrationBuilder.CreateIndex(
                 name: "IX_B_AdminHistories_AccountId",
                 table: "B_AdminHistories",
@@ -709,6 +798,11 @@ namespace tmsang.infra.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_B_DriverHistories_AccountId",
                 table: "B_DriverHistories",
+                column: "AccountId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_B_DriverLocations_AccountId",
+                table: "B_DriverLocations",
                 column: "AccountId");
 
             migrationBuilder.CreateIndex(
@@ -737,6 +831,11 @@ namespace tmsang.infra.Migrations
                 column: "AccountId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_B_GuestLocations_AccountId",
+                table: "B_GuestLocations",
+                column: "AccountId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_B_GuestPolicies_AccountId",
                 table: "B_GuestPolicies",
                 column: "AccountId");
@@ -755,26 +854,6 @@ namespace tmsang.infra.Migrations
                 name: "IX_B_ResponseHistories_ResponseId",
                 table: "B_ResponseHistories",
                 column: "ResponseId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_R_Drivers_B_FeePolicyAccountInGroupId",
-                table: "R_Drivers",
-                column: "B_FeePolicyAccountInGroupId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_R_FeePolicies_GroupId",
-                table: "R_FeePolicies",
-                column: "GroupId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_R_FeePolicies_LocationId",
-                table: "R_FeePolicies",
-                column: "LocationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_R_FeePolicies_PersonalPolicyTypeId",
-                table: "R_FeePolicies",
-                column: "PersonalPolicyTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_R_Requests_R_GuestId",
@@ -805,6 +884,9 @@ namespace tmsang.infra.Migrations
                 name: "B_DriverHistories");
 
             migrationBuilder.DropTable(
+                name: "B_DriverLocations");
+
+            migrationBuilder.DropTable(
                 name: "B_DriverPolicies");
 
             migrationBuilder.DropTable(
@@ -814,7 +896,13 @@ namespace tmsang.infra.Migrations
                 name: "B_EvaluationHistories");
 
             migrationBuilder.DropTable(
+                name: "B_FeePolicyAccountInGroups");
+
+            migrationBuilder.DropTable(
                 name: "B_GuestHistories");
+
+            migrationBuilder.DropTable(
+                name: "B_GuestLocations");
 
             migrationBuilder.DropTable(
                 name: "B_GuestPolicies");
@@ -835,6 +923,9 @@ namespace tmsang.infra.Migrations
                 name: "M_OrderStatus");
 
             migrationBuilder.DropTable(
+                name: "M_PersonalPolicyTypes");
+
+            migrationBuilder.DropTable(
                 name: "M_RoutineCosts");
 
             migrationBuilder.DropTable(
@@ -842,6 +933,9 @@ namespace tmsang.infra.Migrations
 
             migrationBuilder.DropTable(
                 name: "R_FeePolicies");
+
+            migrationBuilder.DropTable(
+                name: "R_Locations");
 
             migrationBuilder.DropTable(
                 name: "R_Orders");
@@ -853,6 +947,9 @@ namespace tmsang.infra.Migrations
                 name: "R_Evaluations");
 
             migrationBuilder.DropTable(
+                name: "R_FeePolicyGroups");
+
+            migrationBuilder.DropTable(
                 name: "R_Payments");
 
             migrationBuilder.DropTable(
@@ -862,22 +959,10 @@ namespace tmsang.infra.Migrations
                 name: "R_Responses");
 
             migrationBuilder.DropTable(
-                name: "M_PersonalPolicyTypes");
-
-            migrationBuilder.DropTable(
-                name: "R_Locations");
-
-            migrationBuilder.DropTable(
                 name: "R_Guests");
 
             migrationBuilder.DropTable(
                 name: "R_Drivers");
-
-            migrationBuilder.DropTable(
-                name: "B_FeePolicyAccountInGroups");
-
-            migrationBuilder.DropTable(
-                name: "R_FeePolicyGroups");
         }
     }
 }

@@ -21,6 +21,7 @@ namespace tmsang.domain
 
         // relationship (1-n: 1)
         public virtual IList<B_GuestHistory> Histories { get; protected set; }
+        public virtual IList<B_GuestLocation> Locations { get; protected set; }
         public virtual IList<B_GuestPolicy> Policies { get; protected set; }
         
         public virtual IList<R_Request> Requests { get; protected set; }
@@ -40,6 +41,23 @@ namespace tmsang.domain
         public static R_Guest Create(string fullName, string phone, string email, string password, byte[] salt) {
             return Create(Guid.NewGuid(), fullName, phone, email, password, salt);
         }
+
+        public static R_Guest CreateForSeed(string fullName, string phone, string email, string password, byte[] salt) {
+            var guest = new R_Guest
+            {
+                Id = Guid.NewGuid(),
+                FullName = fullName,
+                Phone = phone,
+                Email = email,
+                AccountStatus = E_Status.Active,
+
+                Password = password,
+                Salt = salt
+            };
+
+            return guest;
+        }
+
         public static R_Guest Create(Guid id, string fullName, string phone, string email, string password, byte[] salt) {
             var guest = new R_Guest {
                 Id = id,
@@ -85,6 +103,15 @@ namespace tmsang.domain
             this.Salt = salt;
 
             DomainEvents.Raise<R_GuestChangePasswordEvent>(new R_GuestChangePasswordEvent { R_Guest = this });
+        }
+
+        public virtual void PushPosition(double lat, double lng)
+        {
+            // delete old location (maybe change later)
+            Locations = new List<B_GuestLocation>();
+
+            // add location latest
+            Locations.Add(B_GuestLocation.Create(lat, lng, DateTime.Now.Ticks));
         }
     }
 }

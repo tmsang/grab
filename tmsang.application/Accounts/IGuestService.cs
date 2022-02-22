@@ -9,5 +9,6 @@
         TokenDto GuestResetPassword(GuestResetPasswordDto resetPasswordDto);        
         TokenDto GuestChangePassword(GuestChangePasswordDto changePasswordDto);        
         void SendSmsCode(string phone);
+        void PushPosition(string lat, string lng);
     }
 }

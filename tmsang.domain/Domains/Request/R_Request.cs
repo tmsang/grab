@@ -30,9 +30,9 @@ namespace tmsang.domain
         // ===========================================================
         // METHODS
         // ===========================================================
-        public static async Task<R_Request> CreateAsync(Guid orderId, R_Location from, R_Location to, double routineCost)
+        public static async Task<R_Request> CreateAsync(Guid orderId, R_Location from, R_Location to, double routineCost, IBingMap bingMap)
         {
-            var distance = await CalculateDistanceAsync(from, to);
+            var distance = await CalculateDistanceAsync(from, to, bingMap);
             var cost = CalculateCost(distance, routineCost);
 
             var request = new R_Request
@@ -70,7 +70,7 @@ namespace tmsang.domain
             return routineCost * distance;            
         }
 
-        private static async Task<double> CalculateDistanceAsync(R_Location from, R_Location to)
+        private static async Task<double> CalculateDistanceAsync(R_Location from, R_Location to, IBingMap bingMap)
         {
             /*
             string url = "https://maps.googleapis.com/maps/api/distancematrix/xml?origins=" 
@@ -97,7 +97,7 @@ namespace tmsang.domain
             }
             */
 
-            var distanceMatrix = await Util.GetDistanceMatrixAsync(from.Address, to.Address);
+            var distanceMatrix = await bingMap.GetDistanceMatrixAsync(from.Address, to.Address);
             return distanceMatrix.Distance;
         }
     }

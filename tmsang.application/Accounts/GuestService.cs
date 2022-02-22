@@ -193,5 +193,21 @@ namespace tmsang.application
                 jwt = auth.GenerateToken(user.Id.ToString(), E_AccountType.Guest.ToString(), Constants.LOGIN_TOKEN_EXPIRED)
             };
         }
+        public void PushPosition(string lat, string lng)
+        {
+            if (string.IsNullOrEmpty(lat) || string.IsNullOrEmpty(lng))
+            {
+                throw new Exception("Latitude or Longitude is null or empty");
+            }
+            double _lat = 0.0, _lng = 0.0;
+            if (!double.TryParse(lat, out _lat) || !double.TryParse(lng, out _lng))
+            {
+                throw new Exception("Latitude or Longitude is invalid number (double)");
+            }
+
+            var user = (R_Guest)http.HttpContext.Items["User"];
+            user.PushPosition(_lat, _lng);
+            this.guestAccountRepository.Update(user);
+        }
     }
 }

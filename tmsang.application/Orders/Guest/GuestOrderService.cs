@@ -25,7 +25,8 @@ namespace tmsang.application
         readonly IHubContext<SignalrHub, IHubClient> signalrHub;
 
         readonly IStorage storage;
-        readonly IAuth auth;        
+        readonly IAuth auth;
+        readonly IBingMap util;
         readonly IHttpContextAccessor http;
         readonly IUnitOfWork unitOfWork;
 
@@ -45,6 +46,7 @@ namespace tmsang.application
 
             IStorage storage,
             IAuth auth,
+            IBingMap util,
             IHttpContextAccessor http,
             IUnitOfWork unitOfWork)
         {
@@ -63,8 +65,20 @@ namespace tmsang.application
 
             this.storage = storage;
             this.auth = auth;
+            this.util = util;
             this.http = http;
             this.unitOfWork = unitOfWork;
+        }
+
+        public async Task<string> GetPrice() 
+        {            
+            var routineCost = this.routineCostRepository.FindOne(new M_RoutineCostGetCostSpec());
+            if (routineCost == null)
+            {
+                throw new Exception("Routine Cost has not set on valid date");
+            }
+
+            return routineCost.Cost + "";
         }
 
         public async Task Book(BookDto bookDto)
@@ -87,7 +101,7 @@ namespace tmsang.application
             // create request -> requestId  
             var order = R_Order.Create(user.Id, E_OrderStatus.Pending);
 
-            var request = await R_Request.CreateAsync(order.Id, fromLocation, toLocation, routineCost.Cost);
+            var request = await R_Request.CreateAsync(order.Id, fromLocation, toLocation, routineCost.Cost, util);
             
             request.AddHistories(E_OrderStatus.Pending, "Create Request");
 
@@ -102,7 +116,45 @@ namespace tmsang.application
                 Timestamp = DateTime.Now.ToString()
             };
             await signalrHub.Clients.All.BroadcastMessage(msg);
-        }        
+        }
+
+        public async Task<IEnumerable<DriverPositionDto>> GetDriverPositions(string lat, string lng) 
+        {
+            if (string.IsNullOrEmpty(lat) || string.IsNullOrEmpty(lng))
+            {
+                throw new Exception("Latitude or Longitude is null or empty");
+            }
+            double _lat = 0.0, _lng = 0.0;
+            if (!double.TryParse(lat, out _lat) || !double.TryParse(lng, out _lng)) 
+            {
+                throw new Exception("Latitude or Longitude is invalid number (double)");
+            }
+
+            // get list driver positions            
+            var locations = new List<DriverPositionDto>();
+            
+            var drivers = this.driverRepository.Find(new R_DriverGetSpec());
+            if (drivers != null)
+            {
+                foreach (var driver in drivers)
+                {
+                    if (driver.Locations != null && driver.Locations.Count > 0) {
+                        var coordinate = driver.Locations.LastOrDefault();
+                        var distance = util.GetDistanceByCoordinate(_lat, _lng, coordinate.Lat, coordinate.Lng);
+                        if (distance < Constants.DISTANCE_DEFAULT) {
+                            locations.Add(new DriverPositionDto { 
+                                Email = driver.Email, 
+                                Lat = coordinate.Lat, 
+                                Lng = coordinate.Lng, 
+                                Distance = distance 
+                            });
+                        }
+                    }                                        
+                }
+            }
+
+            return locations;
+        }       
 
         public async Task Cancel(string requestId, string reason)
         {

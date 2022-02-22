@@ -25,6 +25,27 @@ namespace tmsang.domain
         {
             return Create(Guid.NewGuid(), fullName, email, phone, address, password, salt);
         }
+
+        public static R_Admin CreateForSeed(
+            string fullName, string email, string phone, string address,
+            string password, byte[] salt)
+        {
+            var admin = new R_Admin
+            {
+                Id = Guid.NewGuid(),
+                FullName = fullName,
+                Email = email,
+                Phone = phone,
+                Address = address,
+                AccountStatus = E_Status.Active,
+
+                Password = password,
+                Salt = salt
+            };         
+
+            return admin;
+        }
+
         public static R_Admin Create(
             Guid id, string fullName, string email, string phone, string address, 
             string password, byte[] salt)

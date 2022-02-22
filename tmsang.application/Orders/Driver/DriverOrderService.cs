@@ -127,6 +127,9 @@ namespace tmsang.application
             // Add record ResponseHistory
             response.AddHistories(E_OrderStatus.Started, "Driver started");
 
+            // Clean unused data [DriverLocations...]
+
+
             // SignalR to Client (should use: Socket IO) change status button (at client side)
             var msg = new MessageInstance
             {
@@ -153,6 +156,9 @@ namespace tmsang.application
 
             // Add record ResponseHistory
             response.AddHistories(E_OrderStatus.Ended, "Driver ended");
+
+            // Create location data [DriverLocations...] -> for user able to see Driver
+
 
             // SignalR to Client (should use: Socket IO) change status button (at client side)
             var msg = new MessageInstance

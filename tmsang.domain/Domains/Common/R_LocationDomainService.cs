@@ -5,10 +5,14 @@ namespace tmsang.domain
     public class R_LocationDomainService
     {
         readonly IRepository<R_Location> locationRepository;
+        readonly IBingMap bingMap;
 
-        public R_LocationDomainService(IRepository<R_Location> locationRepository)
+        public R_LocationDomainService(
+            IRepository<R_Location> locationRepository,
+            IBingMap bingMap)
         {
             this.locationRepository = locationRepository;
+            this.bingMap = bingMap;
         }
 
         public R_Location AddIfNotExists(string address, string latitude, string longtitude) {
@@ -67,7 +71,7 @@ namespace tmsang.domain
             }            
             */
             
-            var response = Util.GetLocationFromAddress(address);
+            var response = bingMap.GetLocationFromAddress(address);
             var location = (Location)response.ResourceSets[0].Resources[0];
 
             var result = R_Location.Create(

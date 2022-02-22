@@ -31,7 +31,9 @@ namespace tmsang.api
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddScoped<IStorage, Storage>();
-            services.AddScoped<IAuth, Auth>();            
+            services.AddScoped<IAuth, Auth>();
+            services.AddScoped<IBingMap, BingMap>();
+            services.AddScoped<IFirebaseAdminSDK, FirebaseAdminSDK>();
 
             services.AddScoped<IRepository<R_Admin>, MyRepository<R_Admin>>();
             services.AddScoped<IRepository<R_Driver>, MyRepository<R_Driver>>();

@@ -9,8 +9,8 @@ using tmsang.infra;
 namespace tmsang.infra.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20211116014646_DataPolicy")]
-    partial class DataPolicy
+    [Migration("20220221101250_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -159,6 +159,31 @@ namespace tmsang.infra.Migrations
                     b.ToTable("B_DriverHistories");
                 });
 
+            modelBuilder.Entity("tmsang.domain.B_DriverLocation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("AccountId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<long>("Date")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("Lat")
+                        .HasColumnType("double");
+
+                    b.Property<double>("Lng")
+                        .HasColumnType("double");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.ToTable("B_DriverLocations");
+                });
+
             modelBuilder.Entity("tmsang.domain.B_DriverPolicy", b =>
                 {
                     b.Property<int>("Id")
@@ -254,7 +279,7 @@ namespace tmsang.infra.Migrations
                         {
                             Id = 1,
                             DriverId = new Guid("9ad9d9f3-a26f-4454-944f-ef0369243b1c"),
-                            GroupId = new Guid("e8b73f2b-e37a-4b06-92ca-7729849a1431")
+                            GroupId = new Guid("1156d402-59d7-401d-a756-1f3409ab5ccc")
                         });
                 });
 
@@ -281,6 +306,31 @@ namespace tmsang.infra.Migrations
                     b.HasIndex("AccountId");
 
                     b.ToTable("B_GuestHistories");
+                });
+
+            modelBuilder.Entity("tmsang.domain.B_GuestLocation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("AccountId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<long>("Date")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("Lat")
+                        .HasColumnType("double");
+
+                    b.Property<double>("Lng")
+                        .HasColumnType("double");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.ToTable("B_GuestLocations");
                 });
 
             modelBuilder.Entity("tmsang.domain.B_GuestPolicy", b =>
@@ -493,32 +543,122 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 1,
-                            ChangedDate = new DateTime(2021, 11, 16, 8, 46, 46, 185, DateTimeKind.Local).AddTicks(5556),
+                            ChangedDate = new DateTime(2022, 2, 21, 17, 12, 49, 665, DateTimeKind.Local).AddTicks(9269),
                             Cost = 8000.0,
-                            From = new DateTime(2021, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "RoutineCost - 10/2021",
+                            From = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "RoutineCost - 01/2022",
                             Status = 1,
-                            To = new DateTime(2021, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            To = new DateTime(2022, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 2,
-                            ChangedDate = new DateTime(2021, 11, 16, 8, 46, 46, 185, DateTimeKind.Local).AddTicks(6624),
+                            ChangedDate = new DateTime(2022, 2, 21, 17, 12, 49, 666, DateTimeKind.Local).AddTicks(641),
                             Cost = 5000.0,
-                            From = new DateTime(2021, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "RoutineCost - 11/2021",
+                            From = new DateTime(2022, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "RoutineCost - 02/2022",
                             Status = 1,
-                            To = new DateTime(2021, 11, 30, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            To = new DateTime(2022, 2, 28, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 3,
-                            ChangedDate = new DateTime(2021, 11, 16, 8, 46, 46, 185, DateTimeKind.Local).AddTicks(6632),
+                            ChangedDate = new DateTime(2022, 2, 21, 17, 12, 49, 666, DateTimeKind.Local).AddTicks(648),
                             Cost = 7000.0,
-                            From = new DateTime(2021, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "RoutineCost - 12/2021",
+                            From = new DateTime(2022, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "RoutineCost - 03/2022",
                             Status = 1,
-                            To = new DateTime(2021, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            To = new DateTime(2022, 3, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ChangedDate = new DateTime(2022, 2, 21, 17, 12, 49, 666, DateTimeKind.Local).AddTicks(654),
+                            Cost = 8000.0,
+                            From = new DateTime(2022, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "RoutineCost - 04/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 4, 30, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ChangedDate = new DateTime(2022, 2, 21, 17, 12, 49, 666, DateTimeKind.Local).AddTicks(660),
+                            Cost = 5000.0,
+                            From = new DateTime(2022, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "RoutineCost - 05/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 5, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ChangedDate = new DateTime(2022, 2, 21, 17, 12, 49, 666, DateTimeKind.Local).AddTicks(670),
+                            Cost = 7000.0,
+                            From = new DateTime(2022, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "RoutineCost - 06/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ChangedDate = new DateTime(2022, 2, 21, 17, 12, 49, 666, DateTimeKind.Local).AddTicks(676),
+                            Cost = 8000.0,
+                            From = new DateTime(2022, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "RoutineCost - 07/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 7, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ChangedDate = new DateTime(2022, 2, 21, 17, 12, 49, 666, DateTimeKind.Local).AddTicks(682),
+                            Cost = 5000.0,
+                            From = new DateTime(2022, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "RoutineCost - 08/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 8, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 9,
+                            ChangedDate = new DateTime(2022, 2, 21, 17, 12, 49, 666, DateTimeKind.Local).AddTicks(688),
+                            Cost = 7000.0,
+                            From = new DateTime(2022, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "RoutineCost - 09/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 10,
+                            ChangedDate = new DateTime(2022, 2, 21, 17, 12, 49, 666, DateTimeKind.Local).AddTicks(694),
+                            Cost = 8000.0,
+                            From = new DateTime(2022, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "RoutineCost - 10/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 11,
+                            ChangedDate = new DateTime(2022, 2, 21, 17, 12, 49, 666, DateTimeKind.Local).AddTicks(700),
+                            Cost = 5000.0,
+                            From = new DateTime(2022, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "RoutineCost - 11/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 11, 30, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 12,
+                            ChangedDate = new DateTime(2022, 2, 21, 17, 12, 49, 666, DateTimeKind.Local).AddTicks(706),
+                            Cost = 7000.0,
+                            From = new DateTime(2022, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "RoutineCost - 12/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -554,32 +694,122 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 1,
-                            ChangedDate = new DateTime(2021, 11, 16, 8, 46, 46, 187, DateTimeKind.Local).AddTicks(426),
+                            ChangedDate = new DateTime(2022, 2, 21, 17, 12, 49, 667, DateTimeKind.Local).AddTicks(8348),
                             Cost = 0.02,
-                            From = new DateTime(2021, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Tax - 10/2021",
+                            From = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tax - 01/2022",
                             Status = 1,
-                            To = new DateTime(2021, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            To = new DateTime(2022, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 2,
-                            ChangedDate = new DateTime(2021, 11, 16, 8, 46, 46, 187, DateTimeKind.Local).AddTicks(1015),
+                            ChangedDate = new DateTime(2022, 2, 21, 17, 12, 49, 667, DateTimeKind.Local).AddTicks(8989),
                             Cost = 0.050000000000000003,
-                            From = new DateTime(2021, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Tax - 11/2021",
+                            From = new DateTime(2022, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tax - 02/2022",
                             Status = 1,
-                            To = new DateTime(2021, 11, 30, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            To = new DateTime(2022, 2, 28, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 3,
-                            ChangedDate = new DateTime(2021, 11, 16, 8, 46, 46, 187, DateTimeKind.Local).AddTicks(1022),
+                            ChangedDate = new DateTime(2022, 2, 21, 17, 12, 49, 667, DateTimeKind.Local).AddTicks(8997),
                             Cost = 0.10000000000000001,
-                            From = new DateTime(2021, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Tax - 12/2021",
+                            From = new DateTime(2022, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tax - 03/2022",
                             Status = 1,
-                            To = new DateTime(2021, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            To = new DateTime(2022, 3, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ChangedDate = new DateTime(2022, 2, 21, 17, 12, 49, 667, DateTimeKind.Local).AddTicks(9004),
+                            Cost = 0.02,
+                            From = new DateTime(2022, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tax - 04/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 4, 30, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ChangedDate = new DateTime(2022, 2, 21, 17, 12, 49, 667, DateTimeKind.Local).AddTicks(9009),
+                            Cost = 0.050000000000000003,
+                            From = new DateTime(2022, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tax - 05/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 5, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ChangedDate = new DateTime(2022, 2, 21, 17, 12, 49, 667, DateTimeKind.Local).AddTicks(9015),
+                            Cost = 0.10000000000000001,
+                            From = new DateTime(2022, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tax - 06/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ChangedDate = new DateTime(2022, 2, 21, 17, 12, 49, 667, DateTimeKind.Local).AddTicks(9020),
+                            Cost = 0.02,
+                            From = new DateTime(2022, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tax - 07/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 7, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ChangedDate = new DateTime(2022, 2, 21, 17, 12, 49, 667, DateTimeKind.Local).AddTicks(9025),
+                            Cost = 0.050000000000000003,
+                            From = new DateTime(2022, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tax - 08/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 8, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 9,
+                            ChangedDate = new DateTime(2022, 2, 21, 17, 12, 49, 667, DateTimeKind.Local).AddTicks(9030),
+                            Cost = 0.10000000000000001,
+                            From = new DateTime(2022, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tax - 09/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 10,
+                            ChangedDate = new DateTime(2022, 2, 21, 17, 12, 49, 667, DateTimeKind.Local).AddTicks(9036),
+                            Cost = 0.02,
+                            From = new DateTime(2022, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tax - 10/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 11,
+                            ChangedDate = new DateTime(2022, 2, 21, 17, 12, 49, 667, DateTimeKind.Local).AddTicks(9041),
+                            Cost = 0.050000000000000003,
+                            From = new DateTime(2022, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tax - 11/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 11, 30, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 12,
+                            ChangedDate = new DateTime(2022, 2, 21, 17, 12, 49, 667, DateTimeKind.Local).AddTicks(9047),
+                            Cost = 0.10000000000000001,
+                            From = new DateTime(2022, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tax - 12/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -692,30 +922,30 @@ namespace tmsang.infra.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b154ed11-db90-4f38-aad1-1873a77807dd"),
+                            Id = new Guid("2b1610fc-30fa-4664-aa8e-a251baad1c43"),
                             Cost = 0.10000000000000001,
-                            GroupId = new Guid("e8b73f2b-e37a-4b06-92ca-7729849a1431"),
+                            GroupId = new Guid("1156d402-59d7-401d-a756-1f3409ab5ccc"),
                             ProvinceOrCity = "Ho Chi Minh"
                         },
                         new
                         {
-                            Id = new Guid("963052af-e5a2-43fc-87b1-bb4561872920"),
+                            Id = new Guid("9ef8909a-f862-40ff-9e08-f76f7b3f8f81"),
                             Cost = 0.25,
-                            GroupId = new Guid("e8b73f2b-e37a-4b06-92ca-7729849a1431"),
+                            GroupId = new Guid("1156d402-59d7-401d-a756-1f3409ab5ccc"),
                             ProvinceOrCity = "Tay Nguyen"
                         },
                         new
                         {
-                            Id = new Guid("522d9619-567d-4242-a8b2-46fe37cf993b"),
+                            Id = new Guid("ecaeff73-2603-4f03-99c6-2ea30989c530"),
                             Cost = 0.10000000000000001,
-                            GroupId = new Guid("e8b73f2b-e37a-4b06-92ca-7729849a1431"),
+                            GroupId = new Guid("1156d402-59d7-401d-a756-1f3409ab5ccc"),
                             ProvinceOrCity = "Binh Duong"
                         },
                         new
                         {
-                            Id = new Guid("f508176b-7884-490b-8c2e-bf9f11322f9d"),
+                            Id = new Guid("6f90b7a9-bb83-4240-9ba9-21a4acccd053"),
                             Cost = 0.050000000000000003,
-                            GroupId = new Guid("e8b73f2b-e37a-4b06-92ca-7729849a1431"),
+                            GroupId = new Guid("1156d402-59d7-401d-a756-1f3409ab5ccc"),
                             ProvinceOrCity = "Ca Mau"
                         });
                 });
@@ -736,17 +966,17 @@ namespace tmsang.infra.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("e8b73f2b-e37a-4b06-92ca-7729849a1431"),
+                            Id = new Guid("1156d402-59d7-401d-a756-1f3409ab5ccc"),
                             Name = "Normal"
                         },
                         new
                         {
-                            Id = new Guid("a1d84449-8e29-4e53-86b4-9cee49f0c604"),
+                            Id = new Guid("8e81fdb7-1450-4f04-9dc4-a24860fa8f2e"),
                             Name = "Wounded"
                         },
                         new
                         {
-                            Id = new Guid("7ce984a8-a557-473c-b617-2d08ce3ce278"),
+                            Id = new Guid("be11e902-4002-48cf-a4f2-c158b50948ea"),
                             Name = "Poor"
                         });
                 });
@@ -963,6 +1193,17 @@ namespace tmsang.infra.Migrations
                     b.Navigation("Driver");
                 });
 
+            modelBuilder.Entity("tmsang.domain.B_DriverLocation", b =>
+                {
+                    b.HasOne("tmsang.domain.R_Driver", "Driver")
+                        .WithMany("Locations")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Driver");
+                });
+
             modelBuilder.Entity("tmsang.domain.B_DriverPolicy", b =>
                 {
                     b.HasOne("tmsang.domain.R_Driver", "Driver")
@@ -1011,6 +1252,17 @@ namespace tmsang.infra.Migrations
                 {
                     b.HasOne("tmsang.domain.R_Guest", "Guest")
                         .WithMany("Histories")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Guest");
+                });
+
+            modelBuilder.Entity("tmsang.domain.B_GuestLocation", b =>
+                {
+                    b.HasOne("tmsang.domain.R_Guest", "Guest")
+                        .WithMany("Locations")
                         .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1095,6 +1347,8 @@ namespace tmsang.infra.Migrations
 
                     b.Navigation("Histories");
 
+                    b.Navigation("Locations");
+
                     b.Navigation("Policies");
 
                     b.Navigation("Responses");
@@ -1115,6 +1369,8 @@ namespace tmsang.infra.Migrations
             modelBuilder.Entity("tmsang.domain.R_Guest", b =>
                 {
                     b.Navigation("Histories");
+
+                    b.Navigation("Locations");
 
                     b.Navigation("Policies");
 

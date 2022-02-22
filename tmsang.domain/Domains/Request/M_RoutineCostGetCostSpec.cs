@@ -9,7 +9,7 @@ namespace tmsang.domain
 
         public M_RoutineCostGetCostSpec()
         {
-            this.RequestDate = DateTime.Now;
+            this.RequestDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
         }
 
         public override Expression<Func<M_RoutineCost, bool>> SpecExpression
