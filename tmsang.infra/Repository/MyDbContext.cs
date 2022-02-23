@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using tmsang.domain;
@@ -382,19 +383,35 @@ namespace tmsang.infra
                 R_FeePolicy.Create("Ca Mau", normalGroupPolicy.Id, 0.05)
             );
 
+            // With data have relationship (cannot use IList.Add -> should use HasData for Parent and Child)
+            // https://stackoverflow.com/questions/56609546/how-to-fix-the-seed-entity-for-entity-type-x-cannot-be-added-because-there-was
             // account
             var auth = new Auth();
             var password = "1234567";
             var hash = auth.EncryptPassword(password);
 
+            var guestId1 = Guid.NewGuid();
+            var guestId2 = Guid.NewGuid();            
             modelBuilder.Entity<R_Guest>().HasData(
-                R_Guest.CreateForSeed("Guest 1", "0919239081", "sangnew2016@gmail.com", hash.Hash, hash.Salt)
+                R_Guest.CreateForSeed(guestId1, "Guest 1", "0919239081", "sangnew2016@gmail.com", hash.Hash, hash.Salt),
+                R_Guest.CreateForSeed(guestId2, "Guest 2", "0708825109", "sangnews2014@gmail.com", hash.Hash, hash.Salt)
             );
-
+            modelBuilder.Entity<B_GuestLocation>().HasData(
+                B_GuestLocation.CreateForSeed(10.74783, 106.68921166666667, DateTime.Now.Ticks, guestId1, 1),
+                B_GuestLocation.CreateForSeed(10.74593, 106.68101166666667, DateTime.Now.Ticks, guestId2, 2)
+            );
+                        
+            var driverId1 = Guid.NewGuid();
+            var driverId2 = Guid.NewGuid();                                    
             modelBuilder.Entity<R_Driver>().HasData(
-                R_Driver.CreateForSeed("Driver 1", "023363000", "", "123 ton dan p7 q4", "0919239081", "sangnew2015@gmail.com", hash.Hash, hash.Salt)
+                R_Driver.CreateForSeed(driverId1, "Driver 1", "023363000", "", "123 ton dan p7 q4", "0919239081", "sangnew2015@gmail.com", hash.Hash, hash.Salt),
+                R_Driver.CreateForSeed(driverId2, "Driver 2", "023363001", "", "32/1 hoang dieu p10 q4", "0708825109", "sangnew2013@gmail.com", hash.Hash, hash.Salt)
             );
-
+            modelBuilder.Entity<B_DriverLocation>().HasData(
+                B_DriverLocation.CreateForSeed(10.74583, 106.68721166666667, DateTime.Now.Ticks, driverId1, 1),
+                B_DriverLocation.CreateForSeed(10.74683, 106.68821166666667, DateTime.Now.Ticks, driverId2, 2)
+            );            
+            
             modelBuilder.Entity<R_Admin>().HasData(
                 R_Admin.CreateForSeed("Admin 1", "sangnew2015@gmail.com", "0919239081", "123 hoang dieu p10q4", hash.Hash, hash.Salt)
             );

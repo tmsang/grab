@@ -21,7 +21,7 @@ namespace tmsang.domain
 
         // relationship (1-n: 1)
         public virtual IList<B_GuestHistory> Histories { get; protected set; }
-        public virtual IList<B_GuestLocation> Locations { get; protected set; }
+        public virtual IList<B_GuestLocation> Locations { get; set; }
         public virtual IList<B_GuestPolicy> Policies { get; protected set; }
         
         public virtual IList<R_Request> Requests { get; protected set; }
@@ -42,10 +42,10 @@ namespace tmsang.domain
             return Create(Guid.NewGuid(), fullName, phone, email, password, salt);
         }
 
-        public static R_Guest CreateForSeed(string fullName, string phone, string email, string password, byte[] salt) {
+        public static R_Guest CreateForSeed(Guid id, string fullName, string phone, string email, string password, byte[] salt) {
             var guest = new R_Guest
             {
-                Id = Guid.NewGuid(),
+                Id = id,
                 FullName = fullName,
                 Phone = phone,
                 Email = email,

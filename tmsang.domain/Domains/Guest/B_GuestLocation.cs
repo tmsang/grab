@@ -26,5 +26,14 @@ namespace tmsang.domain
 
             return location;
         }
+        
+        public static B_GuestLocation CreateForSeed(double lat, double lng, long date, Guid accountId, int id)
+        {
+            var location = Create(lat, lng, date);
+            location.AccountId = accountId;
+            location.Id = id;
+
+            return location;
+        }
     }
 }

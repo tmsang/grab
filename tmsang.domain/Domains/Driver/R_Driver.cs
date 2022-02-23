@@ -35,11 +35,11 @@ namespace tmsang.domain
             return Create(Guid.NewGuid(), fullName, personId, personImage, address, phone, email, password, salt);
         }
 
-        public static R_Driver CreateForSeed(string fullName, string personId, string personImage, string address, string phone, string email, string password, byte[] salt)
+        public static R_Driver CreateForSeed(Guid id, string fullName, string personId, string personImage, string address, string phone, string email, string password, byte[] salt)
         {
             var user = new R_Driver
             {
-                Id = Guid.NewGuid(),
+                Id = id,
                 FullName = fullName,
                 PersonalId = personId,
                 PersonalImage = personImage,
