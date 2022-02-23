@@ -131,9 +131,8 @@ namespace tmsang.application
             }
 
             // get list driver positions            
-            var locations = new List<DriverPositionDto>();
-            
-            var drivers = this.driverRepository.Find(new R_DriverGetSpec());
+            var locations = new List<DriverPositionDto>();            
+            var drivers = this.driverRepository.Find(new R_DriverGetSpec(), "Locations");
             if (drivers != null)
             {
                 foreach (var driver in drivers)
@@ -143,7 +142,7 @@ namespace tmsang.application
                         var distance = util.GetDistanceByCoordinate(_lat, _lng, coordinate.Lat, coordinate.Lng);
                         if (distance < Constants.DISTANCE_DEFAULT) {
                             locations.Add(new DriverPositionDto { 
-                                Email = driver.Email, 
+                                Phone = driver.Phone, 
                                 Lat = coordinate.Lat, 
                                 Lng = coordinate.Lng, 
                                 Distance = distance 

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using tmsang.domain;
@@ -36,7 +37,7 @@ namespace tmsang.infra
             _unitOfWork = unitOfWork;
             table = _unitOfWork.Set<T>();
         }
-
+        
         public void Add(T entity)
         {
             table.Add(entity);
@@ -50,6 +51,11 @@ namespace tmsang.infra
         public IEnumerable<T> Find(ISpecification<T> spec)
         {
             return table.Where(spec.SpecExpression);
+        }
+
+        public IEnumerable<T> Find(ISpecification<T> spec, string navigationProperty)
+        {
+            return table.Where(spec.SpecExpression).Include(navigationProperty);
         }
 
         public T FindById(Guid id)
@@ -70,6 +76,6 @@ namespace tmsang.infra
         public void Remove(T entity)
         {
             table.Remove(entity);
-        }
+        }        
     }
 }

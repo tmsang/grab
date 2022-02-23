@@ -13,7 +13,7 @@ namespace tmsang.infra
         public MemoryRepository(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-        }
+        }        
 
         public void Add(T entity)
         {
@@ -23,6 +23,12 @@ namespace tmsang.infra
 
         public IEnumerable<T> Find(ISpecification<T> spec)
         {
+            return entities.Where(spec.IsSatisfiedBy);
+        }
+
+        public IEnumerable<T> Find(ISpecification<T> spec, string navigationProperty)
+        {
+            // TODO: navigationProperty...
             return entities.Where(spec.IsSatisfiedBy);
         }
 

@@ -388,15 +388,15 @@ namespace tmsang.infra
             var hash = auth.EncryptPassword(password);
 
             modelBuilder.Entity<R_Guest>().HasData(
-                R_Guest.CreateForSeed("Guest 1", "0919239081", "sangnew2016@gmail.com", "1234567", hash.Salt)
+                R_Guest.CreateForSeed("Guest 1", "0919239081", "sangnew2016@gmail.com", hash.Hash, hash.Salt)
             );
 
             modelBuilder.Entity<R_Driver>().HasData(
-                R_Driver.CreateForSeed("Driver 1", "023363000", "", "123 ton dan p7 q4", "0919239081", "sangnew2015@gmail.com", "1234567", hash.Salt)
+                R_Driver.CreateForSeed("Driver 1", "023363000", "", "123 ton dan p7 q4", "0919239081", "sangnew2015@gmail.com", hash.Hash, hash.Salt)
             );
 
             modelBuilder.Entity<R_Admin>().HasData(
-                R_Admin.CreateForSeed("Admin 1", "sangnew2015@gmail.com", "0919239081", "123 hoang dieu p10q4", "1234567", hash.Salt)
+                R_Admin.CreateForSeed("Admin 1", "sangnew2015@gmail.com", "0919239081", "123 hoang dieu p10q4", hash.Hash, hash.Salt)
             );
         }
 

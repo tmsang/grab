@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace tmsang.domain
 {
@@ -73,7 +75,7 @@ namespace tmsang.domain
 
             return user;
         }
-
+        
         public virtual void Activate()      // y nghia: protected set la vay - gom logic vao
         {
             this.AccountStatus = E_Status.Active;
