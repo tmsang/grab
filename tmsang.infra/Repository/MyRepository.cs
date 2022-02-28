@@ -52,7 +52,6 @@ namespace tmsang.infra
         {
             return table.Where(spec.SpecExpression);
         }
-
         public IEnumerable<T> Find(ISpecification<T> spec, string navigationProperty)
         {
             return table.Where(spec.SpecExpression).Include(navigationProperty);
@@ -61,6 +60,10 @@ namespace tmsang.infra
         public T FindById(Guid id)
         {
             return table.Find(id);
+        }
+        public T FindById(Guid id, string navigationProperty)
+        {
+            return table.Where(p => p.Id == id).Include(navigationProperty).FirstOrDefault();
         }
 
         public T FindById(int id)
@@ -71,6 +74,10 @@ namespace tmsang.infra
         public T FindOne(ISpecification<T> spec)
         {
             return table.Where(spec.SpecExpression).FirstOrDefault();
+        }
+        public T FindOne(ISpecification<T> spec, string navigationProperty)
+        {
+            return table.Where(spec.SpecExpression).Include(navigationProperty).FirstOrDefault();
         }
 
         public void Remove(T entity)

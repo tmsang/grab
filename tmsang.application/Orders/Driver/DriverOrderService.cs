@@ -15,6 +15,7 @@ namespace tmsang.application
         readonly IRepository<R_Response> responseRepository;
         readonly IRepository<R_Evaluation> evaluationRepository;
 
+        readonly IRepository<R_Driver> driverRepository;
         readonly IRepository<R_Guest> guestRepository;
         readonly IRepository<R_Location> locationRepository;
         readonly IRepositoryNonRoot<M_RoutineCost> routineCostRepository;
@@ -36,6 +37,7 @@ namespace tmsang.application
             IRepository<R_Response> responseRepository,
             IRepository<R_Evaluation> evaluationRepository,
 
+            IRepository<R_Driver> driverRepository,
             IRepository<R_Guest> guestRepository,
             IRepository<R_Location> locationRepository,
             IRepositoryNonRoot<M_RoutineCost> routineCostRepository,
@@ -56,6 +58,7 @@ namespace tmsang.application
             this.responseRepository = responseRepository;
             this.evaluationRepository = evaluationRepository;
 
+            this.driverRepository = driverRepository;
             this.guestRepository = guestRepository;
             this.locationRepository = locationRepository;
             this.routineCostRepository = routineCostRepository;
@@ -71,6 +74,40 @@ namespace tmsang.application
             this.unitOfWork = unitOfWork;
         }
 
+
+        public async Task<IEnumerable<GuestRequestDto>> Requests()
+        {
+            // get user (driver + current position)
+            var driver = (R_Driver)http.HttpContext.Items["User"];
+            var driverLocation = this.driverRepository.FindById(driver.Id, "Locations").Locations.LastOrDefault();
+
+            // get requests (compare distance to "current position")
+            var orders = this.orderRepository.Find(new R_OrderGetByStatusSpec(E_OrderStatus.Pending)).AsQueryable();            
+            var requests = this.requestRepository.Find(new R_RequestGetByOrderIdSpec(orders)).AsQueryable();
+            var locations = this.locationRepository.Find(new R_LocationGetByRequestsSpec(requests)).AsQueryable();
+            var guests = this.guestRepository.Find(new R_GuestGetByAccountIdsSpec(orders.Select(p => p.GuestId).ToList())).AsQueryable();
+
+            var result = (from order in orders
+                          join request in requests on order.Id equals request.Id
+                          join guest in guests on order.GuestId equals guest.Id
+
+                          select new GuestRequestDto
+                          {
+                              OrderId = order.Id,
+                              Status = order.Status,
+
+                              FromAddress = locations.FirstOrDefault(p => p.Id == request.FromLocationId).Address,
+                              ToAddress = locations.FirstOrDefault(p => p.Id == request.ToLocationId).Address,
+                              RequestDateTime = request.RequestDateTime,
+                              Distance = request.Distance,
+                              Cost = request.Cost,
+
+                              GuestName = guest.FullName,
+                              GuestPhone = guest.Phone
+                          });
+
+            return result;
+        }
 
         public async Task AcceptAsync(Guid orderId)
         {

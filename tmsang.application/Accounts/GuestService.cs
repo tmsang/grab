@@ -124,7 +124,10 @@ namespace tmsang.application
             // neu thoa thi return token
             return new TokenDto
             {
-                jwt = auth.GenerateToken(user.Id.ToString(), E_AccountType.Guest.ToString(), Constants.LOGIN_TOKEN_EXPIRED)
+                jwt = auth.GenerateToken(user.Id.ToString(), E_AccountType.Guest.ToString(), Constants.LOGIN_TOKEN_EXPIRED),
+                FullName = user.FullName,
+                Phone = user.Phone,
+                Email = user.Email
             };
         }
         public void GuestForgotPassword(string email)

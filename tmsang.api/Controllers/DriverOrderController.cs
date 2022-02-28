@@ -23,6 +23,19 @@ namespace tmsang.api
             this.orderService = orderService;
         }
 
+        [HttpGet("requests")]
+        public async Task<IEnumerable<GuestRequestDto>> GuestRequestsAsync()
+        {
+            try
+            {
+                return await this.orderService.Requests();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         [HttpPost("accept")]
         public async Task AcceptBookingAsync(Guid orderId)
         {

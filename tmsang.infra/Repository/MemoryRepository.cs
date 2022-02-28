@@ -13,7 +13,11 @@ namespace tmsang.infra
         public MemoryRepository(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-        }        
+        }
+
+        public void Include(string property) { 
+            // TODO: no implement
+        }
 
         public void Add(T entity)
         {
@@ -25,7 +29,6 @@ namespace tmsang.infra
         {
             return entities.Where(spec.IsSatisfiedBy);
         }
-
         public IEnumerable<T> Find(ISpecification<T> spec, string navigationProperty)
         {
             // TODO: navigationProperty...
@@ -35,9 +38,17 @@ namespace tmsang.infra
         public T FindById(Guid id)
         {
             return entities.Where(p => (Guid)p.Id == id).FirstOrDefault();
-        }        
+        }
+        public T FindById(Guid id, string navigationProperty)
+        {
+            return entities.Where(p => (Guid)p.Id == id).FirstOrDefault();
+        }
 
         public T FindOne(ISpecification<T> spec)
+        {
+            return entities.Where(spec.IsSatisfiedBy).FirstOrDefault();
+        }
+        public T FindOne(ISpecification<T> spec, string navigationProperty)
         {
             return entities.Where(spec.IsSatisfiedBy).FirstOrDefault();
         }

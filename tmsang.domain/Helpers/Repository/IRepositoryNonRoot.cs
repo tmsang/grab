@@ -1,7 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 
 namespace tmsang.domain
 {
@@ -10,7 +8,10 @@ namespace tmsang.domain
         T FindById(Guid id);      // non-root is hust readonly
 
         T FindOne(ISpecification<T> spec);
+        T FindOne(ISpecification<T> spec, string navigationProperty);
+
         IEnumerable<T> Find(ISpecification<T> spec);
-        void Include(string property);
+        IEnumerable<T> Find(ISpecification<T> spec, string navigationProperty);
+        
     }
 }

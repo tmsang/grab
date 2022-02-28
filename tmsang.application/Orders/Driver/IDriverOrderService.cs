@@ -10,5 +10,6 @@ namespace tmsang.application
         Task Start(Guid orderId);
         Task End(Guid orderId);
         Task<IEnumerable<DriverTransactionHistoriesDto>> TransactionHistories();
+        Task<IEnumerable<GuestRequestDto>> Requests();
     }
 }

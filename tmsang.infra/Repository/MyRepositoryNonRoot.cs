@@ -21,22 +21,21 @@ namespace tmsang.infra
         {
             _unitOfWork = unitOfWork;
             table = _unitOfWork.Set<T>();
-        }
-
-        public void Include(string property)
-        {
-            table.Include(property);
-        }
+        }        
 
         public IEnumerable<T> Find(ISpecification<T> spec)
         {
             return table.Where(spec.SpecExpression);
         }
+        public IEnumerable<T> Find(ISpecification<T> spec, string navigationProperty)
+        {
+            return table.Where(spec.SpecExpression).Include(navigationProperty);
+        }
 
         public T FindById(Guid id)
         {
             return table.Find(id);
-        }
+        }        
 
         public T FindById(int id)
         {
@@ -46,6 +45,10 @@ namespace tmsang.infra
         public T FindOne(ISpecification<T> spec)
         {
             return table.Where(spec.SpecExpression).FirstOrDefault();
+        }
+        public T FindOne(ISpecification<T> spec, string navigationProperty)
+        {
+            return table.Where(spec.SpecExpression).Include(navigationProperty).FirstOrDefault();
         }
     }
 }
