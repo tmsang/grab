@@ -359,29 +359,7 @@ namespace tmsang.infra
                     new DateTime(year, 12, DateTime.DaysInMonth(year, 12)),
                     E_Status.Active,
                     0.1)
-            );
-
-            // group
-            var normalGroupPolicy = R_FeePolicyGroup.Create("Normal");
-            var woundedGroupPolicy = R_FeePolicyGroup.Create("Wounded");
-            var poorGroupPolicy = R_FeePolicyGroup.Create("Poor");
-            modelBuilder.Entity<R_FeePolicyGroup>().HasData(
-                normalGroupPolicy, woundedGroupPolicy, poorGroupPolicy
-            );
-
-            // user -> group
-            var driverId = Guid.Parse("9ad9d9f3-a26f-4454-944f-ef0369243b1c");
-            modelBuilder.Entity<B_FeePolicyAccountInGroup>().HasData(
-                B_FeePolicyAccountInGroup.Create(1, normalGroupPolicy.Id, driverId)
-            );
-
-            // fee - cost
-            modelBuilder.Entity<R_FeePolicy>().HasData(
-                R_FeePolicy.Create("Ho Chi Minh", normalGroupPolicy.Id, 0.1),
-                R_FeePolicy.Create("Tay Nguyen", normalGroupPolicy.Id, 0.25),
-                R_FeePolicy.Create("Binh Duong", normalGroupPolicy.Id, 0.1),
-                R_FeePolicy.Create("Ca Mau", normalGroupPolicy.Id, 0.05)
-            );
+            );            
 
             // With data have relationship (cannot use IList.Add -> should use HasData for Parent and Child)
             // https://stackoverflow.com/questions/56609546/how-to-fix-the-seed-entity-for-entity-type-x-cannot-be-added-because-there-was
@@ -414,6 +392,28 @@ namespace tmsang.infra
             
             modelBuilder.Entity<R_Admin>().HasData(
                 R_Admin.CreateForSeed("Admin 1", "sangnew2015@gmail.com", "0919239081", "123 hoang dieu p10q4", hash.Hash, hash.Salt)
+            );
+
+            // create group
+            var normalGroupPolicy = R_FeePolicyGroup.Create("Normal");
+            var woundedGroupPolicy = R_FeePolicyGroup.Create("Wounded");
+            var poorGroupPolicy = R_FeePolicyGroup.Create("Poor");
+            modelBuilder.Entity<R_FeePolicyGroup>().HasData(
+                normalGroupPolicy, woundedGroupPolicy, poorGroupPolicy
+            );
+
+            // add user into group            
+            modelBuilder.Entity<B_FeePolicyAccountInGroup>().HasData(
+                B_FeePolicyAccountInGroup.Create(1, normalGroupPolicy.Id, driverId1),
+                B_FeePolicyAccountInGroup.Create(2, normalGroupPolicy.Id, driverId2)
+            );
+
+            // fee - cost
+            modelBuilder.Entity<R_FeePolicy>().HasData(
+                R_FeePolicy.Create("Ho Chi Minh", normalGroupPolicy.Id, 0.1),
+                R_FeePolicy.Create("Tay Nguyen", normalGroupPolicy.Id, 0.25),
+                R_FeePolicy.Create("Binh Duong", normalGroupPolicy.Id, 0.1),
+                R_FeePolicy.Create("Ca Mau", normalGroupPolicy.Id, 0.05)
             );
         }
 

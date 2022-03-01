@@ -85,7 +85,7 @@ namespace tmsang.application
             var orders = this.orderRepository.Find(new R_OrderGetByStatusSpec(E_OrderStatus.Pending)).AsQueryable();            
             var requests = this.requestRepository.Find(new R_RequestGetByOrderIdSpec(orders)).AsQueryable();
             var locations = this.locationRepository.Find(new R_LocationGetByRequestsSpec(requests)).AsQueryable();
-            var guests = this.guestRepository.Find(new R_GuestGetByAccountIdsSpec(orders.Select(p => p.GuestId).ToList())).AsQueryable();
+            var guests = this.guestRepository.Find(new R_GuestGetByAccountIdsSpec(orders.Select(p => p.GuestId).ToList()), "Locations").AsQueryable();
 
             var result = (from order in orders
                           join request in requests on order.Id equals request.Id
@@ -97,13 +97,19 @@ namespace tmsang.application
                               Status = order.Status,
 
                               FromAddress = locations.FirstOrDefault(p => p.Id == request.FromLocationId).Address,
+
+                              ToLat = locations.FirstOrDefault(p => p.Id == request.ToLocationId).Latitude,
+                              ToLng = locations.FirstOrDefault(p => p.Id == request.ToLocationId).Longtitude,
                               ToAddress = locations.FirstOrDefault(p => p.Id == request.ToLocationId).Address,
+
                               RequestDateTime = request.RequestDateTime,
                               Distance = request.Distance,
                               Cost = request.Cost,
 
                               GuestName = guest.FullName,
-                              GuestPhone = guest.Phone
+                              GuestPhone = guest.Phone,
+                              GuestLat = guest.Locations.OrderByDescending(p => p.Date).FirstOrDefault().Lat + "",
+                              GuestLng = guest.Locations.OrderByDescending(p => p.Date).FirstOrDefault().Lng + ""
                           });
 
             return result;

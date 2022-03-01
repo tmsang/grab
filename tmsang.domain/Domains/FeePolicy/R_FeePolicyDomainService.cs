@@ -32,7 +32,7 @@ namespace tmsang.domain
             // neu [ho ngheo + thuong binh] = tong tien - (0.09 + 0.08)*tong tien = ...
                         
             // a. find group by driverId
-            R_FeePolicyGroup group = this.feePolicyGroupRepository.FindOne(new R_FeePolicyGroupGetByUserId(driverId));
+            R_FeePolicyGroup group = this.feePolicyGroupRepository.FindOne(new R_FeePolicyGroupGetByUserId(driverId), "Users");
             if (group == null) {
                 throw new Exception("This driver is not set into FeePolicyGroup yet");
             }
