@@ -12,6 +12,9 @@ namespace tmsang.application
         public string ToLongtitude { get; set; }
         public string ToAddress { get; set; }
 
+        public double Distance { get; set; }
+        public double Amount { get; set; }
+
         public void EmptyValidation()
         {            
             if (string.IsNullOrEmpty(this.FromLatitude)) throw new Exception("From(latitude) is null or empty");
@@ -21,6 +24,9 @@ namespace tmsang.application
             if (string.IsNullOrEmpty(this.ToLatitude)) throw new Exception("To(latitude) is null or empty");
             if (string.IsNullOrEmpty(this.ToLongtitude)) throw new Exception("To(longtitude) is null or empty");
             if (string.IsNullOrEmpty(this.ToAddress)) throw new Exception("To(address) is null or empty");
+
+            if (Distance <= 0) throw new Exception("Distance is invalid");
+            if (Amount <= 0) throw new Exception("Amount is invalid");
         }
     }
 }

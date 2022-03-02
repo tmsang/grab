@@ -221,7 +221,7 @@ namespace tmsang.application
 
             var responses = this.responseRepository.Find(new R_ResponseGetByDriverIdSpec(user.Id));
 
-            var orders = this.orderRepository.Find(new R_OrderGetByOrderIdsSpec(responses.Select(p => p.OrderId).ToList()));
+            var orders = this.orderRepository.Find(new R_OrderGetByOrderIdsSpec(responses.Select(p => p.Id).ToList()));
 
             var requests = this.requestRepository.Find(new R_RequestGetByOrderIdSpec(orders));                        
 

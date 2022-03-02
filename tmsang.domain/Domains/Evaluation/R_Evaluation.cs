@@ -6,9 +6,13 @@ namespace tmsang.domain
     // Request -> RequestId (set Id in to Root -> prone to update)
     public class R_Evaluation: BaseEntity, IAggregateRoot
     {
-        public virtual Guid Id { get; protected set; }              // == OrderId
+        public virtual Guid Id { get; protected set; }              // == OrderId == RequestId
         public virtual int Rating { get; protected set; }
-        public virtual string Note { get; protected set; }        
+        public virtual string Note { get; protected set; }
+
+        // YES: relationship child
+        public virtual Guid GuestId { get; protected set; }
+        public virtual R_Guest Guest { get; protected set; }
 
         // YES: set relationship to Histories (1-n: 1)
         public virtual IList<B_EvaluationHistory> Histories { get; protected set; }

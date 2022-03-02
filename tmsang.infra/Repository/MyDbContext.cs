@@ -152,16 +152,26 @@ namespace tmsang.infra
             // Order
             modelBuilder.Entity<R_Order>().ToTable("R_Orders");
 
-            // request (1-n guest-request)
-            modelBuilder.Entity<R_Request>().ToTable("R_Requests");                                                            
+            // request (1-n guest-request)          ban than no la ROOT, nhung cung lai la Child
+            modelBuilder.Entity<R_Request>()
+                .ToTable("R_Requests")
+                .HasOne(p => p.Guest)
+                .WithMany(p => p.Requests)
+                .HasForeignKey(p => p.GuestId);
+
             modelBuilder.Entity<B_RequestHistory>()
                 .ToTable("B_RequestHistories")
                 .HasOne(p => p.Request)
                 .WithMany(p => p.Histories)
                 .HasForeignKey(p => p.RequestId);
 
-            // response (1-n driver-response)
-            modelBuilder.Entity<R_Response>().ToTable("R_Responses");                            
+            // response (1-n driver-response)       ban than no la ROOT, nhung cung lai la Child
+            modelBuilder.Entity<R_Response>()
+                .ToTable("R_Responses")
+                .HasOne(p => p.Driver)
+                .WithMany(p => p.Responses)
+                .HasForeignKey(p => p.DriverId);
+
             modelBuilder.Entity<B_ResponseHistory>()
                 .ToTable("B_ResponseHistories")
                 .HasOne(p => p.Response)
@@ -169,14 +179,24 @@ namespace tmsang.infra
                 .HasForeignKey(p => p.ResponseId);
 
             
-            modelBuilder.Entity<R_Payment>().ToTable("R_Payments");            
+            modelBuilder.Entity<R_Payment>()        
+                .ToTable("R_Payments")
+                .HasOne(p => p.Guest)
+                .WithMany(p => p.Payments)
+                .HasForeignKey(p => p.GuestId);
+
             modelBuilder.Entity<B_PaymentHistory>()
                 .ToTable("B_PaymentHistories")
                 .HasOne(p => p.Payment)
                 .WithMany(p => p.Histories)
                 .HasForeignKey(p => p.PaymentId);
             
-            modelBuilder.Entity<R_Evaluation>().ToTable("R_Evaluations");            
+            modelBuilder.Entity<R_Evaluation>()
+                .ToTable("R_Evaluations")
+                .HasOne(p => p.Guest)
+                .WithMany(p => p.Evaluations)
+                .HasForeignKey(p => p.GuestId);
+
             modelBuilder.Entity<B_EvaluationHistory>()
                 .ToTable("B_EvaluationHistories")
                 .HasOne(p => p.Evaluation)

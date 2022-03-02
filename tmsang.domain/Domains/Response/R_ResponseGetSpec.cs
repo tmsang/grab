@@ -14,7 +14,7 @@ namespace tmsang.domain
 
         public override Expression<Func<R_Response, bool>> SpecExpression {
             get {
-                return p => p.OrderId == this.orderId;
+                return p => p.Id == this.orderId;
             }
         }
     }

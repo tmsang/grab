@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.IO;
-using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace tmsang.domain
@@ -22,7 +18,11 @@ namespace tmsang.domain
 
         public virtual DateTime RequestDateTime { get; protected set; }
         public virtual string Reason { get; protected set; }
-                 
+
+        // YES: relationship child
+        public virtual Guid GuestId { get; protected set; }
+        public virtual R_Guest Guest { get; protected set; }
+
         // YES: set relationship to Histories (1-n: 1)
         public virtual IList<B_RequestHistory> Histories { get; protected set; }
 
@@ -30,18 +30,19 @@ namespace tmsang.domain
         // ===========================================================
         // METHODS
         // ===========================================================
-        public static async Task<R_Request> CreateAsync(Guid orderId, R_Location from, R_Location to, double routineCost, IBingMap bingMap)
+        public static async Task<R_Request> CreateAsync(Guid orderId, Guid guestId, R_Location from, R_Location to, double distance, double amount, IBingMap bingMap)
         {
-            var distance = await CalculateDistanceAsync(from, to, bingMap);
-            var cost = CalculateCost(distance, routineCost);
+            //var distance = await CalculateDistanceAsync(from, to, bingMap);
+            //var cost = CalculateCost(distance, routineCost);
 
             var request = new R_Request
             {
                 Id = orderId,
+                GuestId = guestId,
                 FromLocationId = from.Id,
                 ToLocationId = to.Id,
                 Distance = distance,
-                Cost = cost,
+                Cost = amount,
 
                 RequestDateTime = DateTime.Now
             };

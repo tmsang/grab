@@ -91,7 +91,7 @@ namespace tmsang.application
             R_Location toLocation = this.locationDomainService.AddIfNotExists(bookDto.ToAddress, bookDto.ToLatitude, bookDto.ToLongtitude);
             
             // get accountId + routineCost
-            var user = (R_Guest)http.HttpContext.Items["User"];
+            var guest = (R_Guest)http.HttpContext.Items["User"];
             var routineCost = this.routineCostRepository.FindOne(new M_RoutineCostGetCostSpec());
             if (routineCost == null) 
             {
@@ -99,9 +99,9 @@ namespace tmsang.application
             }
 
             // create request -> requestId  
-            var order = R_Order.Create(user.Id, E_OrderStatus.Pending);
+            var order = R_Order.Create(guest.Id, E_OrderStatus.Pending);
 
-            var request = await R_Request.CreateAsync(order.Id, fromLocation, toLocation, routineCost.Cost, util);
+            var request = await R_Request.CreateAsync(order.Id, guest.Id, fromLocation, toLocation, bookDto.Distance, bookDto.Amount, util);
             
             request.AddHistories(E_OrderStatus.Pending, "Create Request");
 

@@ -161,21 +161,6 @@ namespace tmsang.infra.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "R_Evaluations",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    Rating = table.Column<int>(type: "int", nullable: false),
-                    Note = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_R_Evaluations", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "R_FeePolicies",
                 columns: table => new
                 {
@@ -258,23 +243,6 @@ namespace tmsang.infra.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_R_Orders", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "R_Payments",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    Type = table.Column<int>(type: "int", nullable: false),
-                    CardNumber = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Paid = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    RequestId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_R_Payments", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -483,7 +451,6 @@ namespace tmsang.infra.Migrations
                     End = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     Fee = table.Column<double>(type: "double", nullable: false),
                     Tax = table.Column<double>(type: "double", nullable: false),
-                    OrderId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     DriverId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
                 },
                 constraints: table =>
@@ -493,30 +460,6 @@ namespace tmsang.infra.Migrations
                         name: "FK_R_Responses_R_Drivers_DriverId",
                         column: x => x.DriverId,
                         principalTable: "R_Drivers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "B_EvaluationHistories",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    OrderStatusId = table.Column<int>(type: "int", nullable: false),
-                    HappenDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Description = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    EvaluationId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_B_EvaluationHistories", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_B_EvaluationHistories_R_Evaluations_EvaluationId",
-                        column: x => x.EvaluationId,
-                        principalTable: "R_Evaluations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
@@ -614,6 +557,51 @@ namespace tmsang.infra.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "R_Evaluations",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Rating = table.Column<int>(type: "int", nullable: false),
+                    Note = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    GuestId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_R_Evaluations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_R_Evaluations_R_Guests_GuestId",
+                        column: x => x.GuestId,
+                        principalTable: "R_Guests",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "R_Payments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    CardNumber = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Paid = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    GuestId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_R_Payments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_R_Payments_R_Guests_GuestId",
+                        column: x => x.GuestId,
+                        principalTable: "R_Guests",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "R_Requests",
                 columns: table => new
                 {
@@ -625,39 +613,15 @@ namespace tmsang.infra.Migrations
                     RequestDateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     Reason = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    R_GuestId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
+                    GuestId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_R_Requests", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_R_Requests_R_Guests_R_GuestId",
-                        column: x => x.R_GuestId,
+                        name: "FK_R_Requests_R_Guests_GuestId",
+                        column: x => x.GuestId,
                         principalTable: "R_Guests",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "B_PaymentHistories",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    OrderStatusId = table.Column<int>(type: "int", nullable: false),
-                    HappenDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Description = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    PaymentId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_B_PaymentHistories", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_B_PaymentHistories_R_Payments_PaymentId",
-                        column: x => x.PaymentId,
-                        principalTable: "R_Payments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
@@ -682,6 +646,54 @@ namespace tmsang.infra.Migrations
                         name: "FK_B_ResponseHistories_R_Responses_ResponseId",
                         column: x => x.ResponseId,
                         principalTable: "R_Responses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "B_EvaluationHistories",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    OrderStatusId = table.Column<int>(type: "int", nullable: false),
+                    HappenDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Description = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    EvaluationId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_B_EvaluationHistories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_B_EvaluationHistories_R_Evaluations_EvaluationId",
+                        column: x => x.EvaluationId,
+                        principalTable: "R_Evaluations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "B_PaymentHistories",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    OrderStatusId = table.Column<int>(type: "int", nullable: false),
+                    HappenDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Description = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PaymentId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_B_PaymentHistories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_B_PaymentHistories_R_Payments_PaymentId",
+                        column: x => x.PaymentId,
+                        principalTable: "R_Payments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
@@ -716,18 +728,18 @@ namespace tmsang.infra.Migrations
                 columns: new[] { "Id", "ChangedDate", "Cost", "From", "Name", "Status", "To" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 3, 1, 11, 57, 30, 386, DateTimeKind.Local).AddTicks(4984), 8000.0, new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 01/2022", 1, new DateTime(2022, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 12, new DateTime(2022, 3, 1, 11, 57, 30, 386, DateTimeKind.Local).AddTicks(6157), 7000.0, new DateTime(2022, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 12/2022", 1, new DateTime(2022, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 11, new DateTime(2022, 3, 1, 11, 57, 30, 386, DateTimeKind.Local).AddTicks(6150), 5000.0, new DateTime(2022, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 11/2022", 1, new DateTime(2022, 11, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 10, new DateTime(2022, 3, 1, 11, 57, 30, 386, DateTimeKind.Local).AddTicks(6145), 8000.0, new DateTime(2022, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 10/2022", 1, new DateTime(2022, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 8, new DateTime(2022, 3, 1, 11, 57, 30, 386, DateTimeKind.Local).AddTicks(6133), 5000.0, new DateTime(2022, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 08/2022", 1, new DateTime(2022, 8, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 7, new DateTime(2022, 3, 1, 11, 57, 30, 386, DateTimeKind.Local).AddTicks(6128), 8000.0, new DateTime(2022, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 07/2022", 1, new DateTime(2022, 7, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 9, new DateTime(2022, 3, 1, 11, 57, 30, 386, DateTimeKind.Local).AddTicks(6139), 7000.0, new DateTime(2022, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 09/2022", 1, new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 5, new DateTime(2022, 3, 1, 11, 57, 30, 386, DateTimeKind.Local).AddTicks(6117), 5000.0, new DateTime(2022, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 05/2022", 1, new DateTime(2022, 5, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 4, new DateTime(2022, 3, 1, 11, 57, 30, 386, DateTimeKind.Local).AddTicks(6111), 8000.0, new DateTime(2022, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 04/2022", 1, new DateTime(2022, 4, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 3, new DateTime(2022, 3, 1, 11, 57, 30, 386, DateTimeKind.Local).AddTicks(6105), 7000.0, new DateTime(2022, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 03/2022", 1, new DateTime(2022, 3, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 2, new DateTime(2022, 3, 1, 11, 57, 30, 386, DateTimeKind.Local).AddTicks(6097), 5000.0, new DateTime(2022, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 02/2022", 1, new DateTime(2022, 2, 28, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 6, new DateTime(2022, 3, 1, 11, 57, 30, 386, DateTimeKind.Local).AddTicks(6122), 7000.0, new DateTime(2022, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 06/2022", 1, new DateTime(2022, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                    { 1, new DateTime(2022, 3, 1, 14, 58, 33, 487, DateTimeKind.Local).AddTicks(4842), 8000.0, new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 01/2022", 1, new DateTime(2022, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 12, new DateTime(2022, 3, 1, 14, 58, 33, 487, DateTimeKind.Local).AddTicks(6365), 7000.0, new DateTime(2022, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 12/2022", 1, new DateTime(2022, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 11, new DateTime(2022, 3, 1, 14, 58, 33, 487, DateTimeKind.Local).AddTicks(6360), 5000.0, new DateTime(2022, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 11/2022", 1, new DateTime(2022, 11, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 10, new DateTime(2022, 3, 1, 14, 58, 33, 487, DateTimeKind.Local).AddTicks(6354), 8000.0, new DateTime(2022, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 10/2022", 1, new DateTime(2022, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 8, new DateTime(2022, 3, 1, 14, 58, 33, 487, DateTimeKind.Local).AddTicks(6342), 5000.0, new DateTime(2022, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 08/2022", 1, new DateTime(2022, 8, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 7, new DateTime(2022, 3, 1, 14, 58, 33, 487, DateTimeKind.Local).AddTicks(6335), 8000.0, new DateTime(2022, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 07/2022", 1, new DateTime(2022, 7, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 9, new DateTime(2022, 3, 1, 14, 58, 33, 487, DateTimeKind.Local).AddTicks(6348), 7000.0, new DateTime(2022, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 09/2022", 1, new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 5, new DateTime(2022, 3, 1, 14, 58, 33, 487, DateTimeKind.Local).AddTicks(6320), 5000.0, new DateTime(2022, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 05/2022", 1, new DateTime(2022, 5, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 4, new DateTime(2022, 3, 1, 14, 58, 33, 487, DateTimeKind.Local).AddTicks(6312), 8000.0, new DateTime(2022, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 04/2022", 1, new DateTime(2022, 4, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 3, new DateTime(2022, 3, 1, 14, 58, 33, 487, DateTimeKind.Local).AddTicks(6299), 7000.0, new DateTime(2022, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 03/2022", 1, new DateTime(2022, 3, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, new DateTime(2022, 3, 1, 14, 58, 33, 487, DateTimeKind.Local).AddTicks(6289), 5000.0, new DateTime(2022, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 02/2022", 1, new DateTime(2022, 2, 28, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 6, new DateTime(2022, 3, 1, 14, 58, 33, 487, DateTimeKind.Local).AddTicks(6328), 7000.0, new DateTime(2022, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 06/2022", 1, new DateTime(2022, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.InsertData(
@@ -735,32 +747,32 @@ namespace tmsang.infra.Migrations
                 columns: new[] { "Id", "ChangedDate", "Cost", "From", "Name", "Status", "To" },
                 values: new object[,]
                 {
-                    { 8, new DateTime(2022, 3, 1, 11, 57, 30, 388, DateTimeKind.Local).AddTicks(1512), 0.050000000000000003, new DateTime(2022, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 08/2022", 1, new DateTime(2022, 8, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 12, new DateTime(2022, 3, 1, 11, 57, 30, 388, DateTimeKind.Local).AddTicks(1536), 0.10000000000000001, new DateTime(2022, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 12/2022", 1, new DateTime(2022, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 11, new DateTime(2022, 3, 1, 11, 57, 30, 388, DateTimeKind.Local).AddTicks(1530), 0.050000000000000003, new DateTime(2022, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 11/2022", 1, new DateTime(2022, 11, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 10, new DateTime(2022, 3, 1, 11, 57, 30, 388, DateTimeKind.Local).AddTicks(1523), 0.02, new DateTime(2022, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 10/2022", 1, new DateTime(2022, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 9, new DateTime(2022, 3, 1, 11, 57, 30, 388, DateTimeKind.Local).AddTicks(1518), 0.10000000000000001, new DateTime(2022, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 09/2022", 1, new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 7, new DateTime(2022, 3, 1, 11, 57, 30, 388, DateTimeKind.Local).AddTicks(1507), 0.02, new DateTime(2022, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 07/2022", 1, new DateTime(2022, 7, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 6, new DateTime(2022, 3, 1, 11, 57, 30, 388, DateTimeKind.Local).AddTicks(1501), 0.10000000000000001, new DateTime(2022, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 06/2022", 1, new DateTime(2022, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 5, new DateTime(2022, 3, 1, 11, 57, 30, 388, DateTimeKind.Local).AddTicks(1495), 0.050000000000000003, new DateTime(2022, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 05/2022", 1, new DateTime(2022, 5, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 4, new DateTime(2022, 3, 1, 11, 57, 30, 388, DateTimeKind.Local).AddTicks(1489), 0.02, new DateTime(2022, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 04/2022", 1, new DateTime(2022, 4, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 3, new DateTime(2022, 3, 1, 11, 57, 30, 388, DateTimeKind.Local).AddTicks(1483), 0.10000000000000001, new DateTime(2022, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 03/2022", 1, new DateTime(2022, 3, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 2, new DateTime(2022, 3, 1, 11, 57, 30, 388, DateTimeKind.Local).AddTicks(1475), 0.050000000000000003, new DateTime(2022, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 02/2022", 1, new DateTime(2022, 2, 28, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 1, new DateTime(2022, 3, 1, 11, 57, 30, 388, DateTimeKind.Local).AddTicks(834), 0.02, new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 01/2022", 1, new DateTime(2022, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                    { 8, new DateTime(2022, 3, 1, 14, 58, 33, 489, DateTimeKind.Local).AddTicks(8887), 0.050000000000000003, new DateTime(2022, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 08/2022", 1, new DateTime(2022, 8, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 12, new DateTime(2022, 3, 1, 14, 58, 33, 489, DateTimeKind.Local).AddTicks(8912), 0.10000000000000001, new DateTime(2022, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 12/2022", 1, new DateTime(2022, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 11, new DateTime(2022, 3, 1, 14, 58, 33, 489, DateTimeKind.Local).AddTicks(8907), 0.050000000000000003, new DateTime(2022, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 11/2022", 1, new DateTime(2022, 11, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 10, new DateTime(2022, 3, 1, 14, 58, 33, 489, DateTimeKind.Local).AddTicks(8902), 0.02, new DateTime(2022, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 10/2022", 1, new DateTime(2022, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 9, new DateTime(2022, 3, 1, 14, 58, 33, 489, DateTimeKind.Local).AddTicks(8897), 0.10000000000000001, new DateTime(2022, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 09/2022", 1, new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 7, new DateTime(2022, 3, 1, 14, 58, 33, 489, DateTimeKind.Local).AddTicks(8727), 0.02, new DateTime(2022, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 07/2022", 1, new DateTime(2022, 7, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 6, new DateTime(2022, 3, 1, 14, 58, 33, 489, DateTimeKind.Local).AddTicks(8722), 0.10000000000000001, new DateTime(2022, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 06/2022", 1, new DateTime(2022, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 5, new DateTime(2022, 3, 1, 14, 58, 33, 489, DateTimeKind.Local).AddTicks(8712), 0.050000000000000003, new DateTime(2022, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 05/2022", 1, new DateTime(2022, 5, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 4, new DateTime(2022, 3, 1, 14, 58, 33, 489, DateTimeKind.Local).AddTicks(8704), 0.02, new DateTime(2022, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 04/2022", 1, new DateTime(2022, 4, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 3, new DateTime(2022, 3, 1, 14, 58, 33, 489, DateTimeKind.Local).AddTicks(8698), 0.10000000000000001, new DateTime(2022, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 03/2022", 1, new DateTime(2022, 3, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, new DateTime(2022, 3, 1, 14, 58, 33, 489, DateTimeKind.Local).AddTicks(8690), 0.050000000000000003, new DateTime(2022, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 02/2022", 1, new DateTime(2022, 2, 28, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 1, new DateTime(2022, 3, 1, 14, 58, 33, 489, DateTimeKind.Local).AddTicks(8027), 0.02, new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 01/2022", 1, new DateTime(2022, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.InsertData(
                 table: "R_Admins",
                 columns: new[] { "Id", "AccountStatus", "Address", "Email", "FullName", "Password", "Phone", "Salt" },
-                values: new object[] { new Guid("b41ff852-4543-4b5f-93f9-88ff76c1b465"), 1, "123 hoang dieu p10q4", "sangnew2015@gmail.com", "Admin 1", "+JotFoGsS8cpuVxBISh9BfelXkBJZSI3h2fHuk9G80E=", "0919239081", new byte[] { 191, 158, 76, 85, 57, 74, 99, 149, 202, 60, 81, 114, 101, 232, 153, 46 } });
+                values: new object[] { new Guid("a299daba-f48c-4d60-9e99-c5af2d975f14"), 1, "123 hoang dieu p10q4", "sangnew2015@gmail.com", "Admin 1", "W9T5QQza+idm6ZoqjrQ2QhV0uHAknfrjNKOoX54jX5w=", "0919239081", new byte[] { 128, 141, 199, 101, 55, 159, 41, 116, 94, 233, 93, 238, 13, 93, 31, 142 } });
 
             migrationBuilder.InsertData(
                 table: "R_Drivers",
                 columns: new[] { "Id", "AccountStatus", "Address", "Email", "FullName", "Password", "PersonalId", "PersonalImage", "Phone", "Salt" },
                 values: new object[,]
                 {
-                    { new Guid("bdee96d5-b8ec-472d-9712-7374da75f114"), 1, "123 ton dan p7 q4", "sangnew2015@gmail.com", "Driver 1", "+JotFoGsS8cpuVxBISh9BfelXkBJZSI3h2fHuk9G80E=", "023363000", "", "0919239081", new byte[] { 191, 158, 76, 85, 57, 74, 99, 149, 202, 60, 81, 114, 101, 232, 153, 46 } },
-                    { new Guid("ec9e00c4-9065-42e9-8ad7-80ab6bd8779f"), 1, "32/1 hoang dieu p10 q4", "sangnew2013@gmail.com", "Driver 2", "+JotFoGsS8cpuVxBISh9BfelXkBJZSI3h2fHuk9G80E=", "023363001", "", "0708825109", new byte[] { 191, 158, 76, 85, 57, 74, 99, 149, 202, 60, 81, 114, 101, 232, 153, 46 } }
+                    { new Guid("c4388621-fb2a-4637-98d4-7316ee7a1f7a"), 1, "123 ton dan p7 q4", "sangnew2015@gmail.com", "Driver 1", "W9T5QQza+idm6ZoqjrQ2QhV0uHAknfrjNKOoX54jX5w=", "023363000", "", "0919239081", new byte[] { 128, 141, 199, 101, 55, 159, 41, 116, 94, 233, 93, 238, 13, 93, 31, 142 } },
+                    { new Guid("31181c09-b22f-449a-a940-9c1af9e600db"), 1, "32/1 hoang dieu p10 q4", "sangnew2013@gmail.com", "Driver 2", "W9T5QQza+idm6ZoqjrQ2QhV0uHAknfrjNKOoX54jX5w=", "023363001", "", "0708825109", new byte[] { 128, 141, 199, 101, 55, 159, 41, 116, 94, 233, 93, 238, 13, 93, 31, 142 } }
                 });
 
             migrationBuilder.InsertData(
@@ -768,10 +780,10 @@ namespace tmsang.infra.Migrations
                 columns: new[] { "Id", "Cost", "GroupId", "ProvinceOrCity" },
                 values: new object[,]
                 {
-                    { new Guid("e2c832f7-b91f-47e4-93b0-7ea16da7d798"), 0.050000000000000003, new Guid("5540b9d6-1a1e-4fcd-8465-27870707f6a9"), "Ca Mau" },
-                    { new Guid("f69507d2-4616-4dea-8403-89ecc8731b57"), 0.10000000000000001, new Guid("5540b9d6-1a1e-4fcd-8465-27870707f6a9"), "Binh Duong" },
-                    { new Guid("d1797509-7cf3-42ea-a9f0-77224d05341c"), 0.10000000000000001, new Guid("5540b9d6-1a1e-4fcd-8465-27870707f6a9"), "Ho Chi Minh" },
-                    { new Guid("29bf8f5d-19a0-4000-b96f-baec56056b42"), 0.25, new Guid("5540b9d6-1a1e-4fcd-8465-27870707f6a9"), "Tay Nguyen" }
+                    { new Guid("fdf8b454-c695-4681-8154-b9d305d9cd66"), 0.050000000000000003, new Guid("7cb7ae48-0a09-47da-b3ce-1f03ce96c9cc"), "Ca Mau" },
+                    { new Guid("b3df074a-6198-44cc-80fb-9af1fdbead99"), 0.10000000000000001, new Guid("7cb7ae48-0a09-47da-b3ce-1f03ce96c9cc"), "Binh Duong" },
+                    { new Guid("7f975bf5-fbb1-4a4e-abd7-30ec2620b990"), 0.10000000000000001, new Guid("7cb7ae48-0a09-47da-b3ce-1f03ce96c9cc"), "Ho Chi Minh" },
+                    { new Guid("5c5201ee-0ebb-4fd8-a8b6-cf4592317bee"), 0.25, new Guid("7cb7ae48-0a09-47da-b3ce-1f03ce96c9cc"), "Tay Nguyen" }
                 });
 
             migrationBuilder.InsertData(
@@ -779,9 +791,9 @@ namespace tmsang.infra.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("5540b9d6-1a1e-4fcd-8465-27870707f6a9"), "Normal" },
-                    { new Guid("2990b08b-4ce0-425a-8042-67e88e634f18"), "Wounded" },
-                    { new Guid("731ac435-ce9d-48cc-a484-9530db344fac"), "Poor" }
+                    { new Guid("7cb7ae48-0a09-47da-b3ce-1f03ce96c9cc"), "Normal" },
+                    { new Guid("e2d5d855-ed98-4753-a6a3-1cfdcc1d87c8"), "Wounded" },
+                    { new Guid("3533cb23-e359-4a14-bdec-5f8858fe60b7"), "Poor" }
                 });
 
             migrationBuilder.InsertData(
@@ -789,8 +801,8 @@ namespace tmsang.infra.Migrations
                 columns: new[] { "Id", "AccountStatus", "Email", "FullName", "Password", "Phone", "Salt" },
                 values: new object[,]
                 {
-                    { new Guid("f04e1ef8-657d-429b-a7c7-4bb3e95a02fe"), 1, "sangnew2016@gmail.com", "Guest 1", "+JotFoGsS8cpuVxBISh9BfelXkBJZSI3h2fHuk9G80E=", "0919239081", new byte[] { 191, 158, 76, 85, 57, 74, 99, 149, 202, 60, 81, 114, 101, 232, 153, 46 } },
-                    { new Guid("5f6c015d-8bed-4d6d-bf51-2b2bf13ae589"), 1, "sangnews2014@gmail.com", "Guest 2", "+JotFoGsS8cpuVxBISh9BfelXkBJZSI3h2fHuk9G80E=", "0708825109", new byte[] { 191, 158, 76, 85, 57, 74, 99, 149, 202, 60, 81, 114, 101, 232, 153, 46 } }
+                    { new Guid("45e4760e-5733-4666-97d7-f7613f9561eb"), 1, "sangnew2016@gmail.com", "Guest 1", "W9T5QQza+idm6ZoqjrQ2QhV0uHAknfrjNKOoX54jX5w=", "0919239081", new byte[] { 128, 141, 199, 101, 55, 159, 41, 116, 94, 233, 93, 238, 13, 93, 31, 142 } },
+                    { new Guid("328ddfca-f8ff-4a02-851b-ab98d6d86b54"), 1, "sangnews2014@gmail.com", "Guest 2", "W9T5QQza+idm6ZoqjrQ2QhV0uHAknfrjNKOoX54jX5w=", "0708825109", new byte[] { 128, 141, 199, 101, 55, 159, 41, 116, 94, 233, 93, 238, 13, 93, 31, 142 } }
                 });
 
             migrationBuilder.InsertData(
@@ -798,8 +810,8 @@ namespace tmsang.infra.Migrations
                 columns: new[] { "Id", "AccountId", "Date", "Lat", "Lng" },
                 values: new object[,]
                 {
-                    { 1, new Guid("bdee96d5-b8ec-472d-9712-7374da75f114"), 637817326504063461L, 10.74583, 106.68721166666667 },
-                    { 2, new Guid("ec9e00c4-9065-42e9-8ad7-80ab6bd8779f"), 637817326504073979L, 10.746829999999999, 106.68821166666667 }
+                    { 1, new Guid("c4388621-fb2a-4637-98d4-7316ee7a1f7a"), 637817435135115460L, 10.74583, 106.68721166666667 },
+                    { 2, new Guid("31181c09-b22f-449a-a940-9c1af9e600db"), 637817435135120714L, 10.746829999999999, 106.68821166666667 }
                 });
 
             migrationBuilder.InsertData(
@@ -807,8 +819,8 @@ namespace tmsang.infra.Migrations
                 columns: new[] { "Id", "DriverId", "GroupId" },
                 values: new object[,]
                 {
-                    { 1, new Guid("bdee96d5-b8ec-472d-9712-7374da75f114"), new Guid("5540b9d6-1a1e-4fcd-8465-27870707f6a9") },
-                    { 2, new Guid("ec9e00c4-9065-42e9-8ad7-80ab6bd8779f"), new Guid("5540b9d6-1a1e-4fcd-8465-27870707f6a9") }
+                    { 1, new Guid("c4388621-fb2a-4637-98d4-7316ee7a1f7a"), new Guid("7cb7ae48-0a09-47da-b3ce-1f03ce96c9cc") },
+                    { 2, new Guid("31181c09-b22f-449a-a940-9c1af9e600db"), new Guid("7cb7ae48-0a09-47da-b3ce-1f03ce96c9cc") }
                 });
 
             migrationBuilder.InsertData(
@@ -816,8 +828,8 @@ namespace tmsang.infra.Migrations
                 columns: new[] { "Id", "AccountId", "Date", "Lat", "Lng" },
                 values: new object[,]
                 {
-                    { 1, new Guid("f04e1ef8-657d-429b-a7c7-4bb3e95a02fe"), 637817326504047706L, 10.74783, 106.68921166666667 },
-                    { 2, new Guid("5f6c015d-8bed-4d6d-bf51-2b2bf13ae589"), 637817326504052863L, 10.74593, 106.68101166666666 }
+                    { 1, new Guid("45e4760e-5733-4666-97d7-f7613f9561eb"), 637817435135098118L, 10.74783, 106.68921166666667 },
+                    { 2, new Guid("328ddfca-f8ff-4a02-851b-ab98d6d86b54"), 637817435135103989L, 10.74593, 106.68101166666666 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -901,9 +913,19 @@ namespace tmsang.infra.Migrations
                 column: "ResponseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_R_Requests_R_GuestId",
+                name: "IX_R_Evaluations_GuestId",
+                table: "R_Evaluations",
+                column: "GuestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_R_Payments_GuestId",
+                table: "R_Payments",
+                column: "GuestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_R_Requests_GuestId",
                 table: "R_Requests",
-                column: "R_GuestId");
+                column: "GuestId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_R_Responses_DriverId",

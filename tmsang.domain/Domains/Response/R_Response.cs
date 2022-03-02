@@ -6,16 +6,13 @@ namespace tmsang.domain
     // Request -> RequestId (set Id in to Root -> prone to update)
     public class R_Response: BaseEntity, IAggregateRoot
     {
-        public virtual Guid Id { get; protected set; }                
+        public virtual Guid Id { get; protected set; }        
 
         public virtual DateTime Start { get; protected set; }
         public virtual DateTime End { get; protected set; }
 
         public virtual double Fee { get; protected set; }         // tien to A_ mang y nghia la cot tinh toan -> nguyen tac: khong dua cot tinh toan de luu tru
-        public virtual double Tax { get; protected set; }         // tien to A_ mang y nghia la cot tinh toan -> nguyen tac: khong dua cot tinh toan vao luu tru
-
-        // relationship child (1-1)
-        public virtual Guid OrderId { get; protected set; }
+        public virtual double Tax { get; protected set; }         // tien to A_ mang y nghia la cot tinh toan -> nguyen tac: khong dua cot tinh toan vao luu tru                
 
         // relationship child (1-n: n)
         public virtual Guid DriverId { get; protected set; }
@@ -24,18 +21,17 @@ namespace tmsang.domain
         // relationship (1-n: 1)
         public virtual IList<B_ResponseHistory> Histories { get; protected set; }
 
-        public static R_Response Create(Guid orderId, Guid driverId, double fee, double tax) {
-            return Create(Guid.NewGuid(), orderId, driverId, fee, tax);
+        public static R_Response Create(Guid driverId, double fee, double tax) {
+            return Create(Guid.NewGuid(), driverId, fee, tax);
         }
 
-        public static R_Response Create(Guid id, Guid orderId, Guid driverId, double fee, double tax) {
+        public static R_Response Create(Guid id, Guid driverId, double fee, double tax) {
             var response = new R_Response {
                 Id = id,
 
                 Fee = fee,
                 Tax = tax,
-
-                OrderId = orderId,
+                
                 DriverId = driverId
             };
 
