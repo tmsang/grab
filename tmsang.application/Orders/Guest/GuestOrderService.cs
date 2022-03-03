@@ -219,7 +219,7 @@ namespace tmsang.application
             await signalrHub.Clients.All.BroadcastMessage(msg);
         }
 
-        public async Task<IEnumerable<GuestTransactionHistoriesDto>> TransactionHistories()
+        public async Task<IEnumerable<GuestRequestHistoryDto>> Requests()
         {
             // query list transactions by accountId: 
             // [R_Order, R_Request, R_Response, R_Evaluation] - Root: R_Request
@@ -244,25 +244,21 @@ namespace tmsang.application
                           join response in responses on order.Id equals response.Id
                           join evaluation in evalations on order.Id equals evaluation.Id
                           
-                          select new GuestTransactionHistoriesDto
+                          select new GuestRequestHistoryDto
                           { 
                              OrderId = order.Id,
                              Status = order.Status,
 
                              FromAddress = locations.FirstOrDefault(p => p.Id == request.FromLocationId).Address,
                              ToAddress = locations.FirstOrDefault(p => p.Id == request.ToLocationId).Address,
-                             RequestDateTime = request.RequestDateTime,
-                             Reason = request.Reason,
+                             RequestDateTime = request.RequestDateTime,                             
                              Distance = request.Distance,
                              Cost = request.Cost,
 
                              Start = response.Start,
                              End = response.End,
                              DriverName = drivers.FirstOrDefault(p => p.Id == response.DriverId).FullName,
-                             DriverPhone = drivers.FirstOrDefault(p => p.Id == response.DriverId).Phone,
-
-                             Rating = evaluation.Rating,
-                             Note = evaluation.Note
+                             DriverPhone = drivers.FirstOrDefault(p => p.Id == response.DriverId).Phone                                                          
                           });
             
             return result;
