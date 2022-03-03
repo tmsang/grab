@@ -5,7 +5,7 @@ namespace tmsang.application
     public class EvaluableDto
     {
         public string OrderId { get; set; }
-        public int Rating { get; set; }
+        public float Rating { get; set; }
         public string Remark { get; set; }
 
         public void EmptyValidation()

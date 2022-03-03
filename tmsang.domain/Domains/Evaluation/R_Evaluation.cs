@@ -7,7 +7,7 @@ namespace tmsang.domain
     public class R_Evaluation: BaseEntity, IAggregateRoot
     {
         public virtual Guid Id { get; protected set; }              // == OrderId == RequestId
-        public virtual int Rating { get; protected set; }
+        public virtual float Rating { get; protected set; }
         public virtual string Note { get; protected set; }
 
         // NO: khong nen co quan he voi bang Root khac - cho phep Id thoi
@@ -20,11 +20,11 @@ namespace tmsang.domain
         // =========================================================
         // METHODS
         // =========================================================
-        public static R_Evaluation Create(int rating, string note)
+        public static R_Evaluation Create(float rating, string note)
         {
             return Create(Guid.NewGuid(), rating, note);
         }
-        public static R_Evaluation Create(Guid id, int rating, string note)
+        public static R_Evaluation Create(Guid id, float rating, string note)
         {
             var evaluation = new R_Evaluation { 
                 Id = id,
