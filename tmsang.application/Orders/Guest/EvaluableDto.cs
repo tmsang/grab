@@ -4,13 +4,13 @@ namespace tmsang.application
 {
     public class EvaluableDto
     {
-        public string RequestId { get; set; }
+        public string OrderId { get; set; }
         public int Rating { get; set; }
-        public string Note { get; set; }
+        public string Remark { get; set; }
 
         public void EmptyValidation()
         {
-            if (string.IsNullOrEmpty(this.Note)) throw new Exception("Note is null or empty");                                                            
+            if (string.IsNullOrEmpty(this.Remark)) throw new Exception("Note is null or empty");                                                            
         }
     }
 }

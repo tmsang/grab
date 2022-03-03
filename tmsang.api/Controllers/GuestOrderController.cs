@@ -69,6 +69,21 @@ namespace tmsang.api
             }
         }
 
+        
+
+        [HttpGet("requests")]
+        public async Task<IEnumerable<GuestRequestHistoryDto>> Requests()
+        {
+            try
+            {
+                return await this.orderService.Requests();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         [HttpPost("evaluable")]
         public async Task EvaluableAsync(EvaluableDto evaluableDto)
         {
@@ -82,17 +97,5 @@ namespace tmsang.api
             }
         }
 
-        [HttpGet("transaction-histories")]
-        public async Task<IEnumerable<GuestTransactionHistoriesDto>> TransactionHistoriesAsync()
-        {
-            try
-            {
-                return await this.orderService.TransactionHistories();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
     }
 }

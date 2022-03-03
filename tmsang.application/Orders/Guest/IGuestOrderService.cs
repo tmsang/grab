@@ -10,6 +10,6 @@ namespace tmsang.application
         Task<IEnumerable<DriverPositionDto>> GetDriverPositions(string lat, string lng);        
         Task Cancel(string requestId, string reason);
         Task Evaluable(EvaluableDto evaluableDto);
-        Task<IEnumerable<GuestTransactionHistoriesDto>> TransactionHistories();
+        Task<IEnumerable<GuestRequestHistoryDto>> Requests();
     }
 }

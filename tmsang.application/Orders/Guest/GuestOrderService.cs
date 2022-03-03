@@ -194,7 +194,7 @@ namespace tmsang.application
             evaluableDto.EmptyValidation();
 
             // check valid status
-            var orderId = Guid.Parse(evaluableDto.RequestId);
+            var orderId = Guid.Parse(evaluableDto.OrderId);
             R_Order order = this.orderRepository.FindOne(new R_OrderGetSpec(orderId));
             if (order.Status != E_OrderStatus.Ended) 
             {
@@ -202,7 +202,7 @@ namespace tmsang.application
             }
 
             // update info [Rating, Note(R_Evaluation) + Status(B_EvaluationHistory)]
-            R_Evaluation evaluation = R_Evaluation.Create(orderId, evaluableDto.Rating, evaluableDto.Note);
+            R_Evaluation evaluation = R_Evaluation.Create(orderId, evaluableDto.Rating, evaluableDto.Remark);
             order.UpdateStatus(E_OrderStatus.Evaluation);
             evaluation.AddHistories(E_OrderStatus.Evaluation, "Client evaluate grab service");
 
