@@ -19,9 +19,8 @@ namespace tmsang.domain
         public virtual DateTime RequestDateTime { get; protected set; }
         public virtual string Reason { get; protected set; }
 
-        // YES: relationship child
-        public virtual Guid GuestId { get; protected set; }
-        public virtual R_Guest Guest { get; protected set; }
+        // NO: khong nen co quan he voi bang Root khac - cho phep Id thoi
+        public virtual Guid GuestId { get; protected set; }        
 
         // YES: set relationship to Histories (1-n: 1)
         public virtual IList<B_RequestHistory> Histories { get; protected set; }

@@ -25,9 +25,7 @@ namespace tmsang.domain
         public virtual IList<B_DriverHistory> Histories { get; set; } = new List<B_DriverHistory>();
         public virtual IList<B_DriverLocation> Locations { get; set; } = new List<B_DriverLocation>();
         public virtual IList<B_DriverPolicy> Policies { get; set; } = new List<B_DriverPolicy>();
-        public virtual IList<B_DriverTrustLevel> TrustLevels { get; set; } = new List<B_DriverTrustLevel>();
-                
-        public virtual IList<R_Response> Responses { get; set; } = new List<R_Response>();
+        public virtual IList<B_DriverTrustLevel> TrustLevels { get; set; } = new List<B_DriverTrustLevel>();                        
 
 
         public static R_Driver Create(string fullName, string personId, string personImage, string address, string phone, string email, string password, byte[] salt)

@@ -22,11 +22,7 @@ namespace tmsang.domain
         // relationship (1-n: 1)
         public virtual IList<B_GuestHistory> Histories { get; protected set; }
         public virtual IList<B_GuestLocation> Locations { get; set; }
-        public virtual IList<B_GuestPolicy> Policies { get; protected set; }
-        
-        public virtual IList<R_Request> Requests { get; protected set; }
-        public virtual IList<R_Payment> Payments { get; protected set; }
-        public virtual IList<R_Evaluation> Evaluations { get; protected set; }
+        public virtual IList<B_GuestPolicy> Policies { get; protected set; }               
 
         // =========================================
         // B. Events of guest

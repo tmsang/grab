@@ -12,9 +12,8 @@ namespace tmsang.domain
         public virtual string CardNumber { get; protected set; }
         public virtual bool Paid { get; protected set; }
 
-        // YES: relationship child
-        public virtual Guid GuestId { get; protected set; }
-        public virtual R_Guest Guest { get; protected set; }
+        // NO: khong nen co quan he voi bang Root khac - cho phep Id thoi
+        public virtual Guid GuestId { get; protected set; }        
 
         // relationship (1-n)
         public virtual IList<B_PaymentHistory> Histories { get; protected set; }

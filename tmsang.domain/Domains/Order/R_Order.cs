@@ -7,9 +7,10 @@ namespace tmsang.domain
         public virtual Guid Id { get; protected set; }
         public virtual E_OrderStatus Status { get; protected set; }
 
-        // NOT: set relationship to Guest
+        // NO: khong nen co quan he voi bang Root khac - cho phep Id thoi
         public virtual Guid GuestId { get; protected set; }
-        // NOT: set relationship to Request
+
+        // NO: khong nen quan he voi Root khac: Request, Response, Payment, Evaluation
 
 
         // ===========================================================

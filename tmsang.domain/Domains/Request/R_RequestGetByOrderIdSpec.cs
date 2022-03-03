@@ -16,7 +16,9 @@ namespace tmsang.domain
 
         public override Expression<Func<R_Request, bool>> SpecExpression {
             get {
-                return k => this.orders.Any(h => h.Id == k.Id);
+                return k => this.orders != null
+                    && this.orders.Count() > 0
+                    && this.orders.Any(h => h.Id == k.Id);
             }
         }
     }

@@ -226,23 +226,20 @@ namespace tmsang.application
 
             var user = (R_Guest)http.HttpContext.Items["User"];
 
-            var orders = this.orderRepository.Find(new R_OrderGetByAccountIdSpec(user.Id));
+            var orders = this.orderRepository.Find(new R_OrderGetByAccountIdSpec(user.Id)).AsQueryable();
 
-            var requests = this.requestRepository.Find(new R_RequestGetByOrderIdSpec(orders));
+            var requests = this.requestRepository.Find(new R_RequestGetByOrderIdSpec(orders)).AsQueryable();
 
-            var responses = this.responseRepository.Find(new R_ResponseGetByOrderIdSpec(orders));
+            var locations = this.locationRepository.Find(new R_LocationGetByRequestsSpec(requests)).AsQueryable();
 
-            var evalations = this.evaluationRepository.Find(new R_EvaluationGetByOrderIdSpec(orders));
+            var responses = this.responseRepository.Find(new R_ResponseGetByOrderIdSpec(orders)).ToList();
 
-            var locations = this.locationRepository.Find(new R_LocationGetByRequestsSpec(requests));
-
-            var drivers = this.driverRepository.Find(new R_DriverGetByResponsesSpec(responses));
-
+            var evalations = this.evaluationRepository.Find(new R_EvaluationGetByOrderIdSpec(orders)).ToList();
             
-            var result = (from order in orders
-                          join request in requests on order.Id equals request.Id
-                          join response in responses on order.Id equals response.Id
-                          join evaluation in evalations on order.Id equals evaluation.Id
+            var drivers = this.driverRepository.Find(new R_DriverGetByResponsesSpec(responses)).ToList();
+                                    
+            var items = (from order in orders
+                          join request in requests on order.Id equals request.Id                          
                           
                           select new GuestRequestHistoryDto
                           { 
@@ -253,15 +250,26 @@ namespace tmsang.application
                              ToAddress = locations.FirstOrDefault(p => p.Id == request.ToLocationId).Address,
                              RequestDateTime = request.RequestDateTime,                             
                              Distance = request.Distance,
-                             Cost = request.Cost,
+                             Cost = request.Cost                                                                                     
+                          }
+                       ).ToList();
 
-                             Start = response.Start,
-                             End = response.End,
-                             DriverName = drivers.FirstOrDefault(p => p.Id == response.DriverId).FullName,
-                             DriverPhone = drivers.FirstOrDefault(p => p.Id == response.DriverId).Phone                                                          
-                          });
-            
-            return result;
+            foreach (var item in items)
+            {
+                var response = responses.Where(p => p.Id == item.OrderId).FirstOrDefault();
+                if (response == null) break;
+
+                item.Start = response.Start;
+                item.End = response.End;
+
+                var driver = drivers.Where(p => p.Id == response.DriverId).FirstOrDefault();
+                if (driver == null) break;
+
+                item.DriverName = driver.FullName;
+                item.DriverPhone = driver.Phone;
+            }
+
+            return items;
         }
     }    
 }

@@ -14,9 +14,8 @@ namespace tmsang.domain
         public virtual double Fee { get; protected set; }         // tien to A_ mang y nghia la cot tinh toan -> nguyen tac: khong dua cot tinh toan de luu tru
         public virtual double Tax { get; protected set; }         // tien to A_ mang y nghia la cot tinh toan -> nguyen tac: khong dua cot tinh toan vao luu tru                
 
-        // relationship child (1-n: n)
-        public virtual Guid DriverId { get; protected set; }
-        public virtual R_Driver Driver { get; protected set; }
+        // NO: khong nen co quan he voi bang Root khac - cho phep Id thoi
+        public virtual Guid DriverId { get; protected set; }        
 
         // relationship (1-n: 1)
         public virtual IList<B_ResponseHistory> Histories { get; protected set; }

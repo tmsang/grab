@@ -15,8 +15,10 @@ namespace tmsang.domain
         }
 
         public override Expression<Func<R_Driver, bool>> SpecExpression {
-            get {
-                return p => this.responses.Any(i => i.DriverId == p.Id);
+            get {                
+                return p => this.responses != null 
+                    && this.responses.Count() > 0 
+                    && this.responses.Any(i => i.DriverId == p.Id);
             }
         }
     }
