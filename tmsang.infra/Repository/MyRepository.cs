@@ -48,6 +48,15 @@ namespace tmsang.infra
             table.Update(obj);
         }
 
+        public IQueryable<T> All()
+        {
+            return table.Where(p => 1 == 1);
+        }
+        public IQueryable<T> All(string navigationProperty)
+        {
+            return table.Where(p => 1 == 1).Include(navigationProperty);
+        }
+
         public IEnumerable<T> Find(ISpecification<T> spec)
         {
             return table.Where(spec.SpecExpression);

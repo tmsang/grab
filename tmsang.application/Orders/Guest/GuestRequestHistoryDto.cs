@@ -3,6 +3,7 @@ using tmsang.domain;
 
 namespace tmsang.application
 {
+    // Guest xem thong tin Message
     public class GuestRequestHistoryDto
     {
         public Guid OrderId { get; set; }
@@ -16,7 +17,9 @@ namespace tmsang.application
 
         public double Distance { get; set; }
         public double Cost { get; set; }
-                
+        public float Rating { get; set; }
+        public string Note { get; set; }
+
         public string DriverName { get; set; }
         public string DriverPhone { get; set; }        
     }

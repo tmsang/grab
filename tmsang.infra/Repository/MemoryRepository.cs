@@ -25,6 +25,15 @@ namespace tmsang.infra
             _unitOfWork.SaveChanges();
         }
 
+        public IQueryable<T> All()
+        {
+            throw new Exception("Have not implemented");
+        }
+        public IQueryable<T> All(string navigationProperty)
+        {
+            throw new Exception("Have not implemented");
+        }
+
         public IEnumerable<T> Find(ISpecification<T> spec)
         {
             return entities.Where(spec.IsSatisfiedBy);

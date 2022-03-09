@@ -165,7 +165,7 @@ namespace tmsang.infra.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    Rating = table.Column<int>(type: "int", nullable: false),
+                    Rating = table.Column<float>(type: "float", nullable: false),
                     Note = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     GuestId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
@@ -704,18 +704,18 @@ namespace tmsang.infra.Migrations
                 columns: new[] { "Id", "ChangedDate", "Cost", "From", "Name", "Status", "To" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 3, 3, 8, 38, 8, 130, DateTimeKind.Local).AddTicks(3511), 8000.0, new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 01/2022", 1, new DateTime(2022, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 12, new DateTime(2022, 3, 3, 8, 38, 8, 130, DateTimeKind.Local).AddTicks(4576), 7000.0, new DateTime(2022, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 12/2022", 1, new DateTime(2022, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 11, new DateTime(2022, 3, 3, 8, 38, 8, 130, DateTimeKind.Local).AddTicks(4571), 5000.0, new DateTime(2022, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 11/2022", 1, new DateTime(2022, 11, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 10, new DateTime(2022, 3, 3, 8, 38, 8, 130, DateTimeKind.Local).AddTicks(4566), 8000.0, new DateTime(2022, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 10/2022", 1, new DateTime(2022, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 8, new DateTime(2022, 3, 3, 8, 38, 8, 130, DateTimeKind.Local).AddTicks(4556), 5000.0, new DateTime(2022, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 08/2022", 1, new DateTime(2022, 8, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 7, new DateTime(2022, 3, 3, 8, 38, 8, 130, DateTimeKind.Local).AddTicks(4550), 8000.0, new DateTime(2022, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 07/2022", 1, new DateTime(2022, 7, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 9, new DateTime(2022, 3, 3, 8, 38, 8, 130, DateTimeKind.Local).AddTicks(4561), 7000.0, new DateTime(2022, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 09/2022", 1, new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 5, new DateTime(2022, 3, 3, 8, 38, 8, 130, DateTimeKind.Local).AddTicks(4539), 5000.0, new DateTime(2022, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 05/2022", 1, new DateTime(2022, 5, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 4, new DateTime(2022, 3, 3, 8, 38, 8, 130, DateTimeKind.Local).AddTicks(4533), 8000.0, new DateTime(2022, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 04/2022", 1, new DateTime(2022, 4, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 3, new DateTime(2022, 3, 3, 8, 38, 8, 130, DateTimeKind.Local).AddTicks(4525), 7000.0, new DateTime(2022, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 03/2022", 1, new DateTime(2022, 3, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 2, new DateTime(2022, 3, 3, 8, 38, 8, 130, DateTimeKind.Local).AddTicks(4518), 5000.0, new DateTime(2022, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 02/2022", 1, new DateTime(2022, 2, 28, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 6, new DateTime(2022, 3, 3, 8, 38, 8, 130, DateTimeKind.Local).AddTicks(4545), 7000.0, new DateTime(2022, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 06/2022", 1, new DateTime(2022, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                    { 1, new DateTime(2022, 3, 9, 16, 41, 45, 175, DateTimeKind.Local).AddTicks(2161), 8000.0, new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 01/2022", 1, new DateTime(2022, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 12, new DateTime(2022, 3, 9, 16, 41, 45, 175, DateTimeKind.Local).AddTicks(3260), 7000.0, new DateTime(2022, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 12/2022", 1, new DateTime(2022, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 11, new DateTime(2022, 3, 9, 16, 41, 45, 175, DateTimeKind.Local).AddTicks(3253), 5000.0, new DateTime(2022, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 11/2022", 1, new DateTime(2022, 11, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 10, new DateTime(2022, 3, 9, 16, 41, 45, 175, DateTimeKind.Local).AddTicks(3248), 8000.0, new DateTime(2022, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 10/2022", 1, new DateTime(2022, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 8, new DateTime(2022, 3, 9, 16, 41, 45, 175, DateTimeKind.Local).AddTicks(3238), 5000.0, new DateTime(2022, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 08/2022", 1, new DateTime(2022, 8, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 7, new DateTime(2022, 3, 9, 16, 41, 45, 175, DateTimeKind.Local).AddTicks(3231), 8000.0, new DateTime(2022, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 07/2022", 1, new DateTime(2022, 7, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 9, new DateTime(2022, 3, 9, 16, 41, 45, 175, DateTimeKind.Local).AddTicks(3243), 7000.0, new DateTime(2022, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 09/2022", 1, new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 5, new DateTime(2022, 3, 9, 16, 41, 45, 175, DateTimeKind.Local).AddTicks(3218), 5000.0, new DateTime(2022, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 05/2022", 1, new DateTime(2022, 5, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 4, new DateTime(2022, 3, 9, 16, 41, 45, 175, DateTimeKind.Local).AddTicks(3212), 8000.0, new DateTime(2022, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 04/2022", 1, new DateTime(2022, 4, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 3, new DateTime(2022, 3, 9, 16, 41, 45, 175, DateTimeKind.Local).AddTicks(3204), 7000.0, new DateTime(2022, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 03/2022", 1, new DateTime(2022, 3, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, new DateTime(2022, 3, 9, 16, 41, 45, 175, DateTimeKind.Local).AddTicks(3196), 5000.0, new DateTime(2022, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 02/2022", 1, new DateTime(2022, 2, 28, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 6, new DateTime(2022, 3, 9, 16, 41, 45, 175, DateTimeKind.Local).AddTicks(3225), 7000.0, new DateTime(2022, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "RoutineCost - 06/2022", 1, new DateTime(2022, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.InsertData(
@@ -723,32 +723,32 @@ namespace tmsang.infra.Migrations
                 columns: new[] { "Id", "ChangedDate", "Cost", "From", "Name", "Status", "To" },
                 values: new object[,]
                 {
-                    { 8, new DateTime(2022, 3, 3, 8, 38, 8, 132, DateTimeKind.Local).AddTicks(1850), 0.050000000000000003, new DateTime(2022, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 08/2022", 1, new DateTime(2022, 8, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 12, new DateTime(2022, 3, 3, 8, 38, 8, 132, DateTimeKind.Local).AddTicks(1873), 0.10000000000000001, new DateTime(2022, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 12/2022", 1, new DateTime(2022, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 11, new DateTime(2022, 3, 3, 8, 38, 8, 132, DateTimeKind.Local).AddTicks(1867), 0.050000000000000003, new DateTime(2022, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 11/2022", 1, new DateTime(2022, 11, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 10, new DateTime(2022, 3, 3, 8, 38, 8, 132, DateTimeKind.Local).AddTicks(1862), 0.02, new DateTime(2022, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 10/2022", 1, new DateTime(2022, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 9, new DateTime(2022, 3, 3, 8, 38, 8, 132, DateTimeKind.Local).AddTicks(1856), 0.10000000000000001, new DateTime(2022, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 09/2022", 1, new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 7, new DateTime(2022, 3, 3, 8, 38, 8, 132, DateTimeKind.Local).AddTicks(1845), 0.02, new DateTime(2022, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 07/2022", 1, new DateTime(2022, 7, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 6, new DateTime(2022, 3, 3, 8, 38, 8, 132, DateTimeKind.Local).AddTicks(1839), 0.10000000000000001, new DateTime(2022, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 06/2022", 1, new DateTime(2022, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 5, new DateTime(2022, 3, 3, 8, 38, 8, 132, DateTimeKind.Local).AddTicks(1833), 0.050000000000000003, new DateTime(2022, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 05/2022", 1, new DateTime(2022, 5, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 4, new DateTime(2022, 3, 3, 8, 38, 8, 132, DateTimeKind.Local).AddTicks(1827), 0.02, new DateTime(2022, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 04/2022", 1, new DateTime(2022, 4, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 3, new DateTime(2022, 3, 3, 8, 38, 8, 132, DateTimeKind.Local).AddTicks(1821), 0.10000000000000001, new DateTime(2022, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 03/2022", 1, new DateTime(2022, 3, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 2, new DateTime(2022, 3, 3, 8, 38, 8, 132, DateTimeKind.Local).AddTicks(1814), 0.050000000000000003, new DateTime(2022, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 02/2022", 1, new DateTime(2022, 2, 28, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 1, new DateTime(2022, 3, 3, 8, 38, 8, 132, DateTimeKind.Local).AddTicks(1242), 0.02, new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 01/2022", 1, new DateTime(2022, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                    { 8, new DateTime(2022, 3, 9, 16, 41, 45, 176, DateTimeKind.Local).AddTicks(9556), 0.050000000000000003, new DateTime(2022, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 08/2022", 1, new DateTime(2022, 8, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 12, new DateTime(2022, 3, 9, 16, 41, 45, 176, DateTimeKind.Local).AddTicks(9577), 0.10000000000000001, new DateTime(2022, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 12/2022", 1, new DateTime(2022, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 11, new DateTime(2022, 3, 9, 16, 41, 45, 176, DateTimeKind.Local).AddTicks(9572), 0.050000000000000003, new DateTime(2022, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 11/2022", 1, new DateTime(2022, 11, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 10, new DateTime(2022, 3, 9, 16, 41, 45, 176, DateTimeKind.Local).AddTicks(9567), 0.02, new DateTime(2022, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 10/2022", 1, new DateTime(2022, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 9, new DateTime(2022, 3, 9, 16, 41, 45, 176, DateTimeKind.Local).AddTicks(9561), 0.10000000000000001, new DateTime(2022, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 09/2022", 1, new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 7, new DateTime(2022, 3, 9, 16, 41, 45, 176, DateTimeKind.Local).AddTicks(9550), 0.02, new DateTime(2022, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 07/2022", 1, new DateTime(2022, 7, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 6, new DateTime(2022, 3, 9, 16, 41, 45, 176, DateTimeKind.Local).AddTicks(9545), 0.10000000000000001, new DateTime(2022, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 06/2022", 1, new DateTime(2022, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 5, new DateTime(2022, 3, 9, 16, 41, 45, 176, DateTimeKind.Local).AddTicks(9540), 0.050000000000000003, new DateTime(2022, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 05/2022", 1, new DateTime(2022, 5, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 4, new DateTime(2022, 3, 9, 16, 41, 45, 176, DateTimeKind.Local).AddTicks(9534), 0.02, new DateTime(2022, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 04/2022", 1, new DateTime(2022, 4, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 3, new DateTime(2022, 3, 9, 16, 41, 45, 176, DateTimeKind.Local).AddTicks(9529), 0.10000000000000001, new DateTime(2022, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 03/2022", 1, new DateTime(2022, 3, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, new DateTime(2022, 3, 9, 16, 41, 45, 176, DateTimeKind.Local).AddTicks(9521), 0.050000000000000003, new DateTime(2022, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 02/2022", 1, new DateTime(2022, 2, 28, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 1, new DateTime(2022, 3, 9, 16, 41, 45, 176, DateTimeKind.Local).AddTicks(8943), 0.02, new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tax - 01/2022", 1, new DateTime(2022, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.InsertData(
                 table: "R_Admins",
                 columns: new[] { "Id", "AccountStatus", "Address", "Email", "FullName", "Password", "Phone", "Salt" },
-                values: new object[] { new Guid("e680b0e7-e6ed-41e7-80de-247861c6d8ba"), 1, "123 hoang dieu p10q4", "sangnew2015@gmail.com", "Admin 1", "UbAPsR7IBF+TiSP/xZn74HN2uLDWSU3vIw/u6FLolMA=", "0919239081", new byte[] { 39, 107, 158, 1, 95, 94, 129, 118, 57, 240, 16, 155, 184, 5, 216, 207 } });
+                values: new object[] { new Guid("2128d7bc-70b3-4142-b743-43fdcada7962"), 1, "123 hoang dieu p10q4", "sangnew2015@gmail.com", "Admin 1", "N2or9WnXIHFk6g+wu3OH+9QburFdfj+hQcyJbZZYa8M=", "0919239081", new byte[] { 25, 67, 74, 142, 56, 14, 151, 128, 216, 153, 18, 85, 27, 114, 2, 249 } });
 
             migrationBuilder.InsertData(
                 table: "R_Drivers",
                 columns: new[] { "Id", "AccountStatus", "Address", "Email", "FullName", "Password", "PersonalId", "PersonalImage", "Phone", "Salt" },
                 values: new object[,]
                 {
-                    { new Guid("1d350ed1-78f3-4a7e-9960-0e0859a8a762"), 1, "123 ton dan p7 q4", "sangnew2015@gmail.com", "Driver 1", "UbAPsR7IBF+TiSP/xZn74HN2uLDWSU3vIw/u6FLolMA=", "023363000", "", "0919239081", new byte[] { 39, 107, 158, 1, 95, 94, 129, 118, 57, 240, 16, 155, 184, 5, 216, 207 } },
-                    { new Guid("9371d4dd-5839-4e61-919b-1a76e6d6595c"), 1, "32/1 hoang dieu p10 q4", "sangnew2013@gmail.com", "Driver 2", "UbAPsR7IBF+TiSP/xZn74HN2uLDWSU3vIw/u6FLolMA=", "023363001", "", "0708825109", new byte[] { 39, 107, 158, 1, 95, 94, 129, 118, 57, 240, 16, 155, 184, 5, 216, 207 } }
+                    { new Guid("9bfe5271-dc00-40b9-9a3a-3c6e82bf70c0"), 1, "123 ton dan p7 q4", "sangnew2015@gmail.com", "Driver 1", "N2or9WnXIHFk6g+wu3OH+9QburFdfj+hQcyJbZZYa8M=", "023363000", "", "0919239081", new byte[] { 25, 67, 74, 142, 56, 14, 151, 128, 216, 153, 18, 85, 27, 114, 2, 249 } },
+                    { new Guid("c9fdcb89-b706-4738-9d78-8e876fd89268"), 1, "32/1 hoang dieu p10 q4", "sangnew2013@gmail.com", "Driver 2", "N2or9WnXIHFk6g+wu3OH+9QburFdfj+hQcyJbZZYa8M=", "023363001", "", "0708825109", new byte[] { 25, 67, 74, 142, 56, 14, 151, 128, 216, 153, 18, 85, 27, 114, 2, 249 } }
                 });
 
             migrationBuilder.InsertData(
@@ -756,10 +756,10 @@ namespace tmsang.infra.Migrations
                 columns: new[] { "Id", "Cost", "GroupId", "ProvinceOrCity" },
                 values: new object[,]
                 {
-                    { new Guid("668d9b16-f0aa-4b6e-b8d8-ffcf579fba67"), 0.050000000000000003, new Guid("1ec11627-5829-41ed-aaba-7c429abecff9"), "Ca Mau" },
-                    { new Guid("ef92940f-6ad9-4a11-832b-f4c393c1744c"), 0.10000000000000001, new Guid("1ec11627-5829-41ed-aaba-7c429abecff9"), "Binh Duong" },
-                    { new Guid("07a72ddd-e82a-4336-96a2-56852b742d93"), 0.10000000000000001, new Guid("1ec11627-5829-41ed-aaba-7c429abecff9"), "Ho Chi Minh" },
-                    { new Guid("f05cdfa8-9472-4024-aa1c-e39e435faa3d"), 0.25, new Guid("1ec11627-5829-41ed-aaba-7c429abecff9"), "Tay Nguyen" }
+                    { new Guid("67de584c-db7c-48c4-920e-114e38c77440"), 0.050000000000000003, new Guid("45dbeaa5-0212-4bad-b137-a1b7695c80d3"), "Ca Mau" },
+                    { new Guid("d4ba8529-8123-43f7-9728-4b8265cb4766"), 0.10000000000000001, new Guid("45dbeaa5-0212-4bad-b137-a1b7695c80d3"), "Binh Duong" },
+                    { new Guid("ca28d59a-2c9c-4aec-84f1-cb97096b039e"), 0.10000000000000001, new Guid("45dbeaa5-0212-4bad-b137-a1b7695c80d3"), "Ho Chi Minh" },
+                    { new Guid("690e9243-6f4f-4e0b-9d79-fa3afd45561c"), 0.25, new Guid("45dbeaa5-0212-4bad-b137-a1b7695c80d3"), "Tay Nguyen" }
                 });
 
             migrationBuilder.InsertData(
@@ -767,9 +767,9 @@ namespace tmsang.infra.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("1ec11627-5829-41ed-aaba-7c429abecff9"), "Normal" },
-                    { new Guid("a4bd5447-5218-428a-a650-ab8decf92ea4"), "Wounded" },
-                    { new Guid("a5f8b796-d05e-4490-97e4-9a0555b6ec84"), "Poor" }
+                    { new Guid("45dbeaa5-0212-4bad-b137-a1b7695c80d3"), "Normal" },
+                    { new Guid("05a417e3-7c76-4707-ba30-4e0262896ac4"), "Wounded" },
+                    { new Guid("79e44606-1f58-4948-9ca3-68752c896d94"), "Poor" }
                 });
 
             migrationBuilder.InsertData(
@@ -777,8 +777,8 @@ namespace tmsang.infra.Migrations
                 columns: new[] { "Id", "AccountStatus", "Email", "FullName", "Password", "Phone", "Salt" },
                 values: new object[,]
                 {
-                    { new Guid("f5419ee0-11c9-47f9-ad99-745d2a9a6da5"), 1, "sangnew2016@gmail.com", "Guest 1", "UbAPsR7IBF+TiSP/xZn74HN2uLDWSU3vIw/u6FLolMA=", "0919239081", new byte[] { 39, 107, 158, 1, 95, 94, 129, 118, 57, 240, 16, 155, 184, 5, 216, 207 } },
-                    { new Guid("b7ed76c4-40c4-4eee-af75-576199863e96"), 1, "sangnews2014@gmail.com", "Guest 2", "UbAPsR7IBF+TiSP/xZn74HN2uLDWSU3vIw/u6FLolMA=", "0708825109", new byte[] { 39, 107, 158, 1, 95, 94, 129, 118, 57, 240, 16, 155, 184, 5, 216, 207 } }
+                    { new Guid("36071de5-c93a-4f3a-9bc2-ede551f6701b"), 1, "sangnew2016@gmail.com", "Guest 1", "N2or9WnXIHFk6g+wu3OH+9QburFdfj+hQcyJbZZYa8M=", "0919239081", new byte[] { 25, 67, 74, 142, 56, 14, 151, 128, 216, 153, 18, 85, 27, 114, 2, 249 } },
+                    { new Guid("03cb489b-cd9f-42e9-88a3-0605393a179a"), 1, "sangnews2014@gmail.com", "Guest 2", "N2or9WnXIHFk6g+wu3OH+9QburFdfj+hQcyJbZZYa8M=", "0708825109", new byte[] { 25, 67, 74, 142, 56, 14, 151, 128, 216, 153, 18, 85, 27, 114, 2, 249 } }
                 });
 
             migrationBuilder.InsertData(
@@ -786,8 +786,8 @@ namespace tmsang.infra.Migrations
                 columns: new[] { "Id", "AccountId", "Date", "Lat", "Lng" },
                 values: new object[,]
                 {
-                    { 1, new Guid("1d350ed1-78f3-4a7e-9960-0e0859a8a762"), 637818934882117723L, 10.74583, 106.68721166666667 },
-                    { 2, new Guid("9371d4dd-5839-4e61-919b-1a76e6d6595c"), 637818934882122630L, 10.746829999999999, 106.68821166666667 }
+                    { 1, new Guid("9bfe5271-dc00-40b9-9a3a-3c6e82bf70c0"), 637824409051955793L, 10.74583, 106.68721166666667 },
+                    { 2, new Guid("c9fdcb89-b706-4738-9d78-8e876fd89268"), 637824409051960614L, 10.746829999999999, 106.68821166666667 }
                 });
 
             migrationBuilder.InsertData(
@@ -795,8 +795,8 @@ namespace tmsang.infra.Migrations
                 columns: new[] { "Id", "DriverId", "GroupId" },
                 values: new object[,]
                 {
-                    { 1, new Guid("1d350ed1-78f3-4a7e-9960-0e0859a8a762"), new Guid("1ec11627-5829-41ed-aaba-7c429abecff9") },
-                    { 2, new Guid("9371d4dd-5839-4e61-919b-1a76e6d6595c"), new Guid("1ec11627-5829-41ed-aaba-7c429abecff9") }
+                    { 1, new Guid("9bfe5271-dc00-40b9-9a3a-3c6e82bf70c0"), new Guid("45dbeaa5-0212-4bad-b137-a1b7695c80d3") },
+                    { 2, new Guid("c9fdcb89-b706-4738-9d78-8e876fd89268"), new Guid("45dbeaa5-0212-4bad-b137-a1b7695c80d3") }
                 });
 
             migrationBuilder.InsertData(
@@ -804,8 +804,8 @@ namespace tmsang.infra.Migrations
                 columns: new[] { "Id", "AccountId", "Date", "Lat", "Lng" },
                 values: new object[,]
                 {
-                    { 1, new Guid("f5419ee0-11c9-47f9-ad99-745d2a9a6da5"), 637818934882102814L, 10.74783, 106.68921166666667 },
-                    { 2, new Guid("b7ed76c4-40c4-4eee-af75-576199863e96"), 637818934882107487L, 10.74593, 106.68101166666666 }
+                    { 1, new Guid("36071de5-c93a-4f3a-9bc2-ede551f6701b"), 637824409051940597L, 10.74783, 106.68921166666667 },
+                    { 2, new Guid("03cb489b-cd9f-42e9-88a3-0605393a179a"), 637824409051945882L, 10.74593, 106.68101166666666 }
                 });
 
             migrationBuilder.CreateIndex(

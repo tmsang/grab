@@ -31,11 +31,11 @@ namespace tmsang.api
         }
 
         [HttpPost("book")]
-        public async Task BookAsync(BookDto bookDto)
+        public async Task<BookResultDto> BookAsync(BookDto bookDto)
         {
             try
             {
-                await this.orderService.Book(bookDto);
+                return await this.orderService.Book(bookDto);
             }
             catch (Exception ex)
             {
@@ -43,18 +43,19 @@ namespace tmsang.api
             }
         }
 
-        [HttpGet("driver-positions")]
-        public async Task<IEnumerable<DriverPositionDto>> GetDriverPositionsAsync(string lat, string lng)
+        // Mobile Service will snipt 10s to get [driver position, order status]
+        [HttpGet("interval-gets")]
+        public async Task<IntervalResultDto> GetDriverPositionsAsync(string lat, string lng, Guid orderId)
         {
             try
             {
-                return await this.orderService.GetDriverPositions(lat, lng);
+                return await this.orderService.IntervalGets(lat, lng, orderId);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-        }        
+        }
 
         [HttpPost("cancel-by-client")]
         public async Task CancelAsync(string requestId, string reason)
@@ -69,14 +70,27 @@ namespace tmsang.api
             }
         }
 
-        
 
-        [HttpGet("requests")]
-        public async Task<IEnumerable<GuestRequestHistoryDto>> Requests()
+
+        [HttpGet("statistic")]
+        public async Task<StatisticDto> Statistic()
         {
             try
             {
-                return await this.orderService.Requests();
+                return await this.orderService.Statistic();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpGet("request-histories")]
+        public async Task<IEnumerable<GuestRequestHistoryDto>> RequestHistories()
+        {
+            try
+            {
+                return await this.orderService.RequestHistories();
             }
             catch (Exception ex)
             {

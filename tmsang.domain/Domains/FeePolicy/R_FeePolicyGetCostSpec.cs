@@ -16,8 +16,11 @@ namespace tmsang.domain
 
         public override Expression<Func<R_FeePolicy, bool>> SpecExpression { 
             get
-            {
-                return p => p.ProvinceOrCity == this.provinceOrCity && p.GroupId == this.groupId;
+            {                
+                //return p => p.ProvinceOrCity == this.provinceOrCity && p.GroupId == this.groupId;
+                
+                // TODO: tam thoi, chi dung cho Ho Chi Minh
+                return p => p.ProvinceOrCity == "Ho Chi Minh" && p.GroupId == this.groupId;
             }
         }
     }

@@ -8,8 +8,10 @@ namespace tmsang.application
     {
         Task AcceptAsync(Guid orderId);
         Task Start(Guid orderId);
-        Task End(Guid orderId);
-        Task<IEnumerable<DriverTransactionHistoriesDto>> TransactionHistories();
+        Task End(Guid orderId);        
         Task<IEnumerable<GuestRequestDto>> Requests();
+
+        Task<StatisticDto> Statistic();
+        Task<IEnumerable<DriverRequestHistoryDto>> RequestHistories();
     }
 }

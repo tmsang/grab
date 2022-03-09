@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace tmsang.domain
 {
     public interface IRepository<TEntity> where TEntity: IAggregateRoot
     {
+        IQueryable<TEntity> All();
+        IQueryable<TEntity> All(string navigationProperty);
+
         TEntity FindById(Guid id);      // only AggregateRoot able to Use (for Branch should use Root)               
         TEntity FindById(Guid id, string navigationProperty);
 

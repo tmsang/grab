@@ -3,11 +3,11 @@ using System.Linq.Expressions;
 
 namespace tmsang.domain
 {
-    public class R_OrderGetByAccountIdSpec : SpecificationBase<R_Order>
+    public class R_OrderGetByGuestIdSpec : SpecificationBase<R_Order>
     {
         readonly Guid accountId;
 
-        public R_OrderGetByAccountIdSpec(Guid accountId)
+        public R_OrderGetByGuestIdSpec(Guid accountId)
         {
             this.accountId = accountId;
         }

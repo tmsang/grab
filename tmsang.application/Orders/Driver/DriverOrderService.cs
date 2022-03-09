@@ -28,6 +28,7 @@ namespace tmsang.application
 
         readonly IStorage storage;
         readonly IAuth auth;
+        readonly IBingMap util;
         readonly IHttpContextAccessor http;
         readonly IUnitOfWork unitOfWork;
 
@@ -49,6 +50,7 @@ namespace tmsang.application
 
             IStorage storage,
             IAuth auth,
+            IBingMap util,
             IHttpContextAccessor http,
             IUnitOfWork unitOfWork
         )
@@ -70,6 +72,7 @@ namespace tmsang.application
 
             this.storage = storage;
             this.auth = auth;
+            this.util = util;
             this.http = http;
             this.unitOfWork = unitOfWork;
         }
@@ -83,7 +86,7 @@ namespace tmsang.application
 
             // get requests (compare distance to "current position")
             var orders = this.orderRepository.Find(new R_OrderGetByStatusSpec(E_OrderStatus.Pending)).AsQueryable();            
-            var requests = this.requestRepository.Find(new R_RequestGetByOrderIdSpec(orders)).AsQueryable();
+            var requests = this.requestRepository.Find(new R_RequestGetByOrdersSpec(orders)).AsQueryable();
             var locations = this.locationRepository.Find(new R_LocationGetByRequestsSpec(requests)).AsQueryable();
             var guests = this.guestRepository.Find(new R_GuestGetByAccountIdsSpec(orders.Select(p => p.GuestId).ToList()), "Locations").AsQueryable();
 
@@ -110,7 +113,13 @@ namespace tmsang.application
                               GuestPhone = guest.Phone,
                               GuestLat = guest.Locations.OrderByDescending(p => p.Date).FirstOrDefault().Lat + "",
                               GuestLng = guest.Locations.OrderByDescending(p => p.Date).FirstOrDefault().Lng + ""
-                          });
+                          })
+                          .Where(p => util.GetDistanceByCoordinate(
+                                            driverLocation.Lat, 
+                                            driverLocation.Lng, 
+                                            double.Parse(p.GuestLat), 
+                                            double.Parse(p.GuestLng)
+                                      ) <= 5000);
 
             return result;
         }
@@ -214,45 +223,112 @@ namespace tmsang.application
         }
 
 
-        public async Task<IEnumerable<DriverTransactionHistoriesDto>> TransactionHistories()
+        public async Task<StatisticDto> Statistic()
         {
-            // list Client
-            var user = (R_Driver)http.HttpContext.Items["User"];
 
-            var responses = this.responseRepository.Find(new R_ResponseGetByDriverIdSpec(user.Id));
+            var driver = (R_Driver)http.HttpContext.Items["User"];
 
-            var orders = this.orderRepository.Find(new R_OrderGetByOrderIdsSpec(responses.Select(p => p.Id).ToList()));
+            var routineCost = this.routineCostRepository.FindOne(new M_RoutineCostGetCostSpec());
 
-            var requests = this.requestRepository.Find(new R_RequestGetByOrderIdSpec(orders));                        
+            var orders = this.orderRepository.All();
 
-            var locations = this.locationRepository.Find(new R_LocationGetByRequestsSpec(requests));
+            var cancelOrders = this.responseRepository.Find(
+                                    new R_OrderGetCancelStatusByDriverIdSpec(orders, driver.Id)
+                                );
 
-            var guests = this.guestRepository.Find(new R_GuestGetByAccountIdsSpec(orders.Select(p => p.GuestId).ToList()));
+            var doneOrders = this.responseRepository.Find(
+                                    new R_OrderGetDoneStatusByDriverIdSpec(orders, driver.Id)
+                                );
 
+            var requests = this.requestRepository.Find(new R_RequestGetByResponsesSpec(doneOrders));
 
-            var result = (from order in orders
-                          join request in requests on order.Id equals request.Id
-                          join response in responses on order.Id equals response.Id                          
-
-                          select new DriverTransactionHistoriesDto
-                          {
-                              OrderId = order.Id,
-                              Status = order.Status,
-
-                              FromAddress = locations.FirstOrDefault(p => p.Id == request.FromLocationId).Address,
-                              ToAddress = locations.FirstOrDefault(p => p.Id == request.ToLocationId).Address,
-                              RequestDateTime = request.RequestDateTime,
-                              Reason = request.Reason,
-                              Distance = request.Distance,
-                              Cost = request.Cost,
-
-                              Start = response.Start,
-                              End = response.End,
-                              GuestName = guests.FirstOrDefault(p => p.Id == response.DriverId).FullName,
-                              GuestPhone = guests.FirstOrDefault(p => p.Id == response.DriverId).Phone,                              
-                          });
+            var result = new StatisticDto
+            {
+                Price = routineCost.Cost,
+                CancelCounter = cancelOrders.Count(),
+                DoneCounter = doneOrders.Count(),
+                TotalAmount = requests.Sum(p => p.Cost * p.Distance)
+            };
 
             return result;
+        }
+
+        public async Task<IEnumerable<DriverRequestHistoryDto>> RequestHistories()
+        {
+            var emptyList = new List<DriverRequestHistoryDto>();
+
+            // get user (driver + current position)
+            var driver = (R_Driver)http.HttpContext.Items["User"];
+
+            var responses = this.responseRepository.Find(new R_ResponseGetByDriverIdSpec(driver.Id)).ToList();
+            var orderIds = responses.Select(p => p.Id).ToList();
+            if (responses == null || responses.Count() <= 0) return emptyList;
+
+            var orders = this.orderRepository.Find(new R_OrderGetByOrderIdsSpec(orderIds)).AsQueryable();
+            var requests = this.requestRepository.Find(new R_RequestGetByOrdersSpec(orders)).AsQueryable();
+            var locations = this.locationRepository.Find(new R_LocationGetByRequestsSpec(requests)).AsQueryable();                        
+            var items = (from order in orders
+                         join request in requests on order.Id equals request.Id
+
+                         select new 
+                         {
+                             OrderId = order.Id,
+                             Status = order.Status,
+
+                             FromAddress = locations.FirstOrDefault(p => p.Id == request.FromLocationId).Address,
+                             ToAddress = locations.FirstOrDefault(p => p.Id == request.ToLocationId).Address,
+                             RequestDateTime = request.RequestDateTime,
+                             Distance = request.Distance,
+                             Cost = request.Cost,
+                             GuestId = order.GuestId
+                         }
+                       ).ToList();
+
+            if (items == null || items.Count() <= 0) return emptyList;
+
+            var guestIds = items.Select(p => p.GuestId).ToList();
+            var evalations = this.evaluationRepository.Find(new R_EvaluationGetByOrderIdSpec(orders)).ToList();
+            var guests = this.guestRepository.Find(new R_GuestGetByAccountIdsSpec(guestIds)).ToList();
+
+            foreach (var item in items)
+            {
+                var itm = new DriverRequestHistoryDto { 
+                    OrderId = item.OrderId,
+                    Status = item.Status,
+                    FromAddress = item.FromAddress,
+                    ToAddress = item.ToAddress,
+                    RequestDateTime = item.RequestDateTime,
+                    Distance = item.Distance,
+                    Cost = item.Cost                    
+                };
+
+                var response = responses.Where(p => p.Id == item.OrderId).FirstOrDefault();
+                if (response == null) {
+                    emptyList.Add(itm); continue;
+                }
+
+                itm.Start = response.Start;
+                itm.End = response.End;
+
+                var guest = guests.Where(p => p.Id == item.GuestId).FirstOrDefault();
+                if (guest == null) {
+                    emptyList.Add(itm); continue;
+                }
+
+                itm.GuestName = guest.FullName;
+                itm.GuestPhone = guest.Phone;
+
+                var evalation = evalations.Where(p => p.Id == item.OrderId).FirstOrDefault();
+                if (evalation == null) {
+                    emptyList.Add(itm); continue;
+                }
+
+                itm.Rating = evalation.Rating;
+
+                emptyList.Add(itm);
+            }
+
+            return emptyList;
         }
     }
 }

@@ -81,7 +81,7 @@ namespace tmsang.application
             return routineCost.Cost + "";
         }
 
-        public async Task Book(BookDto bookDto)
+        public async Task<BookResultDto> Book(BookDto bookDto)
         {
             // validate input
             bookDto.EmptyValidation();
@@ -92,11 +92,11 @@ namespace tmsang.application
             
             // get accountId + routineCost
             var guest = (R_Guest)http.HttpContext.Items["User"];
-            var routineCost = this.routineCostRepository.FindOne(new M_RoutineCostGetCostSpec());
-            if (routineCost == null) 
-            {
-                throw new Exception("Routine Cost has not set on valid date");
-            }
+            //var routineCost = this.routineCostRepository.FindOne(new M_RoutineCostGetCostSpec());
+            //if (routineCost == null) 
+            //{
+            //    throw new Exception("Routine Cost has not set on valid date");
+            //}
 
             // create request -> requestId  
             var order = R_Order.Create(guest.Id, E_OrderStatus.Pending);
@@ -116,9 +116,14 @@ namespace tmsang.application
                 Timestamp = DateTime.Now.ToString()
             };
             await signalrHub.Clients.All.BroadcastMessage(msg);
+
+            return new BookResultDto { 
+                OrderId = order.Id
+            };
         }
 
-        public async Task<IEnumerable<DriverPositionDto>> GetDriverPositions(string lat, string lng) 
+        // Interval get data: [driver positions, order Status]
+        public async Task<IntervalResultDto> IntervalGets(string lat, string lng, Guid orderId) 
         {
             if (string.IsNullOrEmpty(lat) || string.IsNullOrEmpty(lng))
             {
@@ -131,7 +136,7 @@ namespace tmsang.application
             }
 
             // get list driver positions            
-            var locations = new List<DriverPositionDto>();            
+            var positions = new List<DriverPositionDto>();            
             var drivers = this.driverRepository.Find(new R_DriverGetSpec(), "Locations");
             if (drivers != null)
             {
@@ -141,7 +146,7 @@ namespace tmsang.application
                         var coordinate = driver.Locations.LastOrDefault();
                         var distance = util.GetDistanceByCoordinate(_lat, _lng, coordinate.Lat, coordinate.Lng);
                         if (distance < Constants.DISTANCE_DEFAULT) {
-                            locations.Add(new DriverPositionDto { 
+                            positions.Add(new DriverPositionDto { 
                                 Phone = driver.Phone, 
                                 Lat = coordinate.Lat, 
                                 Lng = coordinate.Lng, 
@@ -152,7 +157,17 @@ namespace tmsang.application
                 }
             }
 
-            return locations;
+            R_Order order = this.orderRepository.FindOne(new R_OrderGetSpec(orderId));
+            if (order == null)
+            {
+                throw new Exception("OrderId does not exists, please check it");
+            }
+
+            return new IntervalResultDto { 
+                OrderId = order.Id,
+                Status = order.Status,
+                Positions = positions           // driver positions (not relate orderId)
+            };
         }       
 
         public async Task Cancel(string requestId, string reason)
@@ -219,24 +234,48 @@ namespace tmsang.application
             await signalrHub.Clients.All.BroadcastMessage(msg);
         }
 
-        public async Task<IEnumerable<GuestRequestHistoryDto>> Requests()
+
+        public async Task<StatisticDto> Statistic() {
+           
+            var guest = (R_Guest)http.HttpContext.Items["User"];
+
+            var routineCost = this.routineCostRepository.FindOne(new M_RoutineCostGetCostSpec());
+
+            var cancelOrders = this.orderRepository.Find(new R_OrderGetCancelStatusByGuestIdSpec(guest.Id));
+                            
+            var doneOrders = this.orderRepository.Find(new R_OrderGetDoneStatusByGuestIdSpec(guest.Id));
+
+            var requests = this.requestRepository.Find(new R_RequestGetByOrdersSpec(doneOrders));                            
+
+            var result = new StatisticDto 
+            { 
+                Price = routineCost.Cost,
+                CancelCounter = cancelOrders.Count(),
+                DoneCounter = doneOrders.Count(),
+                TotalAmount = requests.Sum(p => p.Cost * p.Distance)
+            };
+
+            return result;
+        }
+
+        public async Task<IEnumerable<GuestRequestHistoryDto>> RequestHistories()
         {
             // query list transactions by accountId: 
             // [R_Order, R_Request, R_Response, R_Evaluation] - Root: R_Request
 
             var user = (R_Guest)http.HttpContext.Items["User"];
 
-            var orders = this.orderRepository.Find(new R_OrderGetByAccountIdSpec(user.Id)).AsQueryable();
+            var orders = this.orderRepository.Find(new R_OrderGetByGuestIdSpec(user.Id)).AsQueryable();
 
-            var requests = this.requestRepository.Find(new R_RequestGetByOrderIdSpec(orders)).AsQueryable();
+            var requests = this.requestRepository.Find(new R_RequestGetByOrdersSpec(orders)).AsQueryable();
 
             var locations = this.locationRepository.Find(new R_LocationGetByRequestsSpec(requests)).AsQueryable();
 
-            var responses = this.responseRepository.Find(new R_ResponseGetByOrderIdSpec(orders)).ToList();
+            var responses = this.responseRepository.Find(new R_ResponseGetByOrderIdSpec(orders)).AsQueryable();
 
-            var evalations = this.evaluationRepository.Find(new R_EvaluationGetByOrderIdSpec(orders)).ToList();
+            var evalations = this.evaluationRepository.Find(new R_EvaluationGetByOrderIdSpec(orders)).AsQueryable();
             
-            var drivers = this.driverRepository.Find(new R_DriverGetByResponsesSpec(responses)).ToList();
+            var drivers = this.driverRepository.Find(new R_DriverGetByResponsesSpec(responses)).AsQueryable();
                                     
             var items = (from order in orders
                           join request in requests on order.Id equals request.Id                          
@@ -267,6 +306,12 @@ namespace tmsang.application
 
                 item.DriverName = driver.FullName;
                 item.DriverPhone = driver.Phone;
+
+                var evalation = evalations.Where(p => p.Id == item.OrderId).FirstOrDefault();
+                if (evalation == null) break;
+
+                item.Rating = evalation.Rating;
+                item.Note = evalation.Note;
             }
 
             return items;

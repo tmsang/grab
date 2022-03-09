@@ -75,12 +75,26 @@ namespace tmsang.api
             }
         }
 
-        [HttpGet("transaction-histories")]
-        public async Task<IEnumerable<DriverTransactionHistoriesDto>> TransactionHistoriesAsync()
+
+        [HttpGet("statistic")]
+        public async Task<StatisticDto> Statistic()
         {
             try
             {
-                return await this.orderService.TransactionHistories();
+                return await this.orderService.Statistic();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpGet("request-histories")]
+        public async Task<IEnumerable<DriverRequestHistoryDto>> RequestHistoriesAsync()
+        {
+            try
+            {
+                return await this.orderService.RequestHistories();
             }
             catch (Exception ex)
             {

@@ -5,20 +5,20 @@ using System.Linq;
 
 namespace tmsang.domain
 {
-    public class R_RequestGetByOrderIdSpec : SpecificationBase<R_Request>
+    public class R_RequestGetByOrdersSpec : SpecificationBase<R_Request>
     {
         readonly IEnumerable<R_Order> orders;
 
-        public R_RequestGetByOrderIdSpec(IEnumerable<R_Order> orders)
+        public R_RequestGetByOrdersSpec(IEnumerable<R_Order> orders)
         {
             this.orders = orders;
         }
 
         public override Expression<Func<R_Request, bool>> SpecExpression {
             get {
-                return k => this.orders != null
+                return request => this.orders != null
                     && this.orders.Count() > 0
-                    && this.orders.Any(h => h.Id == k.Id);
+                    && this.orders.Any(h => h.Id == request.Id);
             }
         }
     }

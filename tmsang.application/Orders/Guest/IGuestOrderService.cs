@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace tmsang.application
@@ -6,10 +7,12 @@ namespace tmsang.application
     public interface IGuestOrderService
     {
         Task<string> GetPrice();
-        Task Book(BookDto bookDto);
-        Task<IEnumerable<DriverPositionDto>> GetDriverPositions(string lat, string lng);        
+        Task<BookResultDto> Book(BookDto bookDto);
+        Task<IntervalResultDto> IntervalGets(string lat, string lng, Guid orderId);        
         Task Cancel(string requestId, string reason);
         Task Evaluable(EvaluableDto evaluableDto);
-        Task<IEnumerable<GuestRequestHistoryDto>> Requests();
+
+        Task<StatisticDto> Statistic();
+        Task<IEnumerable<GuestRequestHistoryDto>> RequestHistories();
     }
 }
