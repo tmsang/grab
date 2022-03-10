@@ -84,15 +84,40 @@ namespace tmsang.application
             var driver = (R_Driver)http.HttpContext.Items["User"];
             var driverLocation = this.driverRepository.FindById(driver.Id, "Locations").Locations.LastOrDefault();
 
+            var R = 6371;
+            var lat1 = driverLocation.Lat;
+            var lng1 = driverLocation.Lng;
+
             // get requests (compare distance to "current position")
             var orders = this.orderRepository.Find(new R_OrderGetByStatusSpec(E_OrderStatus.Pending)).AsQueryable();            
             var requests = this.requestRepository.Find(new R_RequestGetByOrdersSpec(orders)).AsQueryable();
             var locations = this.locationRepository.Find(new R_LocationGetByRequestsSpec(requests)).AsQueryable();
             var guests = this.guestRepository.Find(new R_GuestGetByAccountIdsSpec(orders.Select(p => p.GuestId).ToList()), "Locations").AsQueryable();
-
+            
             var result = (from order in orders
                           join request in requests on order.Id equals request.Id
                           join guest in guests on order.GuestId equals guest.Id
+
+                          // ===============================================
+                          // Tinh khoang cach [lat1, lng1, lat2, lng2]
+                          // ===============================================
+                          let lat2 = guest.Locations.OrderByDescending(p => p.Date).FirstOrDefault().Lat
+                          let lng2 = guest.Locations.OrderByDescending(p => p.Date).FirstOrDefault().Lng
+
+                          let dLat = (lat2 - lat1) * (Math.PI / 180)
+                          let dLng = (lng2 - lng1) * (Math.PI / 180)
+
+                          let a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) 
+                                    + Math.Cos(lat1 * (Math.PI / 180)) * Math.Cos(lat2 * (Math.PI / 180)) 
+                                    * Math.Sin(dLng / 2) * Math.Sin(dLng / 2)
+
+                          let c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a))
+                          let d = R * c
+                          
+                          let distance = d * 1000
+                          // ===============================================
+
+                          where distance <= 5000
 
                           select new GuestRequestDto
                           {
@@ -111,16 +136,10 @@ namespace tmsang.application
 
                               GuestName = guest.FullName,
                               GuestPhone = guest.Phone,
-                              GuestLat = guest.Locations.OrderByDescending(p => p.Date).FirstOrDefault().Lat + "",
-                              GuestLng = guest.Locations.OrderByDescending(p => p.Date).FirstOrDefault().Lng + ""
-                          })
-                          .Where(p => util.GetDistanceByCoordinate(
-                                            driverLocation.Lat, 
-                                            driverLocation.Lng, 
-                                            double.Parse(p.GuestLat), 
-                                            double.Parse(p.GuestLng)
-                                      ) <= 5000);
-
+                              GuestLat = lat2,
+                              GuestLng = lng2
+                          });
+            
             return result;
         }
 

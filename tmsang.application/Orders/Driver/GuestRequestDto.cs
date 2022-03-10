@@ -21,7 +21,7 @@ namespace tmsang.application
         public string GuestName { get; set; }
         public string GuestPhone { get; set; }
 
-        public string GuestLat { get; set; }
-        public string GuestLng { get; set; }
+        public double GuestLat { get; set; }
+        public double GuestLng { get; set; }
     }
 }
