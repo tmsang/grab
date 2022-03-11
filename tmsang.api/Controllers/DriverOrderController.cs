@@ -24,11 +24,11 @@ namespace tmsang.api
         }
 
         [HttpGet("requests")]
-        public async Task<IEnumerable<GuestRequestDto>> GuestRequestsAsync()
+        public IEnumerable<GuestRequestDto> Requests()
         {
             try
             {
-                return await this.orderService.Requests();
+                return this.orderService.Requests();
             }
             catch (Exception ex)
             {
@@ -95,6 +95,20 @@ namespace tmsang.api
             try
             {
                 return await this.orderService.RequestHistories();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        // Mobile Service will snipt 10s to get [driver position, order status]
+        [HttpGet("interval-gets")]
+        public IntervalDriverResultDto IntervalDriverGetsAsync()
+        {
+            try
+            {
+                return this.orderService.IntervalGets();
             }
             catch (Exception ex)
             {

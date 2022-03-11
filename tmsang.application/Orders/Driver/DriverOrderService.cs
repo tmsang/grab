@@ -78,7 +78,7 @@ namespace tmsang.application
         }
 
 
-        public async Task<IEnumerable<GuestRequestDto>> Requests()
+        public IEnumerable<GuestRequestDto> Requests()
         {
             // get user (driver + current position)
             var driver = (R_Driver)http.HttpContext.Items["User"];
@@ -118,6 +118,8 @@ namespace tmsang.application
                           // ===============================================
 
                           where distance <= 5000
+
+                          orderby request.RequestDateTime descending
 
                           select new GuestRequestDto
                           {
@@ -279,15 +281,19 @@ namespace tmsang.application
             // get user (driver + current position)
             var driver = (R_Driver)http.HttpContext.Items["User"];
 
-            var responses = this.responseRepository.Find(new R_ResponseGetByDriverIdSpec(driver.Id)).ToList();
-            var orderIds = responses.Select(p => p.Id).ToList();
-            if (responses == null || responses.Count() <= 0) return emptyList;
-
-            var orders = this.orderRepository.Find(new R_OrderGetByOrderIdsSpec(orderIds)).AsQueryable();
+            var responses = this.responseRepository.Find(new R_ResponseGetByDriverIdSpec(driver.Id)).AsQueryable();
+            
+            var orders = this.orderRepository.Find(new R_OrderGetByResponsesSpec(responses)).AsQueryable();
             var requests = this.requestRepository.Find(new R_RequestGetByOrdersSpec(orders)).AsQueryable();
-            var locations = this.locationRepository.Find(new R_LocationGetByRequestsSpec(requests)).AsQueryable();                        
+            var locations = this.locationRepository.Find(new R_LocationGetByRequestsSpec(requests)).AsQueryable();
+
+            var guests = this.guestRepository.Find(new R_GuestGetByOrdersSpec(orders)).AsQueryable();
+            var evalations = this.evaluationRepository.Find(new R_EvaluationGetByOrderIdSpec(orders)).AsQueryable();
+
             var items = (from order in orders
                          join request in requests on order.Id equals request.Id
+
+                         orderby request.RequestDateTime descending
 
                          select new 
                          {
@@ -302,13 +308,7 @@ namespace tmsang.application
                              GuestId = order.GuestId
                          }
                        ).ToList();
-
-            if (items == null || items.Count() <= 0) return emptyList;
-
-            var guestIds = items.Select(p => p.GuestId).ToList();
-            var evalations = this.evaluationRepository.Find(new R_EvaluationGetByOrderIdSpec(orders)).ToList();
-            var guests = this.guestRepository.Find(new R_GuestGetByAccountIdsSpec(guestIds)).ToList();
-
+                                                
             foreach (var item in items)
             {
                 var itm = new DriverRequestHistoryDto { 
@@ -348,6 +348,16 @@ namespace tmsang.application
             }
 
             return emptyList;
+        }
+
+
+        // Interval get data
+        public IntervalDriverResultDto IntervalGets()
+        {                        
+            return new IntervalDriverResultDto
+            {
+                Requests = Requests()
+            };
         }
     }
 }

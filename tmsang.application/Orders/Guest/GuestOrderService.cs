@@ -120,55 +120,7 @@ namespace tmsang.application
             return new BookResultDto { 
                 OrderId = order.Id
             };
-        }
-
-        // Interval get data: [driver positions, order Status]
-        public async Task<IntervalResultDto> IntervalGets(string lat, string lng, Guid orderId) 
-        {
-            if (string.IsNullOrEmpty(lat) || string.IsNullOrEmpty(lng))
-            {
-                throw new Exception("Latitude or Longitude is null or empty");
-            }
-            double _lat = 0.0, _lng = 0.0;
-            if (!double.TryParse(lat, out _lat) || !double.TryParse(lng, out _lng)) 
-            {
-                throw new Exception("Latitude or Longitude is invalid number (double)");
-            }
-
-            // get list driver positions            
-            var positions = new List<DriverPositionDto>();            
-            var drivers = this.driverRepository.Find(new R_DriverGetSpec(), "Locations");
-            if (drivers != null)
-            {
-                foreach (var driver in drivers)
-                {
-                    if (driver.Locations != null && driver.Locations.Count > 0) {
-                        var coordinate = driver.Locations.LastOrDefault();
-                        var distance = util.GetDistanceByCoordinate(_lat, _lng, coordinate.Lat, coordinate.Lng);
-                        if (distance < Constants.DISTANCE_DEFAULT) {
-                            positions.Add(new DriverPositionDto { 
-                                Phone = driver.Phone, 
-                                Lat = coordinate.Lat, 
-                                Lng = coordinate.Lng, 
-                                Distance = distance 
-                            });
-                        }
-                    }                                        
-                }
-            }
-
-            R_Order order = this.orderRepository.FindOne(new R_OrderGetSpec(orderId));
-            if (order == null)
-            {
-                throw new Exception("OrderId does not exists, please check it");
-            }
-
-            return new IntervalResultDto { 
-                OrderId = order.Id,
-                Status = order.Status,
-                Positions = positions           // driver positions (not relate orderId)
-            };
-        }       
+        }             
 
         public async Task Cancel(string requestId, string reason)
         {
@@ -280,6 +232,8 @@ namespace tmsang.application
             var items = (from order in orders
                           join request in requests on order.Id equals request.Id                          
                           
+                          orderby request.RequestDateTime descending
+
                           select new GuestRequestHistoryDto
                           { 
                              OrderId = order.Id,
@@ -315,6 +269,58 @@ namespace tmsang.application
             }
 
             return items;
+        }
+
+        // Interval get data: [driver positions, order Status]
+        public async Task<IntervalGuestResultDto> IntervalGets(string lat, string lng, Guid orderId)
+        {
+            if (string.IsNullOrEmpty(lat) || string.IsNullOrEmpty(lng))
+            {
+                throw new Exception("Latitude or Longitude is null or empty");
+            }
+            double _lat = 0.0, _lng = 0.0;
+            if (!double.TryParse(lat, out _lat) || !double.TryParse(lng, out _lng))
+            {
+                throw new Exception("Latitude or Longitude is invalid number (double)");
+            }
+
+            // get list driver positions            
+            var positions = new List<DriverPositionDto>();
+            var drivers = this.driverRepository.Find(new R_DriverGetSpec(), "Locations");
+            if (drivers != null)
+            {
+                foreach (var driver in drivers)
+                {
+                    if (driver.Locations != null && driver.Locations.Count > 0)
+                    {
+                        var coordinate = driver.Locations.LastOrDefault();
+                        var distance = util.GetDistanceByCoordinate(_lat, _lng, coordinate.Lat, coordinate.Lng);
+                        if (distance < Constants.DISTANCE_DEFAULT)
+                        {
+                            positions.Add(new DriverPositionDto
+                            {
+                                Phone = driver.Phone,
+                                Lat = coordinate.Lat,
+                                Lng = coordinate.Lng,
+                                Distance = distance
+                            });
+                        }
+                    }
+                }
+            }
+
+            R_Order order = this.orderRepository.FindOne(new R_OrderGetSpec(orderId));
+            if (order == null)
+            {
+                throw new Exception("OrderId does not exists, please check it");
+            }
+
+            return new IntervalGuestResultDto
+            {
+                OrderId = order.Id,
+                Status = order.Status,
+                Positions = positions           // driver positions (not relate orderId)
+            };
         }
     }    
 }

@@ -4,7 +4,7 @@ using tmsang.domain;
 
 namespace tmsang.application
 {
-    public class IntervalResultDto
+    public class IntervalGuestResultDto
     {
         public Guid OrderId { get; set; }
         public E_OrderStatus Status { get; set; }

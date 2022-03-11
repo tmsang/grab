@@ -43,20 +43,7 @@ namespace tmsang.api
             }
         }
 
-        // Mobile Service will snipt 10s to get [driver position, order status]
-        [HttpGet("interval-gets")]
-        public async Task<IntervalResultDto> GetDriverPositionsAsync(string lat, string lng, Guid orderId)
-        {
-            try
-            {
-                return await this.orderService.IntervalGets(lat, lng, orderId);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
+        
         [HttpPost("cancel-by-client")]
         public async Task CancelAsync(string requestId, string reason)
         {
@@ -111,5 +98,18 @@ namespace tmsang.api
             }
         }
 
+        // Mobile Service will snipt 10s to get [driver position, order status]
+        [HttpGet("interval-gets")]
+        public async Task<IntervalGuestResultDto> IntervalGuestGetsAsync(string lat, string lng, Guid orderId)
+        {
+            try
+            {
+                return await this.orderService.IntervalGets(lat, lng, orderId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
