@@ -250,19 +250,19 @@ namespace tmsang.application
             foreach (var item in items)
             {
                 var response = responses.Where(p => p.Id == item.OrderId).FirstOrDefault();
-                if (response == null) break;
+                if (response == null) continue;
 
                 item.Start = response.Start;
                 item.End = response.End;
 
                 var driver = drivers.Where(p => p.Id == response.DriverId).FirstOrDefault();
-                if (driver == null) break;
+                if (driver == null) continue;
 
                 item.DriverName = driver.FullName;
                 item.DriverPhone = driver.Phone;
 
                 var evalation = evalations.Where(p => p.Id == item.OrderId).FirstOrDefault();
-                if (evalation == null) break;
+                if (evalation == null) continue;
 
                 item.Rating = evalation.Rating;
                 item.Note = evalation.Note;
