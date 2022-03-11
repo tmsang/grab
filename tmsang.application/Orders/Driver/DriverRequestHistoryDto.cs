@@ -18,6 +18,7 @@ namespace tmsang.application
         public double Distance { get; set; }
         public double Cost { get; set; }
         public float Rating { get; set; }
+        public string Note { get; set; }
 
         public string GuestName { get; set; }
         public string GuestPhone { get; set; }

@@ -343,6 +343,7 @@ namespace tmsang.application
                 }
 
                 itm.Rating = evalation.Rating;
+                itm.Note = evalation.Note;
 
                 emptyList.Add(itm);
             }
