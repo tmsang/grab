@@ -353,8 +353,17 @@ namespace tmsang.application
 
 
         // Interval get data
-        public IntervalDriverResultDto IntervalGets()
-        {                        
+        // khong can include "Locations" de add - no tu add vao
+        // truong hop clear thi phai include vao moi clear hay remove duoc nhe
+        public IntervalDriverResultDto IntervalGets(string lat, string lng)
+        {
+            // a. update driver position 
+            var driver = (R_Driver)http.HttpContext.Items["User"];
+            var locations = this.driverRepository.FindById(driver.Id, "Locations").Locations;
+            locations.Clear();
+            locations.Add(B_DriverLocation.Create(double.Parse(lat), double.Parse(lng), DateTime.Now.Ticks));
+
+            // b. return list of requests
             return new IntervalDriverResultDto
             {
                 Requests = Requests()

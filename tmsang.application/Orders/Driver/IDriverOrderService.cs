@@ -14,6 +14,6 @@ namespace tmsang.application
         Task<StatisticDto> Statistic();
         Task<IEnumerable<DriverRequestHistoryDto>> RequestHistories();
 
-        IntervalDriverResultDto IntervalGets();
+        IntervalDriverResultDto IntervalGets(string lat, string lng);
     }
 }

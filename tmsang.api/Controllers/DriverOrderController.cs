@@ -104,11 +104,11 @@ namespace tmsang.api
 
         // Mobile Service will snipt 10s to get [driver position, order status]
         [HttpGet("interval-gets")]
-        public IntervalDriverResultDto IntervalDriverGetsAsync()
+        public IntervalDriverResultDto IntervalDriverGetsAsync(string lat, string lng)
         {
             try
             {
-                return this.orderService.IntervalGets();
+                return this.orderService.IntervalGets(lat, lng);
             }
             catch (Exception ex)
             {
