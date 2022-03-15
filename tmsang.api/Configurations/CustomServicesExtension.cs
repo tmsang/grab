@@ -94,7 +94,10 @@ namespace tmsang.api
 
             services.AddScoped<Handles<R_RequestsOfGuestEvent>, DomainEventHandle<R_RequestsOfGuestEvent>>();
 
-            // C. Resolve cac service manual
+            // C. Common
+            
+
+            // D. Resolve cac service manual
             var serviceProvider = services.BuildServiceProvider();
             DomainEvents.Init(serviceProvider);
 

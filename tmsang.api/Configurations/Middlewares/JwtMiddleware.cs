@@ -42,7 +42,7 @@ namespace tmsang.api
         private void attachUserToContext(HttpContext context, string token)
         {
             try
-            {
+            {                
                 if (!_auth.ValidateCurrentToken(token)) {
                     throw new Exception("Your token is invalid");
                 }
@@ -70,6 +70,7 @@ namespace tmsang.api
                 // attach user to context on successful jwt validation
                 context.Items["User"] = user;
                 context.Items["Role"] = role;
+                
             }
             catch
             {
