@@ -83,6 +83,7 @@ namespace tmsang.api
 
             services.AddScoped<IGuestOrderService, GuestOrderService>();
             services.AddScoped<IDriverOrderService, DriverOrderService>();
+            services.AddScoped<IAdminOrderService, AdminOrderService>();
 
             services.AddScoped<IRepository<R_Location>, MyRepository<R_Location>>();
             services.AddScoped<IRepositoryNonRoot<M_RoutineCost>, MyRepositoryNonRoot<M_RoutineCost>>();

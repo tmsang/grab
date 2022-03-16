@@ -13,8 +13,4 @@
     <ProjectReference Include="..\tmsang.domain\tmsang.domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Orders\Admin\" />
-  </ItemGroup>
-
 </Project>
