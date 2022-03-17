@@ -8,6 +8,6 @@ namespace tmsang.application
     {
 
         IEnumerable<AdminRequestDto> RequestsByDate(DateTime date);
-        IntervalAdminResultDto IntervalGets();
+        IntervalAdminResultDto IntervalGets(DateTime from, DateTime to);
     }
 }

@@ -76,7 +76,7 @@ namespace tmsang.application
             this.unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<AdminRequestDto> RequestsByDate(DateTime date) {
+        public IEnumerable<AdminRequestDto> RequestsByDate(DateTime from, DateTime to) {
             // get user (driver + current position)
             var admin = (R_Admin)http.HttpContext.Items["User"];            
             
@@ -85,7 +85,8 @@ namespace tmsang.application
             var orders = this.orderRepository.Find(new R_OrderGetByRequestsSpec(requests)).AsQueryable();
             var guests = this.guestRepository.Find(new R_GuestGetByAccountIdsSpec(orders.Select(p => p.GuestId).ToList()), "Locations").AsQueryable();
 
-            var today = date.Date;
+            var fromDate = from.Date;
+            var toDate = to.Date;
             var result = (from order in orders
                           join request in requests on order.Id equals request.Id
                           join guest in guests on order.GuestId equals guest.Id
@@ -93,7 +94,7 @@ namespace tmsang.application
                           let lat2 = guest.Locations.OrderByDescending(p => p.Date).FirstOrDefault().Lat
                           let lng2 = guest.Locations.OrderByDescending(p => p.Date).FirstOrDefault().Lng
 
-                          where request.RequestDateTime.Date == today
+                          where request.RequestDateTime.Date >= fromDate && request.RequestDateTime.Date <= toDate
 
                           orderby request.RequestDateTime descending
 
@@ -123,9 +124,13 @@ namespace tmsang.application
             return result;
         }
 
-        public IntervalAdminResultDto IntervalGets()
-        {
-            return null;
+        public IntervalAdminResultDto IntervalGets(DateTime from, DateTime to)
+        {            
+            var result = new IntervalAdminResultDto { 
+                Requests = RequestsByDate(from, to)
+            };
+
+            return result;
         }
     }
 }
