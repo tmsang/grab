@@ -15,6 +15,7 @@
     </PackageReference>
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.1" />
     <PackageReference Include="Twilio" Version="5.64.0" />
+    <PackageReference Include="vng.zalo.ZaloCSharpSDK" Version="1.0.14" />
   </ItemGroup>
 
   <ItemGroup>

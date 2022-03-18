@@ -34,6 +34,7 @@ namespace tmsang.api
             services.AddScoped<IAuth, Auth>();
             services.AddScoped<IBingMap, BingMap>();
             services.AddScoped<IFirebaseAdminSDK, FirebaseAdminSDK>();
+            services.AddScoped<IZalo, Zalo>();
 
             services.AddScoped<IRepository<R_Admin>, MyRepository<R_Admin>>();
             services.AddScoped<IRepository<R_Driver>, MyRepository<R_Driver>>();

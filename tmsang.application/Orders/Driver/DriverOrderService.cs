@@ -194,7 +194,7 @@ namespace tmsang.application
             order.UpdateStatus(E_OrderStatus.Started);
 
             // Update record R_Response: [start]
-            var response = this.responseRepository.FindOne(new R_ResponseGetSpec(orderId));
+            var response = this.responseRepository.FindOne(new R_ResponseGetByIdSpec(orderId));
             response.UpdateTimeStart(DateTime.Now);
 
             // Add record ResponseHistory
@@ -224,7 +224,7 @@ namespace tmsang.application
             order.UpdateStatus(E_OrderStatus.Ended);
 
             // Update record R_Response: [end]
-            var response = this.responseRepository.FindOne(new R_ResponseGetSpec(orderId));
+            var response = this.responseRepository.FindOne(new R_ResponseGetByIdSpec(orderId));
             response.UpdateTimeEnd(DateTime.Now);
 
             // Add record ResponseHistory

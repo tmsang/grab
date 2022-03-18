@@ -18,12 +18,12 @@ namespace tmsang.api.Controllers
             this.orderService = orderService;
         }
 
-        [HttpGet("requests")]
-        public IEnumerable<AdminRequestDto> Requests()
+        [HttpGet("zalo-call")]
+        public void ZaloCall(string zaloUserId)
         {
             try
             {
-                return this.orderService.RequestsByDate(new DateTime(2022, 3, 10));
+                this.orderService.ZaloCall(zaloUserId);
             }
             catch (Exception ex)
             {
@@ -33,13 +33,12 @@ namespace tmsang.api.Controllers
 
         // Mobile Service will snipt 10s to get [driver position, order status]
         [HttpGet("interval-gets")]
-        public IntervalAdminResultDto IntervalAdminGetsAsync(long from, long to)
+        public IntervalAdminResultDto IntervalAdminGetsAsync(long date)
         {
             try
             {                         
-                DateTime fromDateTime = new DateTime(from).AddHours(7);
-                DateTime toDateTime = new DateTime(to).AddHours(7);
-                return this.orderService.IntervalGets(fromDateTime, toDateTime);
+                DateTime toDateTime = new DateTime(date).AddHours(7);                
+                return this.orderService.IntervalGets(toDateTime);
             }
             catch (Exception ex)
             {
