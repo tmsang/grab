@@ -8,5 +8,6 @@ namespace tmsang.application
         void ZaloCall(string zaloUserId);
         IEnumerable<AdminRequestDto> RequestsByDate(DateTime date);
         IntervalAdminResultDto IntervalGets(DateTime date);
+        IntervalAdminResultMapDto IntervalGetsMap(DateTime date);
     }
 }

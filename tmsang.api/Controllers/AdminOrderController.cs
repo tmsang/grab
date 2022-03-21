@@ -31,14 +31,28 @@ namespace tmsang.api.Controllers
             }
         }
 
-        // Mobile Service will snipt 10s to get [driver position, order status]
+        // Mobile Service will snipt 10s to get [driver position, order status]        
         [HttpGet("interval-gets")]
-        public IntervalAdminResultDto IntervalAdminGetsAsync(long date)
+        public IntervalAdminResultDto IntervalAdminGets(long date)
         {
             try
-            {                         
-                DateTime toDateTime = new DateTime(date).AddHours(7);                
+            {
+                DateTime toDateTime = new DateTime(date).AddHours(7);
                 return this.orderService.IntervalGets(toDateTime);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpGet("interval-gets-map")]
+        public IntervalAdminResultMapDto IntervalAdminGetsMap(long date)
+        {
+            try
+            {
+                DateTime toDateTime = new DateTime(date).AddHours(7);
+                return this.orderService.IntervalGetsMap(toDateTime);
             }
             catch (Exception ex)
             {

@@ -4,7 +4,6 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using tmsang.domain;
-using System.Threading.Tasks;
 
 namespace tmsang.application
 {
@@ -228,6 +227,53 @@ namespace tmsang.application
             };
 
             return result;
+        }
+
+        public IntervalAdminResultMapDto IntervalGetsMap(DateTime date)
+        {
+            // get requests
+            var requests = RequestsByDate(date).ToList();
+
+            // get positions
+            var guests = this.guestRepository.Find(new R_GuestGetSpec(), "Locations").AsQueryable();
+            var drivers = this.driverRepository.Find(new R_DriverGetSpec(), "Locations").AsQueryable();
+
+            var ticks = date.Date.Ticks;
+
+            var positions = (
+                from guest in guests
+                let location = guest.Locations.LastOrDefault()
+                where location.Date >= ticks
+                select new AdminPositionDto {
+                    Id = guest.Id,
+                    Type = 1,
+                    Phone = guest.Phone,
+                    Lat = location.Lat,
+                    Lng = location.Lng
+                }
+            ).Concat(
+                from driver in drivers
+                let location = driver.Locations.LastOrDefault()
+                where location.Date >= ticks
+                select new AdminPositionDto
+                {
+                    Id = driver.Id,
+                    Type = 2,
+                    Phone = driver.Phone,
+                    Lat = location.Lat,
+                    Lng = location.Lng
+                }
+            ).Distinct();
+
+            return new IntervalAdminResultMapDto { 
+                TotalRequests = requests.Count,
+                TotalNew = requests.Where(p => p.Status == E_OrderStatus.Pending).Count(),
+                TotalProcessing = requests.Where(p => p.Status == E_OrderStatus.Accepted || p.Status == E_OrderStatus.Started).Count(),
+                TotalDone = requests.Where(p => p.Status == E_OrderStatus.Ended || p.Status == E_OrderStatus.Evaluation).Count(),
+                TotalCancel = requests.Where(p => p.Status == E_OrderStatus.CancelByUser || p.Status == E_OrderStatus.CancelByDriver || p.Status == E_OrderStatus.CancelByAdmin || p.Status == E_OrderStatus.CancelBySystem).Count(),
+
+                Positions = positions
+            };
         }
     }
 }
