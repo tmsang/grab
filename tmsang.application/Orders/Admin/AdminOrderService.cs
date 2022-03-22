@@ -242,7 +242,7 @@ namespace tmsang.application
 
             var positions = (
                 from guest in guests
-                let location = guest.Locations.LastOrDefault()
+                let location = guest.Locations.OrderBy(p => p.Date).LastOrDefault()
                 where location.Date >= ticks
                 select new AdminPositionDto {
                     Id = guest.Id,
@@ -253,7 +253,7 @@ namespace tmsang.application
                 }
             ).Concat(
                 from driver in drivers
-                let location = driver.Locations.LastOrDefault()
+                let location = driver.Locations.OrderBy(p => p.Date).LastOrDefault()
                 where location.Date >= ticks
                 select new AdminPositionDto
                 {
