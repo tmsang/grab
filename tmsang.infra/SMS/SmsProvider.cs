@@ -19,6 +19,7 @@ namespace tmsang.infra
         public void Send(string phone, string code)
         {
             // Format phone: +840919239081
+            // From: +12565789262
             // https://console.twilio.com/us1/develop/sms/try-it-out/send-an-sms?frameUrl=%2Fconsole%2Fsms%2Fgetting-started%2Fbuild%3Fx-target-region%3Dus1
             phone = "+84" + phone;
 
