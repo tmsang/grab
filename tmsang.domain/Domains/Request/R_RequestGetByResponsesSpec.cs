@@ -18,7 +18,9 @@ namespace tmsang.domain
             get {
                 return request => this.responses != null
                     && this.responses.Count() > 0
-                    && this.responses.Any(h => h.Id == request.Id);
+                    && this.responses
+                        .Select(p => p.Id)
+                        .Contains(request.Id);
             }
         }
     }

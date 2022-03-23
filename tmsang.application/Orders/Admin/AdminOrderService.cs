@@ -229,36 +229,54 @@ namespace tmsang.application
             return result;
         }
 
-        public IntervalAdminResultMapDto IntervalGetsMap(DateTime date)
+        public IntervalAdminResultMapDto IntervalGetsMap(DateTime dateTime)
         {
             // get requests
-            var requests = RequestsByDate(date).ToList();
+            var requestsByDate = RequestsByDate(dateTime).ToList();
 
-            // get positions
+            // get positions [guest dang book + driver dang free de accept]
             var guests = this.guestRepository.Find(new R_GuestGetSpec(), "Locations").AsQueryable();
             var drivers = this.driverRepository.Find(new R_DriverGetSpec(), "Locations").AsQueryable();
 
-            var ticks = date.Date.Ticks;
+            var orders = this.orderRepository.Find(new R_OrderGetByStatusSpec(E_OrderStatus.Pending)).AsQueryable();
+            var requests = this.requestRepository.Find(new R_RequestGetByOrdersSpec(orders)).AsQueryable();
+            var responses = this.responseRepository.Find(new R_ResponseGetAllSpec()).AsQueryable();
+
+            var ticks = dateTime.Date.Ticks;
 
             var positions = (
-                from guest in guests
-                let location = guest.Locations.OrderBy(p => p.Date).LastOrDefault()
-                where location.Date >= ticks
+                from order in orders
+                join request in requests on order.Id equals request.Id
+                join guest in guests on order.GuestId equals guest.Id
+
+                let location = guest.Locations.Where(p => p.Date >= ticks).OrderByDescending(p => p.Date).FirstOrDefault()                
+                where request.RequestDateTime.Date == dateTime.Date && location.Date >= ticks 
+
                 select new AdminPositionDto {
                     Id = guest.Id,
                     Type = 1,
+                    FullName = guest.FullName,
                     Phone = guest.Phone,
                     Lat = location.Lat,
                     Lng = location.Lng
                 }
             ).Concat(
+                // lay danh dach driver co position (hom nay) - danh dach drive dang start trip!
                 from driver in drivers
-                let location = driver.Locations.OrderBy(p => p.Date).LastOrDefault()
-                where location.Date >= ticks
+                let location = driver.Locations.Where(p => p.Date >= ticks).OrderByDescending(p => p.Date).FirstOrDefault()
+                where location.Date >= ticks && !(
+                    from order in orders
+                    join request in requests on order.Id equals request.Id
+                    join response in responses on order.Id equals response.Id
+                    where request.RequestDateTime.Date == dateTime.Date &&
+                        (order.Status == E_OrderStatus.Accepted || order.Status == E_OrderStatus.Started)
+                    select response.DriverId).Contains(driver.Id)
+
                 select new AdminPositionDto
                 {
                     Id = driver.Id,
                     Type = 2,
+                    FullName = driver.FullName,
                     Phone = driver.Phone,
                     Lat = location.Lat,
                     Lng = location.Lng
@@ -266,11 +284,11 @@ namespace tmsang.application
             ).Distinct();
 
             return new IntervalAdminResultMapDto { 
-                TotalRequests = requests.Count,
-                TotalNew = requests.Where(p => p.Status == E_OrderStatus.Pending).Count(),
-                TotalProcessing = requests.Where(p => p.Status == E_OrderStatus.Accepted || p.Status == E_OrderStatus.Started).Count(),
-                TotalDone = requests.Where(p => p.Status == E_OrderStatus.Ended || p.Status == E_OrderStatus.Evaluation).Count(),
-                TotalCancel = requests.Where(p => p.Status == E_OrderStatus.CancelByUser || p.Status == E_OrderStatus.CancelByDriver || p.Status == E_OrderStatus.CancelByAdmin || p.Status == E_OrderStatus.CancelBySystem).Count(),
+                TotalRequests = requestsByDate.Count,
+                TotalNew = requestsByDate.Where(p => p.Status == E_OrderStatus.Pending).Count(),
+                TotalProcessing = requestsByDate.Where(p => p.Status == E_OrderStatus.Accepted || p.Status == E_OrderStatus.Started).Count(),
+                TotalDone = requestsByDate.Where(p => p.Status == E_OrderStatus.Ended || p.Status == E_OrderStatus.Evaluation).Count(),
+                TotalCancel = requestsByDate.Where(p => p.Status == E_OrderStatus.CancelByUser || p.Status == E_OrderStatus.CancelByDriver || p.Status == E_OrderStatus.CancelByAdmin || p.Status == E_OrderStatus.CancelBySystem).Count(),
 
                 Positions = positions
             };

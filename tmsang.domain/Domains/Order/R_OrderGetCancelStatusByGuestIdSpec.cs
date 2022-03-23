@@ -15,7 +15,10 @@ namespace tmsang.domain
         public override Expression<Func<R_Order, bool>> SpecExpression {
             get {
                 return p => p.GuestId == accountId 
-                    && (p.Status == E_OrderStatus.CancelByUser);
+                    && (p.Status == E_OrderStatus.CancelByUser || 
+                        p.Status == E_OrderStatus.CancelByDriver ||
+                        p.Status == E_OrderStatus.CancelByAdmin ||
+                        p.Status == E_OrderStatus.CancelBySystem);
             }
         }
     }

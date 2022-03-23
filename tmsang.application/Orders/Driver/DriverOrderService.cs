@@ -268,7 +268,7 @@ namespace tmsang.application
                 Price = routineCost.Cost,
                 CancelCounter = cancelOrders.Count(),
                 DoneCounter = doneOrders.Count(),
-                TotalAmount = requests.Sum(p => p.Cost * p.Distance)
+                TotalAmount = requests.Sum(p => p.Cost)
             };
 
             return result;

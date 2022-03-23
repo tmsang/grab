@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tmsang.application", "tmsan
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tmsang.infra", "tmsang.infra\tmsang.infra.csproj", "{D9601A2A-5BA5-46F7-9EC5-D2FAE5E76F59}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tmsang.batchjob", "tmsang.batchjob\tmsang.batchjob.csproj", "{1EE7CFBF-58CB-4B10-B507-AEDF6D2D5BC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tmsang.batchjob", "tmsang.batchjob\tmsang.batchjob.csproj", "{1EE7CFBF-58CB-4B10-B507-AEDF6D2D5BC5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
