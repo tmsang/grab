@@ -230,6 +230,14 @@ namespace tmsang.application
                 result = (from guest in guests
                           
                           let history = guest.Histories.OrderByDescending(p => p.HappenDate).FirstOrDefault()
+                          let histories = guest.Histories.Select(p => new AccountHistoryDto
+                          {
+                              Id = p.Id,
+                              HappenDate = p.HappenDate,
+                              Status = p.AccountStatusId,
+                              Description = p.Description
+                          }).OrderByDescending(p => p.HappenDate).ToList()
+
                           where history != null
 
                           select new ActiveAccountDto { 
@@ -238,7 +246,8 @@ namespace tmsang.application
                               Email = guest.Email,
                               Phone = guest.Phone,
                               ModifiedDate = history.HappenDate,
-                              Status = guest.AccountStatus
+                              Status = guest.AccountStatus,
+                              Histories = histories
                           });
             }
             if (type == "driver")
@@ -246,6 +255,14 @@ namespace tmsang.application
                 result = (from driver in drivers
 
                           let history = driver.Histories.OrderByDescending(p => p.HappenDate).FirstOrDefault()
+                          let histories = driver.Histories.Select(p => new AccountHistoryDto
+                          {
+                              Id = p.Id,
+                              HappenDate = p.HappenDate,
+                              Status = p.AccountStatusId,
+                              Description = p.Description
+                          }).OrderByDescending(p => p.HappenDate).ToList()
+
                           where history != null
 
                           select new ActiveAccountDto
@@ -255,7 +272,8 @@ namespace tmsang.application
                               Email = driver.Email,
                               Phone = driver.Phone,
                               ModifiedDate = history.HappenDate,
-                              Status = driver.AccountStatus
+                              Status = driver.AccountStatus,
+                              Histories = histories
                           });
             }
             if (type == "admin")
@@ -263,6 +281,14 @@ namespace tmsang.application
                 result = (from admin in admins
 
                           let history = admin.Histories.OrderByDescending(p => p.HappenDate).FirstOrDefault()
+                          let histories = admin.Histories.Select(p => new AccountHistoryDto
+                          {
+                              Id = p.Id,
+                              HappenDate = p.HappenDate,
+                              Status = p.AccountStatusId,
+                              Description = p.Description
+                          }).OrderByDescending(p => p.HappenDate).ToList()
+
                           where history != null
 
                           select new ActiveAccountDto
@@ -272,7 +298,8 @@ namespace tmsang.application
                               Email = admin.Email,
                               Phone = admin.Phone,
                               ModifiedDate = history.HappenDate,
-                              Status = admin.AccountStatus
+                              Status = admin.AccountStatus,
+                              Histories = histories
                           });
             }
             return result;
