@@ -5,11 +5,11 @@ using System.Linq;
 
 namespace tmsang.domain
 {
-    public class R_GuestGetByAccountIdsSpec : SpecificationBase<R_Guest>
+    public class R_GuestGetByIdsSpec : SpecificationBase<R_Guest>
     {
         readonly IList<Guid> guestIds;
 
-        public R_GuestGetByAccountIdsSpec(IList<Guid> guestIds)
+        public R_GuestGetByIdsSpec(IList<Guid> guestIds)
         {
             this.guestIds = guestIds;
         }

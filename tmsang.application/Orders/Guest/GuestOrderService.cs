@@ -286,7 +286,7 @@ namespace tmsang.application
 
             // get list driver positions            
             var positions = new List<DriverPositionDto>();
-            var drivers = this.driverRepository.Find(new R_DriverGetSpec(), "Locations");
+            var drivers = this.driverRepository.Find(new R_DriverGetByStatusSpec(E_Status.Actived), "Locations");
             if (drivers != null)
             {
                 foreach (var driver in drivers)

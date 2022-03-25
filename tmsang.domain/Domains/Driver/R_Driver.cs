@@ -14,7 +14,7 @@ namespace tmsang.domain
         public virtual string PersonalId { get; protected set; }
         public virtual string PersonalImage { get; protected set; }
         public virtual string Address { get; protected set; }
-        public virtual E_Status AccountStatus { get; protected set; } = E_Status.Deactive;
+        public virtual E_Status AccountStatus { get; protected set; } = E_Status.Deactived;
 
         public virtual string Password { get; protected set; }
         public virtual byte[] Salt { get; protected set; }
@@ -44,7 +44,7 @@ namespace tmsang.domain
                 Address = address,
                 Phone = phone,
                 Email = email,
-                AccountStatus = E_Status.Active,
+                AccountStatus = E_Status.Actived,
 
                 Password = password,
                 Salt = salt
@@ -68,6 +68,7 @@ namespace tmsang.domain
                 Password = password,
                 Salt = salt                
             };
+            user.Histories.Add(B_DriverHistory.Create(E_Status.None, "Create account"));
 
             DomainEvents.Raise<R_DriverCreatedEvent>(new R_DriverCreatedEvent { R_Driver = user });
 
@@ -76,13 +77,15 @@ namespace tmsang.domain
         
         public virtual void Activate()      // y nghia: protected set la vay - gom logic vao
         {
-            this.AccountStatus = E_Status.Active;
+            this.AccountStatus = E_Status.Actived;
+            this.Histories.Add(B_DriverHistory.Create(E_Status.Actived, "Active account"));
         }
 
         public virtual void ResetPassword(string hash, byte[] salt)
         {
             this.Password = hash;
             this.Salt = salt;
+            this.Histories.Add(B_DriverHistory.Create(E_Status.Actived, "Reset account"));
 
             DomainEvents.Raise<R_DriverChangePasswordEvent>(new R_DriverChangePasswordEvent { R_Driver = this });
         }

@@ -216,73 +216,73 @@ namespace tmsang.infra
                     1, $"RoutineCost - 01/{year}",
                     new DateTime(year, 1, 1),
                     new DateTime(year, 1, DateTime.DaysInMonth(year, 1)),
-                    E_Status.Active,
+                    E_Status.Actived,
                     8000),
                 M_RoutineCost.Create(
                     2, $"RoutineCost - 02/{year}",
                     new DateTime(year, 2, 1),
                     new DateTime(year, 2, DateTime.DaysInMonth(year, 2)),
-                    E_Status.Active,
+                    E_Status.Actived,
                     5000),
                 M_RoutineCost.Create(
                     3, $"RoutineCost - 03/{year}",
                     new DateTime(year, 3, 1),
                     new DateTime(year, 3, DateTime.DaysInMonth(year, 3)),
-                    E_Status.Active,
+                    E_Status.Actived,
                     7000),
                 M_RoutineCost.Create(
                     4, $"RoutineCost - 04/{year}",
                     new DateTime(year, 4, 1),
                     new DateTime(year, 4, DateTime.DaysInMonth(year, 4)),
-                    E_Status.Active,
+                    E_Status.Actived,
                     8000),
                 M_RoutineCost.Create(
                     5, $"RoutineCost - 05/{year}",
                     new DateTime(year, 5, 1),
                     new DateTime(year, 5, DateTime.DaysInMonth(year, 5)),
-                    E_Status.Active,
+                    E_Status.Actived,
                     5000),
                 M_RoutineCost.Create(
                     6, $"RoutineCost - 06/{year}",
                     new DateTime(year, 6, 1),
                     new DateTime(year, 6, DateTime.DaysInMonth(year, 6)),
-                    E_Status.Active,
+                    E_Status.Actived,
                     7000),
                 M_RoutineCost.Create(
                     7, $"RoutineCost - 07/{year}",
                     new DateTime(year, 7, 1),
                     new DateTime(year, 7, DateTime.DaysInMonth(year, 7)),
-                    E_Status.Active,
+                    E_Status.Actived,
                     8000),
                 M_RoutineCost.Create(
                     8, $"RoutineCost - 08/{year}",
                     new DateTime(year, 8, 1),
                     new DateTime(year, 8, DateTime.DaysInMonth(year, 8)),
-                    E_Status.Active,
+                    E_Status.Actived,
                     5000),
                 M_RoutineCost.Create(
                     9, $"RoutineCost - 09/{year}",
                     new DateTime(year, 9, 1),
                     new DateTime(year, 9, DateTime.DaysInMonth(year, 9)),
-                    E_Status.Active,
+                    E_Status.Actived,
                     7000),
                 M_RoutineCost.Create(
                     10, $"RoutineCost - 10/{year}", 
                     new DateTime(year, 10, 1), 
                     new DateTime(year, 10, DateTime.DaysInMonth(year, 10)), 
-                    E_Status.Active, 
+                    E_Status.Actived, 
                     8000),
                 M_RoutineCost.Create(
                     11, $"RoutineCost - 11/{year}",
                     new DateTime(year, 11, 1),
                     new DateTime(year, 11, DateTime.DaysInMonth(year, 11)),
-                    E_Status.Active,
+                    E_Status.Actived,
                     5000),
                 M_RoutineCost.Create(
                     12, $"RoutineCost - 12/{year}",
                     new DateTime(year, 12, 1),
                     new DateTime(year, 12, DateTime.DaysInMonth(year, 12)),
-                    E_Status.Active,
+                    E_Status.Actived,
                     7000)
             );
 
@@ -291,73 +291,73 @@ namespace tmsang.infra
                     1, $"Tax - 01/{year}",
                     new DateTime(year, 1, 1),
                     new DateTime(year, 1, DateTime.DaysInMonth(year, 1)),
-                    E_Status.Active,
+                    E_Status.Actived,
                     0.02),
                 M_TaxVAT.Create(
                     2, $"Tax - 02/{year}",
                     new DateTime(year, 2, 1),
                     new DateTime(year, 2, DateTime.DaysInMonth(year, 2)),
-                    E_Status.Active,
+                    E_Status.Actived,
                     0.05),
                 M_TaxVAT.Create(
                     3, $"Tax - 03/{year}",
                     new DateTime(year, 3, 1),
                     new DateTime(year, 3, DateTime.DaysInMonth(year, 3)),
-                    E_Status.Active,
+                    E_Status.Actived,
                     0.1),
                 M_TaxVAT.Create(
                     4, $"Tax - 04/{year}",
                     new DateTime(year, 4, 1),
                     new DateTime(year, 4, DateTime.DaysInMonth(year, 4)),
-                    E_Status.Active,
+                    E_Status.Actived,
                     0.02),
                 M_TaxVAT.Create(
                     5, $"Tax - 05/{year}",
                     new DateTime(year, 5, 1),
                     new DateTime(year, 5, DateTime.DaysInMonth(year, 5)),
-                    E_Status.Active,
+                    E_Status.Actived,
                     0.05),
                 M_TaxVAT.Create(
                     6, $"Tax - 06/{year}",
                     new DateTime(year, 6, 1),
                     new DateTime(year, 6, DateTime.DaysInMonth(year, 6)),
-                    E_Status.Active,
+                    E_Status.Actived,
                     0.1),
                 M_TaxVAT.Create(
                     7, $"Tax - 07/{year}",
                     new DateTime(year, 7, 1),
                     new DateTime(year, 7, DateTime.DaysInMonth(year, 7)),
-                    E_Status.Active,
+                    E_Status.Actived,
                     0.02),
                 M_TaxVAT.Create(
                     8, $"Tax - 08/{year}",
                     new DateTime(year, 8, 1),
                     new DateTime(year, 8, DateTime.DaysInMonth(year, 8)),
-                    E_Status.Active,
+                    E_Status.Actived,
                     0.05),
                 M_TaxVAT.Create(
                     9, $"Tax - 09/{year}",
                     new DateTime(year, 9, 1),
                     new DateTime(year, 9, DateTime.DaysInMonth(year, 9)),
-                    E_Status.Active,
+                    E_Status.Actived,
                     0.1),
                 M_TaxVAT.Create(
                     10, $"Tax - 10/{year}",
                     new DateTime(year, 10, 1),
                     new DateTime(year, 10, DateTime.DaysInMonth(year, 10)),
-                    E_Status.Active,
+                    E_Status.Actived,
                     0.02),
                 M_TaxVAT.Create(
                     11, $"Tax - 11/{year}",
                     new DateTime(year, 11, 1),
                     new DateTime(year, 11, DateTime.DaysInMonth(year, 11)),
-                    E_Status.Active,
+                    E_Status.Actived,
                     0.05),
                 M_TaxVAT.Create(
                     12, $"Tax - 12/{year}",
                     new DateTime(year, 12, 1),
                     new DateTime(year, 12, DateTime.DaysInMonth(year, 12)),
-                    E_Status.Active,
+                    E_Status.Actived,
                     0.1)
             );            
 
@@ -378,7 +378,11 @@ namespace tmsang.infra
                 B_GuestLocation.CreateForSeed(10.74783, 106.68921166666667, DateTime.Now.Ticks, guestId1, 1),
                 B_GuestLocation.CreateForSeed(10.74593, 106.68101166666667, DateTime.Now.Ticks, guestId2, 2)
             );
-                        
+            modelBuilder.Entity<B_GuestHistory>().HasData(
+                B_GuestHistory.CreateForSeed(guestId1, 1, E_Status.Actived, "Seed account"),
+                B_GuestHistory.CreateForSeed(guestId2, 2, E_Status.Actived, "Seed account")
+            );
+
             var driverId1 = Guid.NewGuid();
             var driverId2 = Guid.NewGuid();                                    
             modelBuilder.Entity<R_Driver>().HasData(
@@ -388,10 +392,21 @@ namespace tmsang.infra
             modelBuilder.Entity<B_DriverLocation>().HasData(
                 B_DriverLocation.CreateForSeed(10.74583, 106.68721166666667, DateTime.Now.Ticks, driverId1, 1),
                 B_DriverLocation.CreateForSeed(10.74683, 106.68821166666667, DateTime.Now.Ticks, driverId2, 2)
-            );            
-            
+            );
+            modelBuilder.Entity<B_DriverHistory>().HasData(
+                B_DriverHistory.CreateForSeed(driverId1, 1, E_Status.Actived, "Seed account"),
+                B_DriverHistory.CreateForSeed(driverId2, 2, E_Status.Actived, "Seed account")
+            );
+
+            var adminId1 = Guid.NewGuid();
+            var adminId2 = Guid.NewGuid();
             modelBuilder.Entity<R_Admin>().HasData(
-                R_Admin.CreateForSeed("Admin 1", "sangnew2015@gmail.com", "0919239081", "123 hoang dieu p10q4", hash.Hash, hash.Salt)
+                R_Admin.CreateForSeed(adminId1, "Admin 1", "sangnew2020@gmail.com", "0919239081", "123 hoang dieu p10q4", hash.Hash, hash.Salt),
+                R_Admin.CreateForSeed(adminId2, "Admin 2", "sangnew2021@gmail.com", "0708825109", "456 hoang dieu p10q4", hash.Hash, hash.Salt)
+            );
+            modelBuilder.Entity<B_AdminHistory>().HasData(
+                B_AdminHistory.CreateForSeed(adminId1, 1, E_Status.Actived, "Seed account"),
+                B_AdminHistory.CreateForSeed(adminId2, 2, E_Status.Actived, "Seed account")
             );
 
             // create group

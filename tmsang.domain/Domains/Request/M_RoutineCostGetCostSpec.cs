@@ -15,7 +15,7 @@ namespace tmsang.domain
         public override Expression<Func<M_RoutineCost, bool>> SpecExpression
         {
             get {
-                return p => p.Status == E_Status.Active 
+                return p => p.Status == E_Status.Actived 
                     && p.From <= this.RequestDate 
                     && this.RequestDate <= p.To;
             }

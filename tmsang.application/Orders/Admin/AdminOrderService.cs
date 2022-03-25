@@ -89,7 +89,7 @@ namespace tmsang.application
             var requests = this.requestRepository.Find(new R_RequestGetByDateSpec(dateTime)).AsQueryable();
             var locations = this.locationRepository.Find(new R_LocationGetByRequestsSpec(requests)).AsQueryable();
             var orders = this.orderRepository.Find(new R_OrderGetByRequestsSpec(requests)).AsQueryable();
-            var guests = this.guestRepository.Find(new R_GuestGetByAccountIdsSpec(orders.Select(p => p.GuestId).ToList()), "Locations").AsQueryable();
+            var guests = this.guestRepository.Find(new R_GuestGetByIdsSpec(orders.Select(p => p.GuestId).ToList()), "Locations").AsQueryable();
 
             var date = dateTime.Date;
             var result = (from order in orders
@@ -147,7 +147,7 @@ namespace tmsang.application
             // a. lay toa do khach (theo status = pending + date = hom nay)
             var orders = this.orderRepository.Find(new R_OrderGetByStatusSpec(E_OrderStatus.Pending)).AsQueryable();
             var requests = this.requestRepository.Find(new R_RequestGetByOrdersSpec(orders)).AsQueryable();            
-            var guests = this.guestRepository.Find(new R_GuestGetByAccountIdsSpec(orders.Select(p => p.GuestId).ToList()), "Locations").AsQueryable();
+            var guests = this.guestRepository.Find(new R_GuestGetByIdsSpec(orders.Select(p => p.GuestId).ToList()), "Locations").AsQueryable();
 
             var ticks = dateTime.Date.Ticks;
 
@@ -235,8 +235,8 @@ namespace tmsang.application
             var requestsByDate = RequestsByDate(dateTime).ToList();
 
             // get positions [guest dang book + driver dang free de accept]
-            var guests = this.guestRepository.Find(new R_GuestGetSpec(), "Locations").AsQueryable();
-            var drivers = this.driverRepository.Find(new R_DriverGetSpec(), "Locations").AsQueryable();
+            var guests = this.guestRepository.Find(new R_GuestGetByStatusSpec(E_Status.Actived), "Locations").AsQueryable();
+            var drivers = this.driverRepository.Find(new R_DriverGetByStatusSpec(E_Status.Actived), "Locations").AsQueryable();
 
             var orders = this.orderRepository.Find(new R_OrderGetByStatusSpec(E_OrderStatus.Pending)).AsQueryable();
             var requests = this.requestRepository.Find(new R_RequestGetByOrdersSpec(orders)).AsQueryable();

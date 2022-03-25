@@ -1,12 +1,16 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using tmsang.domain;
 
 namespace tmsang.application
 {
     public class AdminService: IAdminService
     {
-        readonly IRepository<R_Admin> adminAccountRepository;                
+        readonly IRepository<R_Admin> adminAccountRepository;
+        readonly IRepository<R_Driver> driverAccountRepository;
+        readonly IRepository<R_Guest> guestAccountRepository;
 
         readonly IStorage storage;
         readonly IAuth auth;
@@ -17,6 +21,8 @@ namespace tmsang.application
 
         public AdminService(
             IRepository<R_Admin> adminAccountRepository,
+            IRepository<R_Driver> driverAccountRepository,
+            IRepository<R_Guest> guestAccountRepository,
             R_AdminDomainService accountDomainService,
 
             IStorage storage,
@@ -24,7 +30,10 @@ namespace tmsang.application
             IHttpContextAccessor http,
             IUnitOfWork unitOfWork)
         {
-            this.adminAccountRepository = adminAccountRepository;                        
+            this.adminAccountRepository = adminAccountRepository;
+            this.driverAccountRepository = driverAccountRepository;
+            this.guestAccountRepository = guestAccountRepository;
+
             this.accountDomainService = accountDomainService;
 
             this.storage = storage;
@@ -63,6 +72,7 @@ namespace tmsang.application
             // add thong tin dang ky vao bang R_Admin -> raise event (email)
             var hash = auth.EncryptPassword(registerDto.Password);
             var account = R_Admin.Create(registerDto.FullName, registerDto.Email, registerDto.Phone, registerDto.Address, hash.Hash, hash.Salt);
+
             this.unitOfWork.ForceBeginTransaction();
             this.adminAccountRepository.Add(account);
         }
@@ -99,8 +109,8 @@ namespace tmsang.application
             {
                 throw new Exception("This account is not exists");
             }
-
             user.Activate();
+
             this.unitOfWork.ForceBeginTransaction();
             this.adminAccountRepository.Update(user);
         }
@@ -163,6 +173,7 @@ namespace tmsang.application
             // update password vao bang R_Admin
             var hash = auth.EncryptPassword(resetPasswordDto.NewPassword);
             user.ResetPassword(hash.Hash, hash.Salt);
+
             this.unitOfWork.ForceBeginTransaction();
             this.adminAccountRepository.Update(user);
             // return token
@@ -187,6 +198,8 @@ namespace tmsang.application
             // update password vao bang R_Admin
             var hash = auth.EncryptPassword(changePasswordDto.NewPassword);
             user.ResetPassword(hash.Hash, hash.Salt);
+
+            this.unitOfWork.ForceBeginTransaction();
             this.adminAccountRepository.Update(user);
             // return token
             return new TokenDto
@@ -201,5 +214,70 @@ namespace tmsang.application
 
             return hash.Hash;
         }
+
+        /*=============================================
+         * Quan ly Account [Guest, Driver, Admin]
+         ==============================================*/
+        public IEnumerable<ActiveAccountDto> GetAccounts(string type)
+        {
+            IEnumerable<ActiveAccountDto> result = null;
+
+            var guests = this.guestAccountRepository.Find(new R_GuestGetAllSpec(), "Histories").AsQueryable();
+            var drivers = this.driverAccountRepository.Find(new R_DriverGetAllSpec(), "Histories").AsQueryable();
+            var admins = this.adminAccountRepository.Find(new R_AdminGetAllSpec(), "Histories").AsQueryable();
+
+            if (type == "guest") {
+                result = (from guest in guests
+                          
+                          let history = guest.Histories.OrderByDescending(p => p.HappenDate).FirstOrDefault()
+                          where history != null
+
+                          select new ActiveAccountDto { 
+                              Id = guest.Id,
+                              FullName = guest.FullName,
+                              Email = guest.Email,
+                              Phone = guest.Phone,
+                              ModifiedDate = history.HappenDate,
+                              Status = guest.AccountStatus
+                          });
+            }
+            if (type == "driver")
+            {
+                result = (from driver in drivers
+
+                          let history = driver.Histories.OrderByDescending(p => p.HappenDate).FirstOrDefault()
+                          where history != null
+
+                          select new ActiveAccountDto
+                          {
+                              Id = driver.Id,
+                              FullName = driver.FullName,
+                              Email = driver.Email,
+                              Phone = driver.Phone,
+                              ModifiedDate = history.HappenDate,
+                              Status = driver.AccountStatus
+                          });
+            }
+            if (type == "admin")
+            {
+                result = (from admin in admins
+
+                          let history = admin.Histories.OrderByDescending(p => p.HappenDate).FirstOrDefault()
+                          where history != null
+
+                          select new ActiveAccountDto
+                          {
+                              Id = admin.Id,
+                              FullName = admin.FullName,
+                              Email = admin.Email,
+                              Phone = admin.Phone,
+                              ModifiedDate = history.HappenDate,
+                              Status = admin.AccountStatus
+                          });
+            }
+            return result;
+        }
+
+
     }
 }

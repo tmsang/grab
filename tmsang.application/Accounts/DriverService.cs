@@ -62,19 +62,18 @@ namespace tmsang.application
             // add thong tin dang ky vao bang R_Admin -> raise event (email)
             var hash = auth.EncryptPassword(registerDto.Password);
 
-            var account = R_Driver.Create(registerDto.FullName, registerDto.PersonalId,
+            var driver = R_Driver.Create(registerDto.FullName, registerDto.PersonalId,
                                             registerDto.Avatar, registerDto.Address, registerDto.Phone, registerDto.Email,
                                             hash.Hash, hash.Salt);
 
-            var bike = B_DriverBike.Create(account.Id, registerDto.PlateNo, registerDto.BikeOwner, registerDto.EngineNo,
+            var bike = B_DriverBike.Create(driver.Id, registerDto.PlateNo, registerDto.BikeOwner, registerDto.EngineNo,
                                             registerDto.ChassisNo, registerDto.BikeType, registerDto.Brand, registerDto.RegistrationDate);
 
-            this.unitOfWork.ForceBeginTransaction();
-
             // bike is just branch -> should use root (Driver)
-            account.Bikes.Add(bike);                          // vi Bike quan he 1-1 voi Driver Account, nen ta add the nay, chu 1-n thi di tu root
+            driver.Bikes.Add(bike);                          // vi Bike quan he 1-1 voi Driver Account, nen ta add the nay, chu 1-n thi di tu root            
 
-            this.driverAccountRepository.Add(account);
+            this.unitOfWork.ForceBeginTransaction();            
+            this.driverAccountRepository.Add(driver);
         }
 
         public void DriverActivate(string token)
@@ -105,15 +104,15 @@ namespace tmsang.application
             var nameids = nameid.Split(';');
             var email = nameids[1];
 
-            var user = this.accountDomainService.GetDriverByEmailIgnoreActive(email);
-            if (user == null)
+            var driver = this.accountDomainService.GetDriverByEmailIgnoreActive(email);
+            if (driver == null)
             {
                 throw new Exception("This account is not exists");
             }
+            driver.Activate();            
 
-            user.Activate();
             this.unitOfWork.ForceBeginTransaction();
-            this.driverAccountRepository.Update(user);
+            this.driverAccountRepository.Update(driver);
         }
 
         public TokenDto DriverLogin(DriverLoginDto loginDto)
@@ -142,6 +141,7 @@ namespace tmsang.application
                 Email = user.Email
             };
         }
+
         public void DriverForgotPassword(string email)
         {
             // kiem tra su ton tai user
@@ -153,6 +153,7 @@ namespace tmsang.application
             // send ma SMS code
             SendSmsCode(user.Phone);
         }
+
         public TokenDto DriverResetPassword(DriverResetPasswordDto resetPasswordDto)
         {
             // validate input (required)
@@ -172,6 +173,7 @@ namespace tmsang.application
             // update password vao bang R_Admin
             var hash = auth.EncryptPassword(resetPasswordDto.NewPassword);
             user.ResetPassword(hash.Hash, hash.Salt);
+
             this.unitOfWork.ForceBeginTransaction();
             this.driverAccountRepository.Update(user);
             // return token
@@ -196,6 +198,8 @@ namespace tmsang.application
             // update password vao bang R_Admin
             var hash = auth.EncryptPassword(changePasswordDto.NewPassword);
             user.ResetPassword(hash.Hash, hash.Salt);
+
+            this.unitOfWork.ForceBeginTransaction();
             this.driverAccountRepository.Update(user);
             // return token
             return new TokenDto
@@ -218,6 +222,8 @@ namespace tmsang.application
 
             var user = (R_Driver)http.HttpContext.Items["User"];
             user.PushPosition(_lat, _lng);
+
+            this.unitOfWork.ForceBeginTransaction();
             this.driverAccountRepository.Update(user);
         }
     }

@@ -17,7 +17,7 @@ namespace tmsang.domain
         public override Expression<Func<R_Driver, bool>> SpecExpression
         {
             get {
-                return p => p.AccountStatus == E_Status.Active 
+                return p => p.AccountStatus == E_Status.Actived 
                             && this.ids != null                            
                             && this.ids.All(i => i != p.Id);
             }

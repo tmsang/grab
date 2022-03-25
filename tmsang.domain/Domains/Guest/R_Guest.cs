@@ -47,11 +47,11 @@ namespace tmsang.domain
                 FullName = fullName,
                 Phone = phone,
                 Email = email,
-                AccountStatus = E_Status.Active,
+                AccountStatus = E_Status.Actived,
 
                 Password = password,
                 Salt = salt
-            };
+            };            
 
             return guest;
         }
@@ -66,6 +66,8 @@ namespace tmsang.domain
                 Password = password,
                 Salt = salt                
             };
+            guest.Histories.Add(B_GuestHistory.Create(E_Status.None, "Create account"));
+
             // add event sourcing
             DomainEvents.Raise<R_GuestCreatedEvent>(new R_GuestCreatedEvent() { R_Guest = guest });
 
@@ -92,13 +94,15 @@ namespace tmsang.domain
 
         public virtual void Activate()      // y nghia: protected set la vay - gom logic vao
         {
-            this.AccountStatus = E_Status.Active;
+            this.AccountStatus = E_Status.Actived;
+            this.Histories.Add(B_GuestHistory.Create(E_Status.Actived, "Active account"));
         }        
 
         public virtual void ResetPassword(string hash, byte[] salt)
         {
             this.Password = hash;
             this.Salt = salt;
+            this.Histories.Add(B_GuestHistory.Create(E_Status.Actived, "Reset password"));
 
             DomainEvents.Raise<R_GuestChangePasswordEvent>(new R_GuestChangePasswordEvent { R_Guest = this });
         }

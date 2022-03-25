@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using tmsang.application;
 
 namespace tmsang.api
@@ -125,5 +126,24 @@ namespace tmsang.api
                 throw ex;
             }
         }
+
+
+        // ===============================================
+        // Active Account [Guest, Driver, Admin]
+        // ===============================================
+        [Authorize]
+        [HttpGet("accounts")]
+        public IEnumerable<ActiveAccountDto> GetAccounts(string type)
+        {
+            try
+            {
+                return this.accountService.GetAccounts(type);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }

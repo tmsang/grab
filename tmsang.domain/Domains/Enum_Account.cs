@@ -29,11 +29,11 @@
 
     public enum E_Status
     { 
-        Remove = -2,
-        Lock = -1,
+        Hidden = -2,
+        Locked = -1,
         None = 0,
-        Active = 1,
-        Deactive = 2
+        Actived = 1,
+        Deactived = 2
     }
 
     public enum E_AccountType

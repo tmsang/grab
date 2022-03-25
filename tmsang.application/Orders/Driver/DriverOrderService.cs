@@ -92,7 +92,7 @@ namespace tmsang.application
             var orders = this.orderRepository.Find(new R_OrderGetByStatusSpec(E_OrderStatus.Pending)).AsQueryable();            
             var requests = this.requestRepository.Find(new R_RequestGetByOrdersSpec(orders)).AsQueryable();
             var locations = this.locationRepository.Find(new R_LocationGetByRequestsSpec(requests)).AsQueryable();
-            var guests = this.guestRepository.Find(new R_GuestGetByAccountIdsSpec(orders.Select(p => p.GuestId).ToList()), "Locations").AsQueryable();
+            var guests = this.guestRepository.Find(new R_GuestGetByIdsSpec(orders.Select(p => p.GuestId).ToList()), "Locations").AsQueryable();
             
             var result = (from order in orders
                           join request in requests on order.Id equals request.Id

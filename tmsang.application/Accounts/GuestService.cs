@@ -60,9 +60,10 @@ namespace tmsang.application
             }
             // add thong tin dang ky vao bang R_Admin -> raise event (email)
             var hash = auth.EncryptPassword(registerDto.Password);
-            var account = R_Guest.Create(registerDto.FullName, registerDto.Phone, registerDto.Email, hash.Hash, hash.Salt);
+            var guest = R_Guest.Create(registerDto.FullName, registerDto.Phone, registerDto.Email, hash.Hash, hash.Salt);            
+
             this.unitOfWork.ForceBeginTransaction();
-            this.guestAccountRepository.Add(account);
+            this.guestAccountRepository.Add(guest);
         }
 
         public void GuestActivate(string token)
@@ -93,15 +94,15 @@ namespace tmsang.application
             var nameids = nameid.Split(';');
             var email = nameids[1];
 
-            var user = this.accountDomainService.GetGuestByEmailIgnoreActive(email);
-            if (user == null)
+            var guest = this.accountDomainService.GetGuestByEmailIgnoreActive(email);
+            if (guest == null)
             {
                 throw new Exception("This account is not exists");
             }
+            guest.Activate();            
 
-            user.Activate();
             this.unitOfWork.ForceBeginTransaction();
-            this.guestAccountRepository.Update(user);
+            this.guestAccountRepository.Update(guest);
         }
 
         public TokenDto GuestLogin(GuestLoginDto loginDto)
@@ -130,6 +131,7 @@ namespace tmsang.application
                 Email = user.Email
             };
         }
+
         public void GuestForgotPassword(string email)
         {
             // kiem tra su ton tai user
@@ -141,61 +143,67 @@ namespace tmsang.application
             // send ma SMS code
             SendSmsCode(user.Phone);
         }
+
         public TokenDto GuestResetPassword(GuestResetPasswordDto resetPasswordDto)
         {
             // validate input (required)
             resetPasswordDto.EmptyValidation();
             // kiem tra su ton tai user
-            var user = this.accountDomainService.GetGuestByEmail(resetPasswordDto.Email);
-            if (user == null)
+            var guest = this.accountDomainService.GetGuestByEmail(resetPasswordDto.Email);
+            if (guest == null)
             {
                 throw new Exception("This account is not exists");
             }
             // kiem tra SMS code (duoc goi luc Forgot password)
-            var code = this.storage.SmsGetCode(user.Phone);
+            var code = this.storage.SmsGetCode(guest.Phone);
             if (code != resetPasswordDto.SmsCode)
             {
                 throw new Exception("SMS Code is invalid");
             }
             // doi chieu password -va kiem tra password hop le
-            var isPasswordMatched = auth.VerifyPassword(resetPasswordDto.OldPassword, user.Salt, user.Password);
+            var isPasswordMatched = auth.VerifyPassword(resetPasswordDto.OldPassword, guest.Salt, guest.Password);
             if (!isPasswordMatched)
             {
                 throw new Exception("Old Password is invalid");
             }
             // update password vao bang R_Guest
             var hash = auth.EncryptPassword(resetPasswordDto.NewPassword);
-            user.ResetPassword(hash.Hash, hash.Salt);            
+            guest.ResetPassword(hash.Hash, hash.Salt);            
+
             this.unitOfWork.ForceBeginTransaction();
-            this.guestAccountRepository.Update(user);
+            this.guestAccountRepository.Update(guest);
             // return token
             return new TokenDto
             {
-                jwt = auth.GenerateToken(user.Id.ToString(), E_AccountType.Guest.ToString(), Constants.LOGIN_TOKEN_EXPIRED)
+                jwt = auth.GenerateToken(guest.Id.ToString(), E_AccountType.Guest.ToString(), Constants.LOGIN_TOKEN_EXPIRED)
             };
         }
+
         public TokenDto GuestChangePassword(GuestChangePasswordDto changePasswordDto)
         {
             // validate input (required)
             changePasswordDto.EmptyValidation();
             // lay thong tin user trong HttpContext
-            var user = (R_Guest)http.HttpContext.Items["User"];
+            var guest = (R_Guest)http.HttpContext.Items["User"];
             // kiem tra SMS code (duoc goi luc Forgot password)
-            var code = this.storage.SmsGetCode(user.Phone);
+            var code = this.storage.SmsGetCode(guest.Phone);
             if (code != changePasswordDto.SmsCode)
             {
                 throw new Exception("SMS Code is invalid");
             }
             // update password vao bang R_Admin
             var hash = auth.EncryptPassword(changePasswordDto.NewPassword);
-            user.ResetPassword(hash.Hash, hash.Salt);            
-            this.guestAccountRepository.Update(user);
+            guest.ResetPassword(hash.Hash, hash.Salt);            
+
+            this.unitOfWork.ForceBeginTransaction();
+            this.guestAccountRepository.Update(guest);
             // return token
             return new TokenDto
             {
-                jwt = auth.GenerateToken(user.Id.ToString(), E_AccountType.Guest.ToString(), Constants.LOGIN_TOKEN_EXPIRED)
+                jwt = auth.GenerateToken(guest.Id.ToString(), E_AccountType.Guest.ToString(), Constants.LOGIN_TOKEN_EXPIRED)
             };
         }
+
         public void PushPosition(string lat, string lng)
         {
             if (string.IsNullOrEmpty(lat) || string.IsNullOrEmpty(lng))

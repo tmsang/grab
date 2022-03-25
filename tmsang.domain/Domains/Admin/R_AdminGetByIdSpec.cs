@@ -15,7 +15,7 @@ namespace tmsang.domain
         public override Expression<Func<R_Admin, bool>> SpecExpression
         {
             get {
-                return p => p.AccountStatus == E_Status.Active
+                return p => p.AccountStatus == E_Status.Actived
                             && p.Id.ToString() == this.id;
             }
         }

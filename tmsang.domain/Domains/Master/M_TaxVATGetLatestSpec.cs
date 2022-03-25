@@ -12,7 +12,7 @@ namespace tmsang.domain
 
         public override Expression<Func<M_TaxVAT, bool>> SpecExpression {
             get {
-                return p => p.Status == E_Status.Active &&
+                return p => p.Status == E_Status.Actived &&
                     p.From <= DateTime.Now && p.To >= DateTime.Now;
             }
         }
