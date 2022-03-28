@@ -109,7 +109,7 @@ namespace tmsang.application
             {
                 throw new Exception("This account is not exists");
             }
-            driver.Activate();            
+            driver.ChangeStatus(E_Status.Actived);            
 
             this.unitOfWork.ForceBeginTransaction();
             this.driverAccountRepository.Update(driver);

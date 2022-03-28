@@ -16,5 +16,6 @@ namespace tmsang.application
 
         //quan ly cac account khac
         IEnumerable<ActiveAccountDto> GetAccounts(string type);
+        void ActionOnAccount(ActionOnAccountDto action);
     }
 }

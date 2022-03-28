@@ -47,7 +47,7 @@ namespace tmsang.api
                     throw new Exception("Your token is invalid");
                 }
 
-                var id = _auth.GetClaim(token, "nameid");
+                var id = new Guid(_auth.GetClaim(token, "nameid"));
                 var role = _auth.GetClaim(token, "role");
                 object user = null;
 

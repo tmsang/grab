@@ -92,10 +92,10 @@ namespace tmsang.domain
         // C. Business & Logic
         // =========================================
 
-        public virtual void Activate()      // y nghia: protected set la vay - gom logic vao
+        public virtual void ChangeStatus(E_Status status)      // y nghia: protected set la vay - gom logic vao
         {
-            this.AccountStatus = E_Status.Actived;
-            this.Histories.Add(B_GuestHistory.Create(E_Status.Actived, "Active account"));
+            this.AccountStatus = status;
+            this.Histories.Add(B_GuestHistory.Create(status, $"Change status account {status.ToString()}"));
         }        
 
         public virtual void ResetPassword(string hash, byte[] salt)

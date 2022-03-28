@@ -1,4 +1,6 @@
-﻿namespace tmsang.domain
+﻿using System;
+
+namespace tmsang.domain
 {
     public class R_GuestDomainService
     {        
@@ -22,7 +24,7 @@
         //=============================================
         // GUEST
         //=============================================
-        public R_Guest GetGuestById(string id)
+        public R_Guest GetGuestById(Guid id)
         {
             // doi chieu email/phone voi database
             var r_GuestGetByIdSpec = new R_GuestGetByIdSpec(id);

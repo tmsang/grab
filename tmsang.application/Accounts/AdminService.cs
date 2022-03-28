@@ -109,7 +109,7 @@ namespace tmsang.application
             {
                 throw new Exception("This account is not exists");
             }
-            user.Activate();
+            user.ChangeStatus(E_Status.Actived);
 
             this.unitOfWork.ForceBeginTransaction();
             this.adminAccountRepository.Update(user);
@@ -305,6 +305,34 @@ namespace tmsang.application
             return result;
         }
 
+        public void ActionOnAccount(ActionOnAccountDto action) {                                    
+
+            if (action.AccountType == "guest")
+            {
+                var guest = this.guestAccountRepository.FindById(action.Id, "Histories");
+                if (guest == null) throw new Exception("This account is not exists");
+                guest.ChangeStatus(action.Status == E_Status.None ? E_Status.Actived : action.Status);
+                this.unitOfWork.ForceBeginTransaction();
+                this.guestAccountRepository.Update(guest);
+            }
+            if (action.AccountType == "driver")
+            {
+                var driver = this.driverAccountRepository.FindById(action.Id, "Histories");
+                if (driver == null) throw new Exception("This account is not exists");
+                driver.ChangeStatus(action.Status == E_Status.None ? E_Status.Actived : action.Status);
+                this.unitOfWork.ForceBeginTransaction();
+                this.driverAccountRepository.Update(driver);
+            }
+            if (action.AccountType == "admin")
+            {
+                var admin = this.adminAccountRepository.FindById(action.Id, "Histories");
+                if (admin == null) throw new Exception("This account is not exists");                
+                admin.ChangeStatus(action.Status == E_Status.None ? E_Status.Actived : action.Status);
+                this.unitOfWork.ForceBeginTransaction();
+                this.adminAccountRepository.Update(admin);
+            }
+
+        }
 
     }
 }

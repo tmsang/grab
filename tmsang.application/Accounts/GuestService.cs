@@ -99,7 +99,7 @@ namespace tmsang.application
             {
                 throw new Exception("This account is not exists");
             }
-            guest.Activate();            
+            guest.ChangeStatus(E_Status.Actived);            
 
             this.unitOfWork.ForceBeginTransaction();
             this.guestAccountRepository.Update(guest);

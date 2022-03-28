@@ -128,9 +128,9 @@ namespace tmsang.api
         }
 
 
-        // ===============================================
-        // Active Account [Guest, Driver, Admin]
-        // ===============================================
+        // ========================================================
+        // Active Account [Guest, Driver, Admin] - for Web Admin
+        // ========================================================
         [Authorize]
         [HttpGet("accounts")]
         public IEnumerable<ActiveAccountDto> GetAccounts(string type)
@@ -145,5 +145,18 @@ namespace tmsang.api
             }
         }
 
+        [Authorize]
+        [HttpPost("accounts")]
+        public void ActionOnAccount([FromForm] ActionOnAccountDto action)
+        {
+            try
+            {
+                this.accountService.ActionOnAccount(action);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
