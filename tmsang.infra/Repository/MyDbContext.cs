@@ -384,11 +384,15 @@ namespace tmsang.infra
             );
 
             var driverId1 = Guid.NewGuid();
-            var driverId2 = Guid.NewGuid();                                    
-            modelBuilder.Entity<R_Driver>().HasData(
-                R_Driver.CreateForSeed(driverId1, "Driver 1", "023363000", "", "123 ton dan p7 q4", "0919239081", "sangnew2015@gmail.com", hash.Hash, hash.Salt),
-                R_Driver.CreateForSeed(driverId2, "Driver 2", "023363001", "", "32/1 hoang dieu p10 q4", "0708825109", "sangnew2013@gmail.com", hash.Hash, hash.Salt)
+            var driverId2 = Guid.NewGuid();
+            var driver1 = R_Driver.CreateForSeed(driverId1, "Driver 1", "023363000", "", "123 ton dan p7 q4", "0919239081", "sangnew2015@gmail.com", hash.Hash, hash.Salt);
+            var driver2 = R_Driver.CreateForSeed(driverId2, "Driver 2", "023363001", "", "32/1 hoang dieu p10 q4", "0708825109", "sangnew2013@gmail.com", hash.Hash, hash.Salt);
+            modelBuilder.Entity<R_Driver>().HasData(driver1, driver2);
+            modelBuilder.Entity<B_DriverBike>().HasData(
+                B_DriverBike.CreateForSeed(1, driverId1, "59C1-22983", "THACH MINH SANG", "23451", "762-6572", "VISION", "HONDA", DateTime.Now),
+                B_DriverBike.CreateForSeed(2, driverId2, "59C1-65283", "TRAN THANH HAI", "87087", "301-6770", "AIRBLADE", "HONDA", DateTime.Now)
             );
+
             modelBuilder.Entity<B_DriverLocation>().HasData(
                 B_DriverLocation.CreateForSeed(10.74583, 106.68721166666667, DateTime.Now.Ticks, driverId1, 1),
                 B_DriverLocation.CreateForSeed(10.74683, 106.68821166666667, DateTime.Now.Ticks, driverId2, 2)

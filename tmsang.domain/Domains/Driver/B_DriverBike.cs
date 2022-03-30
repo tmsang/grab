@@ -35,5 +35,17 @@ namespace tmsang.domain
 
             return bike;
         }
+
+        public static B_DriverBike CreateForSeed(
+            int Id,
+            Guid AccountId, string plateNo, string bikeOwner, string engineNo,
+            string chassisNo, string bikeType, string brand, DateTime registrationDate
+        ) {
+            var bike = Create(AccountId, plateNo, bikeOwner, engineNo,
+                chassisNo, bikeType, brand, registrationDate);
+            bike.Id = Id;
+
+            return bike;
+        }
     }
 }
