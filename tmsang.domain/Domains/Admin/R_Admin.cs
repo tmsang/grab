@@ -16,8 +16,8 @@ namespace tmsang.domain
         public virtual byte[] Salt { get; protected set; }
 
         // relationship
-        public virtual IList<B_AdminHistory> Histories { get; protected set; }
-        public virtual IList<B_AdminPolicy> Policies { get; protected set; }
+        public virtual IList<B_AdminHistory> Histories { get; protected set; } = new List<B_AdminHistory>();
+        public virtual IList<B_AdminPolicy> Policies { get; protected set; } = new List<B_AdminPolicy>();
 
 
         public static R_Admin Create(

@@ -93,7 +93,7 @@ namespace tmsang.api
             }
         }
 
-        [HttpGet("smscode")]
+        [HttpPost("smscode")]
         public void SmsCode(string phone)
         {
             try

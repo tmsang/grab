@@ -20,9 +20,9 @@ namespace tmsang.domain
         public virtual byte[] Salt { get; protected set; }
 
         // relationship (1-n: 1)
-        public virtual IList<B_GuestHistory> Histories { get; protected set; }
-        public virtual IList<B_GuestLocation> Locations { get; set; }
-        public virtual IList<B_GuestPolicy> Policies { get; protected set; }               
+        public virtual IList<B_GuestHistory> Histories { get; protected set; } = new List<B_GuestHistory>();
+        public virtual IList<B_GuestLocation> Locations { get; set; } = new List<B_GuestLocation>();
+        public virtual IList<B_GuestPolicy> Policies { get; protected set; } = new List<B_GuestPolicy>();
 
         // =========================================
         // B. Events of guest
