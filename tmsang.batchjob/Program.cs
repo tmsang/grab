@@ -5,8 +5,25 @@ namespace tmsang.batchjob
 {
     public class Program
     {
+        /*=========================================
+         * STATUS:
+         
+            Pending = 1,
+            Accepted = 2,
+            Started = 3,        
+            Ended = 4,
+            Evaluation = 5,
+
+            CancelByUser = 10,
+            CancelByDriver = 11,
+            CancelByAdmin = 12,
+            CancelBySystem = 13
+        =========================================*/
+
         const int PERIOD_MAX_WAITING = 3;   // Khach cho toi da 3 phut
         const int CANCEL_BY_SYSTEM = 13;    // System huy khi qua 3 phut  
+
+        const int STATUS_Pending = 1;
 
         static void Main(string[] args)
         {                                 
@@ -25,7 +42,7 @@ namespace tmsang.batchjob
                             set RO.Status = {CANCEL_BY_SYSTEM}
                             where 
                                 RO.Id = RR.Id 
-                                AND RO.Status in (1, 2) 
+                                AND RO.Status in ({STATUS_Pending}) 
                                 AND (
                                     (TIME_TO_SEC(NOW()) - TIME_TO_SEC(RR.RequestDateTime))/60 >= {PERIOD_MAX_WAITING}
                                     OR    

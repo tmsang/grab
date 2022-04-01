@@ -9,7 +9,7 @@ using tmsang.infra;
 namespace tmsang.infra.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20220325034829_Initial")]
+    [Migration("20220331013026_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,18 +47,18 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 1,
-                            AccountId = new Guid("f7b6fb14-0b1c-4805-b1f2-ce6a9bb61bf4"),
+                            AccountId = new Guid("8b40ca6f-e2dd-4d95-8a9c-05aa2641a38f"),
                             AccountStatusId = 1,
                             Description = "Seed account",
-                            HappenDate = new DateTime(2022, 3, 25, 10, 48, 28, 757, DateTimeKind.Local).AddTicks(5820)
+                            HappenDate = new DateTime(2022, 3, 31, 8, 30, 25, 718, DateTimeKind.Local).AddTicks(1566)
                         },
                         new
                         {
                             Id = 2,
-                            AccountId = new Guid("18cb4527-34a1-4b91-aa11-7f162c2da86e"),
+                            AccountId = new Guid("7e200028-bf2c-4cd0-b09e-b219b01c916b"),
                             AccountStatusId = 1,
                             Description = "Seed account",
-                            HappenDate = new DateTime(2022, 3, 25, 10, 48, 28, 757, DateTimeKind.Local).AddTicks(6698)
+                            HappenDate = new DateTime(2022, 3, 31, 8, 30, 25, 718, DateTimeKind.Local).AddTicks(2465)
                         });
                 });
 
@@ -122,6 +122,32 @@ namespace tmsang.infra.Migrations
                     b.HasIndex("AccountId");
 
                     b.ToTable("B_DriverBikes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccountId = new Guid("1ead2044-08e5-4020-a12e-0bcbfa741ab7"),
+                            BikeOwner = "THACH MINH SANG",
+                            BikeType = "VISION",
+                            Brand = "HONDA",
+                            ChassisNo = "762-6572",
+                            EngineNo = "23451",
+                            PlateNo = "59C1-22983",
+                            RegistrationDate = new DateTime(2022, 3, 31, 8, 30, 25, 716, DateTimeKind.Local).AddTicks(2219)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccountId = new Guid("4a7833f9-feba-4f9e-9d0d-b24911634c28"),
+                            BikeOwner = "TRAN THANH HAI",
+                            BikeType = "AIRBLADE",
+                            Brand = "HONDA",
+                            ChassisNo = "301-6770",
+                            EngineNo = "87087",
+                            PlateNo = "59C1-65283",
+                            RegistrationDate = new DateTime(2022, 3, 31, 8, 30, 25, 716, DateTimeKind.Local).AddTicks(7206)
+                        });
                 });
 
             modelBuilder.Entity("tmsang.domain.B_DriverFeePolicy", b =>
@@ -180,18 +206,18 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 1,
-                            AccountId = new Guid("bfc7a2ce-4cad-41e3-a822-9459109908fd"),
+                            AccountId = new Guid("1ead2044-08e5-4020-a12e-0bcbfa741ab7"),
                             AccountStatusId = 1,
                             Description = "Seed account",
-                            HappenDate = new DateTime(2022, 3, 25, 10, 48, 28, 756, DateTimeKind.Local).AddTicks(8563)
+                            HappenDate = new DateTime(2022, 3, 31, 8, 30, 25, 717, DateTimeKind.Local).AddTicks(3016)
                         },
                         new
                         {
                             Id = 2,
-                            AccountId = new Guid("bd066d70-66a0-4db3-b20b-11d8dd499217"),
+                            AccountId = new Guid("4a7833f9-feba-4f9e-9d0d-b24911634c28"),
                             AccountStatusId = 1,
                             Description = "Seed account",
-                            HappenDate = new DateTime(2022, 3, 25, 10, 48, 28, 756, DateTimeKind.Local).AddTicks(9458)
+                            HappenDate = new DateTime(2022, 3, 31, 8, 30, 25, 717, DateTimeKind.Local).AddTicks(3926)
                         });
                 });
 
@@ -223,16 +249,16 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 1,
-                            AccountId = new Guid("bfc7a2ce-4cad-41e3-a822-9459109908fd"),
-                            Date = 637838021087562635L,
+                            AccountId = new Guid("1ead2044-08e5-4020-a12e-0bcbfa741ab7"),
+                            Date = 637843122257167473L,
                             Lat = 10.74583,
                             Lng = 106.68721166666667
                         },
                         new
                         {
                             Id = 2,
-                            AccountId = new Guid("bd066d70-66a0-4db3-b20b-11d8dd499217"),
-                            Date = 637838021087565918L,
+                            AccountId = new Guid("4a7833f9-feba-4f9e-9d0d-b24911634c28"),
+                            Date = 637843122257170483L,
                             Lat = 10.746829999999999,
                             Lng = 106.68821166666667
                         });
@@ -332,14 +358,14 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 1,
-                            DriverId = new Guid("bfc7a2ce-4cad-41e3-a822-9459109908fd"),
-                            GroupId = new Guid("b0f96fba-8302-467b-a985-70f3307d3ae7")
+                            DriverId = new Guid("1ead2044-08e5-4020-a12e-0bcbfa741ab7"),
+                            GroupId = new Guid("60e6e062-ff1c-4c4a-8644-904eea5c6e55")
                         },
                         new
                         {
                             Id = 2,
-                            DriverId = new Guid("bd066d70-66a0-4db3-b20b-11d8dd499217"),
-                            GroupId = new Guid("b0f96fba-8302-467b-a985-70f3307d3ae7")
+                            DriverId = new Guid("4a7833f9-feba-4f9e-9d0d-b24911634c28"),
+                            GroupId = new Guid("60e6e062-ff1c-4c4a-8644-904eea5c6e55")
                         });
                 });
 
@@ -371,18 +397,18 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 1,
-                            AccountId = new Guid("75647c3e-9277-4320-ab9e-858cdf3a9b88"),
+                            AccountId = new Guid("71ce352e-7508-4191-8039-75385d14b2dc"),
                             AccountStatusId = 1,
                             Description = "Seed account",
-                            HappenDate = new DateTime(2022, 3, 25, 10, 48, 28, 755, DateTimeKind.Local).AddTicks(4306)
+                            HappenDate = new DateTime(2022, 3, 31, 8, 30, 25, 715, DateTimeKind.Local).AddTicks(4215)
                         },
                         new
                         {
                             Id = 2,
-                            AccountId = new Guid("942b8df7-9f14-4a6a-a909-ec054ec7483d"),
+                            AccountId = new Guid("4cade1ac-6668-419c-8167-7321b97939ee"),
                             AccountStatusId = 1,
                             Description = "Seed account",
-                            HappenDate = new DateTime(2022, 3, 25, 10, 48, 28, 755, DateTimeKind.Local).AddTicks(5204)
+                            HappenDate = new DateTime(2022, 3, 31, 8, 30, 25, 715, DateTimeKind.Local).AddTicks(5136)
                         });
                 });
 
@@ -414,16 +440,16 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 1,
-                            AccountId = new Guid("75647c3e-9277-4320-ab9e-858cdf3a9b88"),
-                            Date = 637838021087548083L,
+                            AccountId = new Guid("71ce352e-7508-4191-8039-75385d14b2dc"),
+                            Date = 637843122257148496L,
                             Lat = 10.74783,
                             Lng = 106.68921166666667
                         },
                         new
                         {
                             Id = 2,
-                            AccountId = new Guid("942b8df7-9f14-4a6a-a909-ec054ec7483d"),
-                            Date = 637838021087551708L,
+                            AccountId = new Guid("4cade1ac-6668-419c-8167-7321b97939ee"),
+                            Date = 637843122257151636L,
                             Lat = 10.74593,
                             Lng = 106.68101166666666
                         });
@@ -639,7 +665,7 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 1,
-                            ChangedDate = new DateTime(2022, 3, 25, 10, 48, 28, 680, DateTimeKind.Local).AddTicks(2716),
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 559, DateTimeKind.Local).AddTicks(2404),
                             Cost = 8000.0,
                             From = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "RoutineCost - 01/2022",
@@ -649,7 +675,7 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 2,
-                            ChangedDate = new DateTime(2022, 3, 25, 10, 48, 28, 680, DateTimeKind.Local).AddTicks(3359),
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 559, DateTimeKind.Local).AddTicks(3052),
                             Cost = 5000.0,
                             From = new DateTime(2022, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "RoutineCost - 02/2022",
@@ -659,7 +685,7 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 3,
-                            ChangedDate = new DateTime(2022, 3, 25, 10, 48, 28, 680, DateTimeKind.Local).AddTicks(3367),
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 559, DateTimeKind.Local).AddTicks(3059),
                             Cost = 7000.0,
                             From = new DateTime(2022, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "RoutineCost - 03/2022",
@@ -669,7 +695,7 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 4,
-                            ChangedDate = new DateTime(2022, 3, 25, 10, 48, 28, 680, DateTimeKind.Local).AddTicks(3373),
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 559, DateTimeKind.Local).AddTicks(3064),
                             Cost = 8000.0,
                             From = new DateTime(2022, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "RoutineCost - 04/2022",
@@ -679,7 +705,7 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 5,
-                            ChangedDate = new DateTime(2022, 3, 25, 10, 48, 28, 680, DateTimeKind.Local).AddTicks(3378),
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 559, DateTimeKind.Local).AddTicks(3069),
                             Cost = 5000.0,
                             From = new DateTime(2022, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "RoutineCost - 05/2022",
@@ -689,7 +715,7 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 6,
-                            ChangedDate = new DateTime(2022, 3, 25, 10, 48, 28, 680, DateTimeKind.Local).AddTicks(3383),
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 559, DateTimeKind.Local).AddTicks(3074),
                             Cost = 7000.0,
                             From = new DateTime(2022, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "RoutineCost - 06/2022",
@@ -699,7 +725,7 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 7,
-                            ChangedDate = new DateTime(2022, 3, 25, 10, 48, 28, 680, DateTimeKind.Local).AddTicks(3388),
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 559, DateTimeKind.Local).AddTicks(3079),
                             Cost = 8000.0,
                             From = new DateTime(2022, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "RoutineCost - 07/2022",
@@ -709,7 +735,7 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 8,
-                            ChangedDate = new DateTime(2022, 3, 25, 10, 48, 28, 680, DateTimeKind.Local).AddTicks(3393),
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 559, DateTimeKind.Local).AddTicks(3085),
                             Cost = 5000.0,
                             From = new DateTime(2022, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "RoutineCost - 08/2022",
@@ -719,7 +745,7 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 9,
-                            ChangedDate = new DateTime(2022, 3, 25, 10, 48, 28, 680, DateTimeKind.Local).AddTicks(3400),
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 559, DateTimeKind.Local).AddTicks(3090),
                             Cost = 7000.0,
                             From = new DateTime(2022, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "RoutineCost - 09/2022",
@@ -729,7 +755,7 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 10,
-                            ChangedDate = new DateTime(2022, 3, 25, 10, 48, 28, 680, DateTimeKind.Local).AddTicks(3406),
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 559, DateTimeKind.Local).AddTicks(3096),
                             Cost = 8000.0,
                             From = new DateTime(2022, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "RoutineCost - 10/2022",
@@ -739,7 +765,7 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 11,
-                            ChangedDate = new DateTime(2022, 3, 25, 10, 48, 28, 680, DateTimeKind.Local).AddTicks(3411),
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 559, DateTimeKind.Local).AddTicks(3101),
                             Cost = 5000.0,
                             From = new DateTime(2022, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "RoutineCost - 11/2022",
@@ -749,7 +775,7 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 12,
-                            ChangedDate = new DateTime(2022, 3, 25, 10, 48, 28, 680, DateTimeKind.Local).AddTicks(3416),
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 559, DateTimeKind.Local).AddTicks(3106),
                             Cost = 7000.0,
                             From = new DateTime(2022, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "RoutineCost - 12/2022",
@@ -790,7 +816,7 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 1,
-                            ChangedDate = new DateTime(2022, 3, 25, 10, 48, 28, 681, DateTimeKind.Local).AddTicks(7316),
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 560, DateTimeKind.Local).AddTicks(6568),
                             Cost = 0.02,
                             From = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Tax - 01/2022",
@@ -800,7 +826,7 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 2,
-                            ChangedDate = new DateTime(2022, 3, 25, 10, 48, 28, 681, DateTimeKind.Local).AddTicks(7713),
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 560, DateTimeKind.Local).AddTicks(6958),
                             Cost = 0.050000000000000003,
                             From = new DateTime(2022, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Tax - 02/2022",
@@ -810,7 +836,7 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 3,
-                            ChangedDate = new DateTime(2022, 3, 25, 10, 48, 28, 681, DateTimeKind.Local).AddTicks(7719),
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 560, DateTimeKind.Local).AddTicks(6964),
                             Cost = 0.10000000000000001,
                             From = new DateTime(2022, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Tax - 03/2022",
@@ -820,7 +846,7 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 4,
-                            ChangedDate = new DateTime(2022, 3, 25, 10, 48, 28, 681, DateTimeKind.Local).AddTicks(7724),
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 560, DateTimeKind.Local).AddTicks(6970),
                             Cost = 0.02,
                             From = new DateTime(2022, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Tax - 04/2022",
@@ -830,7 +856,7 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 5,
-                            ChangedDate = new DateTime(2022, 3, 25, 10, 48, 28, 681, DateTimeKind.Local).AddTicks(7789),
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 560, DateTimeKind.Local).AddTicks(6975),
                             Cost = 0.050000000000000003,
                             From = new DateTime(2022, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Tax - 05/2022",
@@ -840,7 +866,7 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 6,
-                            ChangedDate = new DateTime(2022, 3, 25, 10, 48, 28, 681, DateTimeKind.Local).AddTicks(7794),
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 560, DateTimeKind.Local).AddTicks(6979),
                             Cost = 0.10000000000000001,
                             From = new DateTime(2022, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Tax - 06/2022",
@@ -850,7 +876,7 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 7,
-                            ChangedDate = new DateTime(2022, 3, 25, 10, 48, 28, 681, DateTimeKind.Local).AddTicks(7799),
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 560, DateTimeKind.Local).AddTicks(6984),
                             Cost = 0.02,
                             From = new DateTime(2022, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Tax - 07/2022",
@@ -860,7 +886,7 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 8,
-                            ChangedDate = new DateTime(2022, 3, 25, 10, 48, 28, 681, DateTimeKind.Local).AddTicks(7803),
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 560, DateTimeKind.Local).AddTicks(6989),
                             Cost = 0.050000000000000003,
                             From = new DateTime(2022, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Tax - 08/2022",
@@ -870,7 +896,7 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 9,
-                            ChangedDate = new DateTime(2022, 3, 25, 10, 48, 28, 681, DateTimeKind.Local).AddTicks(7808),
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 560, DateTimeKind.Local).AddTicks(7045),
                             Cost = 0.10000000000000001,
                             From = new DateTime(2022, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Tax - 09/2022",
@@ -880,7 +906,7 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 10,
-                            ChangedDate = new DateTime(2022, 3, 25, 10, 48, 28, 681, DateTimeKind.Local).AddTicks(7813),
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 560, DateTimeKind.Local).AddTicks(7050),
                             Cost = 0.02,
                             From = new DateTime(2022, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Tax - 10/2022",
@@ -890,7 +916,7 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 11,
-                            ChangedDate = new DateTime(2022, 3, 25, 10, 48, 28, 681, DateTimeKind.Local).AddTicks(7818),
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 560, DateTimeKind.Local).AddTicks(7055),
                             Cost = 0.050000000000000003,
                             From = new DateTime(2022, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Tax - 11/2022",
@@ -900,7 +926,7 @@ namespace tmsang.infra.Migrations
                         new
                         {
                             Id = 12,
-                            ChangedDate = new DateTime(2022, 3, 25, 10, 48, 28, 681, DateTimeKind.Local).AddTicks(7824),
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 560, DateTimeKind.Local).AddTicks(7062),
                             Cost = 0.10000000000000001,
                             From = new DateTime(2022, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Tax - 12/2022",
@@ -943,25 +969,25 @@ namespace tmsang.infra.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f7b6fb14-0b1c-4805-b1f2-ce6a9bb61bf4"),
+                            Id = new Guid("8b40ca6f-e2dd-4d95-8a9c-05aa2641a38f"),
                             AccountStatus = 1,
                             Address = "123 hoang dieu p10q4",
                             Email = "sangnew2020@gmail.com",
                             FullName = "Admin 1",
-                            Password = "EBWbmOigtUUSMmeTRwSpwVd2ft+svPYs0BBtB6jdm1M=",
+                            Password = "5QSdSx5RijYeRshgKs2o22irt6jGXeKT++Kfykl31xw=",
                             Phone = "0919239081",
-                            Salt = new byte[] { 194, 114, 250, 149, 234, 175, 65, 44, 25, 84, 22, 15, 36, 121, 76, 58 }
+                            Salt = new byte[] { 231, 83, 229, 105, 148, 157, 135, 172, 16, 192, 79, 246, 64, 224, 72, 232 }
                         },
                         new
                         {
-                            Id = new Guid("18cb4527-34a1-4b91-aa11-7f162c2da86e"),
+                            Id = new Guid("7e200028-bf2c-4cd0-b09e-b219b01c916b"),
                             AccountStatus = 1,
                             Address = "456 hoang dieu p10q4",
                             Email = "sangnew2021@gmail.com",
                             FullName = "Admin 2",
-                            Password = "EBWbmOigtUUSMmeTRwSpwVd2ft+svPYs0BBtB6jdm1M=",
+                            Password = "5QSdSx5RijYeRshgKs2o22irt6jGXeKT++Kfykl31xw=",
                             Phone = "0708825109",
-                            Salt = new byte[] { 194, 114, 250, 149, 234, 175, 65, 44, 25, 84, 22, 15, 36, 121, 76, 58 }
+                            Salt = new byte[] { 231, 83, 229, 105, 148, 157, 135, 172, 16, 192, 79, 246, 64, 224, 72, 232 }
                         });
                 });
 
@@ -1005,29 +1031,29 @@ namespace tmsang.infra.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("bfc7a2ce-4cad-41e3-a822-9459109908fd"),
+                            Id = new Guid("1ead2044-08e5-4020-a12e-0bcbfa741ab7"),
                             AccountStatus = 1,
                             Address = "123 ton dan p7 q4",
                             Email = "sangnew2015@gmail.com",
                             FullName = "Driver 1",
-                            Password = "EBWbmOigtUUSMmeTRwSpwVd2ft+svPYs0BBtB6jdm1M=",
+                            Password = "5QSdSx5RijYeRshgKs2o22irt6jGXeKT++Kfykl31xw=",
                             PersonalId = "023363000",
                             PersonalImage = "",
                             Phone = "0919239081",
-                            Salt = new byte[] { 194, 114, 250, 149, 234, 175, 65, 44, 25, 84, 22, 15, 36, 121, 76, 58 }
+                            Salt = new byte[] { 231, 83, 229, 105, 148, 157, 135, 172, 16, 192, 79, 246, 64, 224, 72, 232 }
                         },
                         new
                         {
-                            Id = new Guid("bd066d70-66a0-4db3-b20b-11d8dd499217"),
+                            Id = new Guid("4a7833f9-feba-4f9e-9d0d-b24911634c28"),
                             AccountStatus = 1,
                             Address = "32/1 hoang dieu p10 q4",
                             Email = "sangnew2013@gmail.com",
                             FullName = "Driver 2",
-                            Password = "EBWbmOigtUUSMmeTRwSpwVd2ft+svPYs0BBtB6jdm1M=",
+                            Password = "5QSdSx5RijYeRshgKs2o22irt6jGXeKT++Kfykl31xw=",
                             PersonalId = "023363001",
                             PersonalImage = "",
                             Phone = "0708825109",
-                            Salt = new byte[] { 194, 114, 250, 149, 234, 175, 65, 44, 25, 84, 22, 15, 36, 121, 76, 58 }
+                            Salt = new byte[] { 231, 83, 229, 105, 148, 157, 135, 172, 16, 192, 79, 246, 64, 224, 72, 232 }
                         });
                 });
 
@@ -1073,30 +1099,30 @@ namespace tmsang.infra.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("dffccae3-c313-4763-a2ec-53c7ab4bd2f5"),
+                            Id = new Guid("87e6c48c-df17-40ef-bf6c-83f43ed17faf"),
                             Cost = 0.10000000000000001,
-                            GroupId = new Guid("b0f96fba-8302-467b-a985-70f3307d3ae7"),
+                            GroupId = new Guid("60e6e062-ff1c-4c4a-8644-904eea5c6e55"),
                             ProvinceOrCity = "Ho Chi Minh"
                         },
                         new
                         {
-                            Id = new Guid("1457c289-85ed-45d2-8a4e-8b4577986e41"),
+                            Id = new Guid("333b4c37-8215-4ccb-8d0a-af002741c0af"),
                             Cost = 0.25,
-                            GroupId = new Guid("b0f96fba-8302-467b-a985-70f3307d3ae7"),
+                            GroupId = new Guid("60e6e062-ff1c-4c4a-8644-904eea5c6e55"),
                             ProvinceOrCity = "Tay Nguyen"
                         },
                         new
                         {
-                            Id = new Guid("cdd08ea9-8d8d-45d3-a868-2a462033ccb8"),
+                            Id = new Guid("800ce6ad-77cf-4cc1-894c-d458debc93f2"),
                             Cost = 0.10000000000000001,
-                            GroupId = new Guid("b0f96fba-8302-467b-a985-70f3307d3ae7"),
+                            GroupId = new Guid("60e6e062-ff1c-4c4a-8644-904eea5c6e55"),
                             ProvinceOrCity = "Binh Duong"
                         },
                         new
                         {
-                            Id = new Guid("3fc3bfc1-9f58-460b-8f81-1558759a5833"),
+                            Id = new Guid("08ffe23f-9092-4194-807f-79a15a9d462f"),
                             Cost = 0.050000000000000003,
-                            GroupId = new Guid("b0f96fba-8302-467b-a985-70f3307d3ae7"),
+                            GroupId = new Guid("60e6e062-ff1c-4c4a-8644-904eea5c6e55"),
                             ProvinceOrCity = "Ca Mau"
                         });
                 });
@@ -1117,17 +1143,17 @@ namespace tmsang.infra.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b0f96fba-8302-467b-a985-70f3307d3ae7"),
+                            Id = new Guid("60e6e062-ff1c-4c4a-8644-904eea5c6e55"),
                             Name = "Normal"
                         },
                         new
                         {
-                            Id = new Guid("c143b41e-b01d-45a0-89f9-7d2476234eb0"),
+                            Id = new Guid("49476f13-4609-4240-a460-919c99c5788c"),
                             Name = "Wounded"
                         },
                         new
                         {
-                            Id = new Guid("3ca8550d-7e9a-4963-8578-a90cc6e0e1ea"),
+                            Id = new Guid("52c76430-047a-4e29-82ab-8320ce53dc18"),
                             Name = "Poor"
                         });
                 });
@@ -1163,23 +1189,23 @@ namespace tmsang.infra.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("75647c3e-9277-4320-ab9e-858cdf3a9b88"),
+                            Id = new Guid("71ce352e-7508-4191-8039-75385d14b2dc"),
                             AccountStatus = 1,
                             Email = "sangnew2016@gmail.com",
                             FullName = "Guest 1",
-                            Password = "EBWbmOigtUUSMmeTRwSpwVd2ft+svPYs0BBtB6jdm1M=",
+                            Password = "5QSdSx5RijYeRshgKs2o22irt6jGXeKT++Kfykl31xw=",
                             Phone = "0919239081",
-                            Salt = new byte[] { 194, 114, 250, 149, 234, 175, 65, 44, 25, 84, 22, 15, 36, 121, 76, 58 }
+                            Salt = new byte[] { 231, 83, 229, 105, 148, 157, 135, 172, 16, 192, 79, 246, 64, 224, 72, 232 }
                         },
                         new
                         {
-                            Id = new Guid("942b8df7-9f14-4a6a-a909-ec054ec7483d"),
+                            Id = new Guid("4cade1ac-6668-419c-8167-7321b97939ee"),
                             AccountStatus = 1,
                             Email = "sangnews2014@gmail.com",
                             FullName = "Guest 2",
-                            Password = "EBWbmOigtUUSMmeTRwSpwVd2ft+svPYs0BBtB6jdm1M=",
+                            Password = "5QSdSx5RijYeRshgKs2o22irt6jGXeKT++Kfykl31xw=",
                             Phone = "0708825109",
-                            Salt = new byte[] { 194, 114, 250, 149, 234, 175, 65, 44, 25, 84, 22, 15, 36, 121, 76, 58 }
+                            Salt = new byte[] { 231, 83, 229, 105, 148, 157, 135, 172, 16, 192, 79, 246, 64, 224, 72, 232 }
                         });
                 });
 
