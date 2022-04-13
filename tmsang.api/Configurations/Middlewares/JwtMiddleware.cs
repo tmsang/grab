@@ -42,12 +42,12 @@ namespace tmsang.api
         private void attachUserToContext(HttpContext context, string token)
         {
             try
-            {
+            {                
                 if (!_auth.ValidateCurrentToken(token)) {
                     throw new Exception("Your token is invalid");
                 }
 
-                var id = _auth.GetClaim(token, "nameid");
+                var id = new Guid(_auth.GetClaim(token, "nameid"));
                 var role = _auth.GetClaim(token, "role");
                 object user = null;
 
@@ -70,6 +70,7 @@ namespace tmsang.api
                 // attach user to context on successful jwt validation
                 context.Items["User"] = user;
                 context.Items["Role"] = role;
+                
             }
             catch
             {

@@ -1,4 +1,6 @@
-﻿namespace tmsang.domain
+﻿using System;
+
+namespace tmsang.domain
 {
     public class R_AdminDomainService
     {
@@ -22,7 +24,7 @@
         //=============================================
         // ADMIN
         //=============================================
-        public R_Admin GetAdminById(string id)
+        public R_Admin GetAdminById(Guid id)
         {
             // doi chieu email/phone voi database
             var r_AdminGetByIdSpec = new R_AdminGetByIdSpec(id);

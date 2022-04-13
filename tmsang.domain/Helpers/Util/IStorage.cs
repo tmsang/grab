@@ -35,6 +35,8 @@ namespace tmsang.domain
 
         public string RootPath { get; set; }
         public string UrlApi { get; set; }
+        public string GoogleApiKey { get; set; }
+
         public Dictionary<string, SmsVerification> SmsStorage { get; set; } = new Dictionary<string, SmsVerification>();
     }
 }

@@ -20,10 +20,9 @@ namespace tmsang.domain
         public virtual byte[] Salt { get; protected set; }
 
         // relationship (1-n: 1)
-        public virtual IList<B_GuestHistory> Histories { get; protected set; }
-        public virtual IList<B_GuestPolicy> Policies { get; protected set; }
-        
-        public virtual IList<R_Request> Requests { get; protected set; }
+        public virtual IList<B_GuestHistory> Histories { get; protected set; } = new List<B_GuestHistory>();
+        public virtual IList<B_GuestLocation> Locations { get; set; } = new List<B_GuestLocation>();
+        public virtual IList<B_GuestPolicy> Policies { get; protected set; } = new List<B_GuestPolicy>();
 
         // =========================================
         // B. Events of guest
@@ -40,6 +39,23 @@ namespace tmsang.domain
         public static R_Guest Create(string fullName, string phone, string email, string password, byte[] salt) {
             return Create(Guid.NewGuid(), fullName, phone, email, password, salt);
         }
+
+        public static R_Guest CreateForSeed(Guid id, string fullName, string phone, string email, string password, byte[] salt) {
+            var guest = new R_Guest
+            {
+                Id = id,
+                FullName = fullName,
+                Phone = phone,
+                Email = email,
+                AccountStatus = E_Status.Actived,
+
+                Password = password,
+                Salt = salt
+            };            
+
+            return guest;
+        }
+
         public static R_Guest Create(Guid id, string fullName, string phone, string email, string password, byte[] salt) {
             var guest = new R_Guest {
                 Id = id,
@@ -50,6 +66,8 @@ namespace tmsang.domain
                 Password = password,
                 Salt = salt                
             };
+            guest.Histories.Add(B_GuestHistory.Create(E_Status.None, "Create account"));
+
             // add event sourcing
             DomainEvents.Raise<R_GuestCreatedEvent>(new R_GuestCreatedEvent() { R_Guest = guest });
 
@@ -74,14 +92,28 @@ namespace tmsang.domain
         // C. Business & Logic
         // =========================================
 
-        public virtual void Activate()      // y nghia: protected set la vay - gom logic vao
+        public virtual void ChangeStatus(E_Status status)      // y nghia: protected set la vay - gom logic vao
         {
-            this.AccountStatus = E_Status.Active;
+            this.AccountStatus = status;
+            this.Histories.Add(B_GuestHistory.Create(status, $"Change status account {status.ToString()}"));
+        }        
+
+        public virtual void ResetPassword(string hash, byte[] salt)
+        {
+            this.Password = hash;
+            this.Salt = salt;
+            this.Histories.Add(B_GuestHistory.Create(E_Status.Actived, "Reset password"));
+
+            DomainEvents.Raise<R_GuestChangePasswordEvent>(new R_GuestChangePasswordEvent { R_Guest = this });
         }
 
-        public virtual void ResetPassword(string newPassword)
+        public virtual void PushPosition(double lat, double lng)
         {
-            this.Password = newPassword;
+            // delete old location (maybe change later)
+            Locations = new List<B_GuestLocation>();
+
+            // add location latest
+            Locations.Add(B_GuestLocation.Create(lat, lng, DateTime.Now.Ticks));
         }
     }
 }

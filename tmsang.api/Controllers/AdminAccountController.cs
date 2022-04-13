@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 using tmsang.application;
 
 namespace tmsang.api
@@ -20,9 +22,9 @@ namespace tmsang.api
             {
                 this.accountService.AdminRegister(registerDto);
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -33,9 +35,9 @@ namespace tmsang.api
             {
                 this.accountService.AdminActivate(token);
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -46,9 +48,9 @@ namespace tmsang.api
             {
                 return this.accountService.AdminLogin(loginDto);
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -59,9 +61,9 @@ namespace tmsang.api
             {
                 this.accountService.AdminForgotPassword(email);
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -72,9 +74,9 @@ namespace tmsang.api
             {
                 return this.accountService.AdminResetPassword(resetPasswordDto);
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -90,9 +92,9 @@ namespace tmsang.api
             {
                 return this.accountService.AdminChangePassword(changePasswordDto);
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -103,9 +105,57 @@ namespace tmsang.api
             {
                 this.accountService.SendSmsCode(phone);
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
+            }
+        }
+
+        // ===============================================
+        // Utility
+        // ===============================================
+        [HttpGet("encrypt")]
+        public string EncryptPassword(string password)
+        {
+            try
+            {
+                return this.accountService.EncryptPassword(password);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        // ========================================================
+        // Active Account [Guest, Driver, Admin] - for Web Admin
+        // ========================================================
+        [Authorize]
+        [HttpGet("accounts")]
+        public IEnumerable<ActiveAccountDto> GetAccounts(string type)
+        {
+            try
+            {
+                return this.accountService.GetAccounts(type);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [Authorize]
+        [HttpPost("accounts")]
+        public void ActionOnAccount([FromForm] ActionOnAccountDto action)
+        {
+            try
+            {
+                this.accountService.ActionOnAccount(action);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
     }

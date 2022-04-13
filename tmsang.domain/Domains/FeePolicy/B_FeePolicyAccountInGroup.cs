@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace tmsang.domain
 {
@@ -10,8 +9,31 @@ namespace tmsang.domain
         // relatioship (1-n: n)
         public virtual Guid GroupId { get; protected set; }
         public virtual R_FeePolicyGroup Group { get; protected set; }
+        
+        public virtual Guid DriverId { get; protected set; }
 
-        // relationship (1-n: 1)
-        public virtual IList<R_Driver> Drivers { get; protected set; }        
+
+        public static B_FeePolicyAccountInGroup Create(Guid groupId, Guid driverId) 
+        {
+            var policyInGroup = new B_FeePolicyAccountInGroup
+            {                
+                GroupId = groupId,
+                DriverId = driverId
+            };
+
+            return policyInGroup;
+        }
+
+        public static B_FeePolicyAccountInGroup Create(int id, Guid groupId, Guid driverId)
+        {
+            var policyInGroup = new B_FeePolicyAccountInGroup
+            {
+                Id = id,
+                GroupId = groupId,
+                DriverId = driverId
+            };
+
+            return policyInGroup;
+        }
     }
 }

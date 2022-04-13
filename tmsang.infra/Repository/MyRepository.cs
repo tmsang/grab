@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using tmsang.domain;
@@ -36,7 +37,7 @@ namespace tmsang.infra
             _unitOfWork = unitOfWork;
             table = _unitOfWork.Set<T>();
         }
-
+        
         public void Add(T entity)
         {
             table.Add(entity);
@@ -47,14 +48,31 @@ namespace tmsang.infra
             table.Update(obj);
         }
 
+        public IQueryable<T> All()
+        {
+            return table.Where(p => 1 == 1);
+        }
+        public IQueryable<T> All(string navigationProperty)
+        {
+            return table.Where(p => 1 == 1).Include(navigationProperty);
+        }
+
         public IEnumerable<T> Find(ISpecification<T> spec)
         {
             return table.Where(spec.SpecExpression);
+        }
+        public IEnumerable<T> Find(ISpecification<T> spec, string navigationProperty)
+        {
+            return table.Where(spec.SpecExpression).Include(navigationProperty);
         }
 
         public T FindById(Guid id)
         {
             return table.Find(id);
+        }
+        public T FindById(Guid id, string navigationProperty)
+        {
+            return table.Where(p => p.Id == id).Include(navigationProperty).FirstOrDefault();
         }
 
         public T FindById(int id)
@@ -66,10 +84,14 @@ namespace tmsang.infra
         {
             return table.Where(spec.SpecExpression).FirstOrDefault();
         }
+        public T FindOne(ISpecification<T> spec, string navigationProperty)
+        {
+            return table.Where(spec.SpecExpression).Include(navigationProperty).FirstOrDefault();
+        }
 
         public void Remove(T entity)
         {
             table.Remove(entity);
-        }
+        }        
     }
 }

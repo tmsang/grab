@@ -5,9 +5,9 @@ namespace tmsang.domain
 {
     public class R_GuestGetByIdSpec : SpecificationBase<R_Guest>
     {
-        readonly string id;
+        readonly Guid id;
 
-        public R_GuestGetByIdSpec(string id)
+        public R_GuestGetByIdSpec(Guid id)
         {
             this.id = id;
         }
@@ -15,8 +15,8 @@ namespace tmsang.domain
         public override Expression<Func<R_Guest, bool>> SpecExpression
         {
             get {
-                return p => p.AccountStatus == E_Status.Active
-                            && p.Id.ToString() == this.id;
+                return p => p.AccountStatus == E_Status.Actived
+                            && p.Id == this.id;
             }
         }
     }

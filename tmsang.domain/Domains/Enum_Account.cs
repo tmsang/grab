@@ -13,13 +13,27 @@
         SetBike = 13
     }
 
+    public enum E_OrderStatus
+    {
+        Pending = 1,
+        Accepted = 2,
+        Started = 3,        
+        Ended = 4,
+        Evaluation = 5,
+
+        CancelByUser = 10,
+        CancelByDriver = 11,
+        CancelByAdmin = 12,
+        CancelBySystem = 13
+    }
+
     public enum E_Status
     { 
-        Remove = -2,
-        Lock = -1,
+        Hidden = -2,
+        Locked = -1,
         None = 0,
-        Active = 1,
-        Deactive = 2
+        Actived = 1,
+        Deactived = 2
     }
 
     public enum E_AccountType

@@ -40,6 +40,24 @@ namespace tmsang.infra.Migrations
                     b.HasIndex("AccountId");
 
                     b.ToTable("B_AdminHistories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccountId = new Guid("8b40ca6f-e2dd-4d95-8a9c-05aa2641a38f"),
+                            AccountStatusId = 1,
+                            Description = "Seed account",
+                            HappenDate = new DateTime(2022, 3, 31, 8, 30, 25, 718, DateTimeKind.Local).AddTicks(1566)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccountId = new Guid("7e200028-bf2c-4cd0-b09e-b219b01c916b"),
+                            AccountStatusId = 1,
+                            Description = "Seed account",
+                            HappenDate = new DateTime(2022, 3, 31, 8, 30, 25, 718, DateTimeKind.Local).AddTicks(2465)
+                        });
                 });
 
             modelBuilder.Entity("tmsang.domain.B_AdminPolicy", b =>
@@ -102,6 +120,32 @@ namespace tmsang.infra.Migrations
                     b.HasIndex("AccountId");
 
                     b.ToTable("B_DriverBikes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccountId = new Guid("1ead2044-08e5-4020-a12e-0bcbfa741ab7"),
+                            BikeOwner = "THACH MINH SANG",
+                            BikeType = "VISION",
+                            Brand = "HONDA",
+                            ChassisNo = "762-6572",
+                            EngineNo = "23451",
+                            PlateNo = "59C1-22983",
+                            RegistrationDate = new DateTime(2022, 3, 31, 8, 30, 25, 716, DateTimeKind.Local).AddTicks(2219)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccountId = new Guid("4a7833f9-feba-4f9e-9d0d-b24911634c28"),
+                            BikeOwner = "TRAN THANH HAI",
+                            BikeType = "AIRBLADE",
+                            Brand = "HONDA",
+                            ChassisNo = "301-6770",
+                            EngineNo = "87087",
+                            PlateNo = "59C1-65283",
+                            RegistrationDate = new DateTime(2022, 3, 31, 8, 30, 25, 716, DateTimeKind.Local).AddTicks(7206)
+                        });
                 });
 
             modelBuilder.Entity("tmsang.domain.B_DriverFeePolicy", b =>
@@ -155,6 +199,67 @@ namespace tmsang.infra.Migrations
                     b.HasIndex("AccountId");
 
                     b.ToTable("B_DriverHistories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccountId = new Guid("1ead2044-08e5-4020-a12e-0bcbfa741ab7"),
+                            AccountStatusId = 1,
+                            Description = "Seed account",
+                            HappenDate = new DateTime(2022, 3, 31, 8, 30, 25, 717, DateTimeKind.Local).AddTicks(3016)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccountId = new Guid("4a7833f9-feba-4f9e-9d0d-b24911634c28"),
+                            AccountStatusId = 1,
+                            Description = "Seed account",
+                            HappenDate = new DateTime(2022, 3, 31, 8, 30, 25, 717, DateTimeKind.Local).AddTicks(3926)
+                        });
+                });
+
+            modelBuilder.Entity("tmsang.domain.B_DriverLocation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("AccountId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<long>("Date")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("Lat")
+                        .HasColumnType("double");
+
+                    b.Property<double>("Lng")
+                        .HasColumnType("double");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.ToTable("B_DriverLocations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccountId = new Guid("1ead2044-08e5-4020-a12e-0bcbfa741ab7"),
+                            Date = 637843122257167473L,
+                            Lat = 10.74583,
+                            Lng = 106.68721166666667
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccountId = new Guid("4a7833f9-feba-4f9e-9d0d-b24911634c28"),
+                            Date = 637843122257170483L,
+                            Lat = 10.746829999999999,
+                            Lng = 106.68821166666667
+                        });
                 });
 
             modelBuilder.Entity("tmsang.domain.B_DriverPolicy", b =>
@@ -235,6 +340,9 @@ namespace tmsang.infra.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<Guid>("DriverId")
+                        .HasColumnType("char(36)");
+
                     b.Property<Guid>("GroupId")
                         .HasColumnType("char(36)");
 
@@ -243,6 +351,20 @@ namespace tmsang.infra.Migrations
                     b.HasIndex("GroupId");
 
                     b.ToTable("B_FeePolicyAccountInGroups");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DriverId = new Guid("1ead2044-08e5-4020-a12e-0bcbfa741ab7"),
+                            GroupId = new Guid("60e6e062-ff1c-4c4a-8644-904eea5c6e55")
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DriverId = new Guid("4a7833f9-feba-4f9e-9d0d-b24911634c28"),
+                            GroupId = new Guid("60e6e062-ff1c-4c4a-8644-904eea5c6e55")
+                        });
                 });
 
             modelBuilder.Entity("tmsang.domain.B_GuestHistory", b =>
@@ -268,6 +390,67 @@ namespace tmsang.infra.Migrations
                     b.HasIndex("AccountId");
 
                     b.ToTable("B_GuestHistories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccountId = new Guid("71ce352e-7508-4191-8039-75385d14b2dc"),
+                            AccountStatusId = 1,
+                            Description = "Seed account",
+                            HappenDate = new DateTime(2022, 3, 31, 8, 30, 25, 715, DateTimeKind.Local).AddTicks(4215)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccountId = new Guid("4cade1ac-6668-419c-8167-7321b97939ee"),
+                            AccountStatusId = 1,
+                            Description = "Seed account",
+                            HappenDate = new DateTime(2022, 3, 31, 8, 30, 25, 715, DateTimeKind.Local).AddTicks(5136)
+                        });
+                });
+
+            modelBuilder.Entity("tmsang.domain.B_GuestLocation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("AccountId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<long>("Date")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("Lat")
+                        .HasColumnType("double");
+
+                    b.Property<double>("Lng")
+                        .HasColumnType("double");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.ToTable("B_GuestLocations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccountId = new Guid("71ce352e-7508-4191-8039-75385d14b2dc"),
+                            Date = 637843122257148496L,
+                            Lat = 10.74783,
+                            Lng = 106.68921166666667
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccountId = new Guid("4cade1ac-6668-419c-8167-7321b97939ee"),
+                            Date = 637843122257151636L,
+                            Lat = 10.74593,
+                            Lng = 106.68101166666666
+                        });
                 });
 
             modelBuilder.Entity("tmsang.domain.B_GuestPolicy", b =>
@@ -382,8 +565,8 @@ namespace tmsang.infra.Migrations
                     b.Property<DateTime?>("From")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("Name")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -408,8 +591,8 @@ namespace tmsang.infra.Migrations
                     b.Property<DateTime?>("From")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("Name")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -434,8 +617,8 @@ namespace tmsang.infra.Migrations
                     b.Property<DateTime?>("From")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("Name")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -463,8 +646,8 @@ namespace tmsang.infra.Migrations
                     b.Property<DateTime?>("From")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("Name")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -475,6 +658,128 @@ namespace tmsang.infra.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("M_RoutineCosts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 559, DateTimeKind.Local).AddTicks(2404),
+                            Cost = 8000.0,
+                            From = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "RoutineCost - 01/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 559, DateTimeKind.Local).AddTicks(3052),
+                            Cost = 5000.0,
+                            From = new DateTime(2022, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "RoutineCost - 02/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 2, 28, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 559, DateTimeKind.Local).AddTicks(3059),
+                            Cost = 7000.0,
+                            From = new DateTime(2022, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "RoutineCost - 03/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 3, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 559, DateTimeKind.Local).AddTicks(3064),
+                            Cost = 8000.0,
+                            From = new DateTime(2022, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "RoutineCost - 04/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 4, 30, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 559, DateTimeKind.Local).AddTicks(3069),
+                            Cost = 5000.0,
+                            From = new DateTime(2022, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "RoutineCost - 05/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 5, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 559, DateTimeKind.Local).AddTicks(3074),
+                            Cost = 7000.0,
+                            From = new DateTime(2022, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "RoutineCost - 06/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 559, DateTimeKind.Local).AddTicks(3079),
+                            Cost = 8000.0,
+                            From = new DateTime(2022, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "RoutineCost - 07/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 7, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 559, DateTimeKind.Local).AddTicks(3085),
+                            Cost = 5000.0,
+                            From = new DateTime(2022, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "RoutineCost - 08/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 8, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 9,
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 559, DateTimeKind.Local).AddTicks(3090),
+                            Cost = 7000.0,
+                            From = new DateTime(2022, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "RoutineCost - 09/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 10,
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 559, DateTimeKind.Local).AddTicks(3096),
+                            Cost = 8000.0,
+                            From = new DateTime(2022, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "RoutineCost - 10/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 11,
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 559, DateTimeKind.Local).AddTicks(3101),
+                            Cost = 5000.0,
+                            From = new DateTime(2022, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "RoutineCost - 11/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 11, 30, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 12,
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 559, DateTimeKind.Local).AddTicks(3106),
+                            Cost = 7000.0,
+                            From = new DateTime(2022, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "RoutineCost - 12/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("tmsang.domain.M_TaxVAT", b =>
@@ -492,8 +797,8 @@ namespace tmsang.infra.Migrations
                     b.Property<DateTime?>("From")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("Name")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -504,6 +809,128 @@ namespace tmsang.infra.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("M_TaxVAT");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 560, DateTimeKind.Local).AddTicks(6568),
+                            Cost = 0.02,
+                            From = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tax - 01/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 560, DateTimeKind.Local).AddTicks(6958),
+                            Cost = 0.050000000000000003,
+                            From = new DateTime(2022, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tax - 02/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 2, 28, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 560, DateTimeKind.Local).AddTicks(6964),
+                            Cost = 0.10000000000000001,
+                            From = new DateTime(2022, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tax - 03/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 3, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 560, DateTimeKind.Local).AddTicks(6970),
+                            Cost = 0.02,
+                            From = new DateTime(2022, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tax - 04/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 4, 30, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 560, DateTimeKind.Local).AddTicks(6975),
+                            Cost = 0.050000000000000003,
+                            From = new DateTime(2022, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tax - 05/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 5, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 560, DateTimeKind.Local).AddTicks(6979),
+                            Cost = 0.10000000000000001,
+                            From = new DateTime(2022, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tax - 06/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 560, DateTimeKind.Local).AddTicks(6984),
+                            Cost = 0.02,
+                            From = new DateTime(2022, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tax - 07/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 7, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 560, DateTimeKind.Local).AddTicks(6989),
+                            Cost = 0.050000000000000003,
+                            From = new DateTime(2022, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tax - 08/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 8, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 9,
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 560, DateTimeKind.Local).AddTicks(7045),
+                            Cost = 0.10000000000000001,
+                            From = new DateTime(2022, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tax - 09/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 10,
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 560, DateTimeKind.Local).AddTicks(7050),
+                            Cost = 0.02,
+                            From = new DateTime(2022, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tax - 10/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 11,
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 560, DateTimeKind.Local).AddTicks(7055),
+                            Cost = 0.050000000000000003,
+                            From = new DateTime(2022, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tax - 11/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 11, 30, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 12,
+                            ChangedDate = new DateTime(2022, 3, 31, 8, 30, 25, 560, DateTimeKind.Local).AddTicks(7062),
+                            Cost = 0.10000000000000001,
+                            From = new DateTime(2022, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Tax - 12/2022",
+                            Status = 1,
+                            To = new DateTime(2022, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("tmsang.domain.R_Admin", b =>
@@ -536,6 +963,30 @@ namespace tmsang.infra.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("R_Admins");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("8b40ca6f-e2dd-4d95-8a9c-05aa2641a38f"),
+                            AccountStatus = 1,
+                            Address = "123 hoang dieu p10q4",
+                            Email = "sangnew2020@gmail.com",
+                            FullName = "Admin 1",
+                            Password = "5QSdSx5RijYeRshgKs2o22irt6jGXeKT++Kfykl31xw=",
+                            Phone = "0919239081",
+                            Salt = new byte[] { 231, 83, 229, 105, 148, 157, 135, 172, 16, 192, 79, 246, 64, 224, 72, 232 }
+                        },
+                        new
+                        {
+                            Id = new Guid("7e200028-bf2c-4cd0-b09e-b219b01c916b"),
+                            AccountStatus = 1,
+                            Address = "456 hoang dieu p10q4",
+                            Email = "sangnew2021@gmail.com",
+                            FullName = "Admin 2",
+                            Password = "5QSdSx5RijYeRshgKs2o22irt6jGXeKT++Kfykl31xw=",
+                            Phone = "0708825109",
+                            Salt = new byte[] { 231, 83, 229, 105, 148, 157, 135, 172, 16, 192, 79, 246, 64, 224, 72, 232 }
+                        });
                 });
 
             modelBuilder.Entity("tmsang.domain.R_Driver", b =>
@@ -549,9 +1000,6 @@ namespace tmsang.infra.Migrations
 
                     b.Property<string>("Address")
                         .HasColumnType("longtext");
-
-                    b.Property<int?>("B_FeePolicyAccountInGroupId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .HasColumnType("longtext");
@@ -576,9 +1024,35 @@ namespace tmsang.infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("B_FeePolicyAccountInGroupId");
-
                     b.ToTable("R_Drivers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("1ead2044-08e5-4020-a12e-0bcbfa741ab7"),
+                            AccountStatus = 1,
+                            Address = "123 ton dan p7 q4",
+                            Email = "sangnew2015@gmail.com",
+                            FullName = "Driver 1",
+                            Password = "5QSdSx5RijYeRshgKs2o22irt6jGXeKT++Kfykl31xw=",
+                            PersonalId = "023363000",
+                            PersonalImage = "",
+                            Phone = "0919239081",
+                            Salt = new byte[] { 231, 83, 229, 105, 148, 157, 135, 172, 16, 192, 79, 246, 64, 224, 72, 232 }
+                        },
+                        new
+                        {
+                            Id = new Guid("4a7833f9-feba-4f9e-9d0d-b24911634c28"),
+                            AccountStatus = 1,
+                            Address = "32/1 hoang dieu p10 q4",
+                            Email = "sangnew2013@gmail.com",
+                            FullName = "Driver 2",
+                            Password = "5QSdSx5RijYeRshgKs2o22irt6jGXeKT++Kfykl31xw=",
+                            PersonalId = "023363001",
+                            PersonalImage = "",
+                            Phone = "0708825109",
+                            Salt = new byte[] { 231, 83, 229, 105, 148, 157, 135, 172, 16, 192, 79, 246, 64, 224, 72, 232 }
+                        });
                 });
 
             modelBuilder.Entity("tmsang.domain.R_Evaluation", b =>
@@ -587,14 +1061,14 @@ namespace tmsang.infra.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
+                    b.Property<Guid>("GuestId")
+                        .HasColumnType("char(36)");
+
                     b.Property<string>("Note")
                         .HasColumnType("longtext");
 
-                    b.Property<int>("Rating")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("RequestId")
-                        .HasColumnType("char(36)");
+                    b.Property<float>("Rating")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -607,24 +1081,48 @@ namespace tmsang.infra.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid?>("GroupId")
+                    b.Property<double>("Cost")
+                        .HasColumnType("double");
+
+                    b.Property<Guid>("GroupId")
                         .HasColumnType("char(36)");
 
-                    b.Property<long?>("LocationId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int?>("PersonalPolicyTypeId")
-                        .HasColumnType("int");
+                    b.Property<string>("ProvinceOrCity")
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GroupId");
-
-                    b.HasIndex("LocationId");
-
-                    b.HasIndex("PersonalPolicyTypeId");
-
                     b.ToTable("R_FeePolicies");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("87e6c48c-df17-40ef-bf6c-83f43ed17faf"),
+                            Cost = 0.10000000000000001,
+                            GroupId = new Guid("60e6e062-ff1c-4c4a-8644-904eea5c6e55"),
+                            ProvinceOrCity = "Ho Chi Minh"
+                        },
+                        new
+                        {
+                            Id = new Guid("333b4c37-8215-4ccb-8d0a-af002741c0af"),
+                            Cost = 0.25,
+                            GroupId = new Guid("60e6e062-ff1c-4c4a-8644-904eea5c6e55"),
+                            ProvinceOrCity = "Tay Nguyen"
+                        },
+                        new
+                        {
+                            Id = new Guid("800ce6ad-77cf-4cc1-894c-d458debc93f2"),
+                            Cost = 0.10000000000000001,
+                            GroupId = new Guid("60e6e062-ff1c-4c4a-8644-904eea5c6e55"),
+                            ProvinceOrCity = "Binh Duong"
+                        },
+                        new
+                        {
+                            Id = new Guid("08ffe23f-9092-4194-807f-79a15a9d462f"),
+                            Cost = 0.050000000000000003,
+                            GroupId = new Guid("60e6e062-ff1c-4c4a-8644-904eea5c6e55"),
+                            ProvinceOrCity = "Ca Mau"
+                        });
                 });
 
             modelBuilder.Entity("tmsang.domain.R_FeePolicyGroup", b =>
@@ -639,6 +1137,23 @@ namespace tmsang.infra.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("R_FeePolicyGroups");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("60e6e062-ff1c-4c4a-8644-904eea5c6e55"),
+                            Name = "Normal"
+                        },
+                        new
+                        {
+                            Id = new Guid("49476f13-4609-4240-a460-919c99c5788c"),
+                            Name = "Wounded"
+                        },
+                        new
+                        {
+                            Id = new Guid("52c76430-047a-4e29-82ab-8320ce53dc18"),
+                            Name = "Poor"
+                        });
                 });
 
             modelBuilder.Entity("tmsang.domain.R_Guest", b =>
@@ -668,13 +1183,35 @@ namespace tmsang.infra.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("R_Guests");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("71ce352e-7508-4191-8039-75385d14b2dc"),
+                            AccountStatus = 1,
+                            Email = "sangnew2016@gmail.com",
+                            FullName = "Guest 1",
+                            Password = "5QSdSx5RijYeRshgKs2o22irt6jGXeKT++Kfykl31xw=",
+                            Phone = "0919239081",
+                            Salt = new byte[] { 231, 83, 229, 105, 148, 157, 135, 172, 16, 192, 79, 246, 64, 224, 72, 232 }
+                        },
+                        new
+                        {
+                            Id = new Guid("4cade1ac-6668-419c-8167-7321b97939ee"),
+                            AccountStatus = 1,
+                            Email = "sangnews2014@gmail.com",
+                            FullName = "Guest 2",
+                            Password = "5QSdSx5RijYeRshgKs2o22irt6jGXeKT++Kfykl31xw=",
+                            Phone = "0708825109",
+                            Salt = new byte[] { 231, 83, 229, 105, 148, 157, 135, 172, 16, 192, 79, 246, 64, 224, 72, 232 }
+                        });
                 });
 
             modelBuilder.Entity("tmsang.domain.R_Location", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("Address")
                         .HasColumnType("longtext");
@@ -685,9 +1222,29 @@ namespace tmsang.infra.Migrations
                     b.Property<string>("Longtitude")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("ProvinceOrCity")
+                        .HasColumnType("longtext");
+
                     b.HasKey("Id");
 
                     b.ToTable("R_Locations");
+                });
+
+            modelBuilder.Entity("tmsang.domain.R_Order", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("GuestId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("R_Orders");
                 });
 
             modelBuilder.Entity("tmsang.domain.R_Payment", b =>
@@ -699,11 +1256,11 @@ namespace tmsang.infra.Migrations
                     b.Property<string>("CardNumber")
                         .HasColumnType("longtext");
 
+                    b.Property<Guid>("GuestId")
+                        .HasColumnType("char(36)");
+
                     b.Property<bool>("Paid")
                         .HasColumnType("tinyint(1)");
-
-                    b.Property<Guid>("RequestId")
-                        .HasColumnType("char(36)");
 
                     b.Property<int>("Type")
                         .HasColumnType("int");
@@ -725,8 +1282,8 @@ namespace tmsang.infra.Migrations
                     b.Property<double>("Distance")
                         .HasColumnType("double");
 
-                    b.Property<long?>("FromId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("FromLocationId")
+                        .HasColumnType("char(36)");
 
                     b.Property<Guid>("GuestId")
                         .HasColumnType("char(36)");
@@ -737,16 +1294,10 @@ namespace tmsang.infra.Migrations
                     b.Property<DateTime>("RequestDateTime")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<long?>("ToId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("ToLocationId")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FromId");
-
-                    b.HasIndex("GuestId");
-
-                    b.HasIndex("ToId");
 
                     b.ToTable("R_Requests");
                 });
@@ -766,9 +1317,6 @@ namespace tmsang.infra.Migrations
                     b.Property<double>("Fee")
                         .HasColumnType("double");
 
-                    b.Property<Guid>("RequestId")
-                        .HasColumnType("char(36)");
-
                     b.Property<DateTime>("Start")
                         .HasColumnType("datetime(6)");
 
@@ -776,8 +1324,6 @@ namespace tmsang.infra.Migrations
                         .HasColumnType("double");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DriverId");
 
                     b.ToTable("R_Responses");
                 });
@@ -830,6 +1376,17 @@ namespace tmsang.infra.Migrations
                 {
                     b.HasOne("tmsang.domain.R_Driver", "Driver")
                         .WithMany("Histories")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Driver");
+                });
+
+            modelBuilder.Entity("tmsang.domain.B_DriverLocation", b =>
+                {
+                    b.HasOne("tmsang.domain.R_Driver", "Driver")
+                        .WithMany("Locations")
                         .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -892,6 +1449,17 @@ namespace tmsang.infra.Migrations
                     b.Navigation("Guest");
                 });
 
+            modelBuilder.Entity("tmsang.domain.B_GuestLocation", b =>
+                {
+                    b.HasOne("tmsang.domain.R_Guest", "Guest")
+                        .WithMany("Locations")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Guest");
+                });
+
             modelBuilder.Entity("tmsang.domain.B_GuestPolicy", b =>
                 {
                     b.HasOne("tmsang.domain.R_Guest", "Guest")
@@ -936,73 +1504,6 @@ namespace tmsang.infra.Migrations
                     b.Navigation("Response");
                 });
 
-            modelBuilder.Entity("tmsang.domain.R_Driver", b =>
-                {
-                    b.HasOne("tmsang.domain.B_FeePolicyAccountInGroup", null)
-                        .WithMany("Drivers")
-                        .HasForeignKey("B_FeePolicyAccountInGroupId");
-                });
-
-            modelBuilder.Entity("tmsang.domain.R_FeePolicy", b =>
-                {
-                    b.HasOne("tmsang.domain.R_FeePolicyGroup", "Group")
-                        .WithMany()
-                        .HasForeignKey("GroupId");
-
-                    b.HasOne("tmsang.domain.R_Location", "Location")
-                        .WithMany()
-                        .HasForeignKey("LocationId");
-
-                    b.HasOne("tmsang.domain.M_PersonalPolicyType", "PersonalPolicyType")
-                        .WithMany()
-                        .HasForeignKey("PersonalPolicyTypeId");
-
-                    b.Navigation("Group");
-
-                    b.Navigation("Location");
-
-                    b.Navigation("PersonalPolicyType");
-                });
-
-            modelBuilder.Entity("tmsang.domain.R_Request", b =>
-                {
-                    b.HasOne("tmsang.domain.R_Location", "From")
-                        .WithMany()
-                        .HasForeignKey("FromId");
-
-                    b.HasOne("tmsang.domain.R_Guest", "Guest")
-                        .WithMany("Requests")
-                        .HasForeignKey("GuestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("tmsang.domain.R_Location", "To")
-                        .WithMany()
-                        .HasForeignKey("ToId");
-
-                    b.Navigation("From");
-
-                    b.Navigation("Guest");
-
-                    b.Navigation("To");
-                });
-
-            modelBuilder.Entity("tmsang.domain.R_Response", b =>
-                {
-                    b.HasOne("tmsang.domain.R_Driver", "Driver")
-                        .WithMany("Responses")
-                        .HasForeignKey("DriverId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Driver");
-                });
-
-            modelBuilder.Entity("tmsang.domain.B_FeePolicyAccountInGroup", b =>
-                {
-                    b.Navigation("Drivers");
-                });
-
             modelBuilder.Entity("tmsang.domain.R_Admin", b =>
                 {
                     b.Navigation("Histories");
@@ -1018,9 +1519,9 @@ namespace tmsang.infra.Migrations
 
                     b.Navigation("Histories");
 
-                    b.Navigation("Policies");
+                    b.Navigation("Locations");
 
-                    b.Navigation("Responses");
+                    b.Navigation("Policies");
 
                     b.Navigation("TrustLevels");
                 });
@@ -1039,9 +1540,9 @@ namespace tmsang.infra.Migrations
                 {
                     b.Navigation("Histories");
 
-                    b.Navigation("Policies");
+                    b.Navigation("Locations");
 
-                    b.Navigation("Requests");
+                    b.Navigation("Policies");
                 });
 
             modelBuilder.Entity("tmsang.domain.R_Payment", b =>

@@ -32,12 +32,14 @@ namespace tmsang.api
 
             services.AddScoped<IStorage, Storage>();
             services.AddScoped<IAuth, Auth>();
-            services.AddScoped<IUtil, Util>();
+            services.AddScoped<IBingMap, BingMap>();
+            services.AddScoped<IFirebaseAdminSDK, FirebaseAdminSDK>();
+            services.AddScoped<IZalo, Zalo>();
 
             services.AddScoped<IRepository<R_Admin>, MyRepository<R_Admin>>();
             services.AddScoped<IRepository<R_Driver>, MyRepository<R_Driver>>();
             services.AddScoped<IRepository<R_Guest>, MyRepository<R_Guest>>();            
-
+                        
             // ----------------------------------------------
             // DI: Application
             // ----------------------------------------------
@@ -68,14 +70,36 @@ namespace tmsang.api
             services.AddScoped<Handles<R_GuestChangePasswordEvent>, DomainEventHandle<R_GuestChangePasswordEvent>>();   // event
             services.AddScoped<Handles<R_GuestChangePasswordEvent>, R_GuestChangePasswordEmailHandle>();                // handle
 
-
             services.AddScoped<Handles<R_AccountSmsVerificationEvent>, DomainEventHandle<R_AccountSmsVerificationEvent>>();
             services.AddScoped<Handles<R_AccountSmsVerificationEvent>, R_AccountSmsVerificationHandle>();
 
-            // B. ORDER
+            // B. ORDER            
+            services.AddScoped<IRepository<R_Order>, MyRepository<R_Order>>();
+            services.AddScoped<IRepository<R_Request>, MyRepository<R_Request>>();
+            services.AddScoped<IRepository<R_Response>, MyRepository<R_Response>>();
+            services.AddScoped<IRepository<R_Evaluation>, MyRepository<R_Evaluation>>();
+
+            services.AddScoped<IRepository<R_FeePolicy>, MyRepository<R_FeePolicy>>();
+            services.AddScoped<IRepository<R_FeePolicyGroup>, MyRepository<R_FeePolicyGroup>>();
+
+            services.AddScoped<IGuestOrderService, GuestOrderService>();
+            services.AddScoped<IDriverOrderService, DriverOrderService>();
+            services.AddScoped<IAdminOrderService, AdminOrderService>();
+
+            services.AddScoped<IRepository<R_Location>, MyRepository<R_Location>>();
+            services.AddScoped<IRepositoryNonRoot<M_RoutineCost>, MyRepositoryNonRoot<M_RoutineCost>>();
+            services.AddScoped<IRepositoryNonRoot<M_TaxVAT>, MyRepositoryNonRoot<M_TaxVAT>>();
+
+            services.AddScoped<R_LocationDomainService>();
+            services.AddScoped<R_GuestDomainService>();
+            services.AddScoped<R_FeePolicyDomainService>();
+
             services.AddScoped<Handles<R_RequestsOfGuestEvent>, DomainEventHandle<R_RequestsOfGuestEvent>>();
 
-            // C. Resolve cac service manual
+            // C. Common
+            
+
+            // D. Resolve cac service manual
             var serviceProvider = services.BuildServiceProvider();
             DomainEvents.Init(serviceProvider);
 

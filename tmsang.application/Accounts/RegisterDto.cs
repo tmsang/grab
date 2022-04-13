@@ -44,7 +44,7 @@ namespace tmsang.application
         public string ChassisNo { get; set; }       // so khung: 435-2134
         public string BikeType { get; set; }        // loai xe: VISION        
         public string Brand { get; set; }           // hang xe: HONDA
-        public DateTime RegistrationDate { get; set; }
+        public DateTime RegistrationDate { get; set; } = DateTime.Now;
 
         public void EmptyValidation()
         {

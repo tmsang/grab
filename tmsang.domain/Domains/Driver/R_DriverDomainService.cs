@@ -1,4 +1,6 @@
-﻿namespace tmsang.domain
+﻿using System;
+
+namespace tmsang.domain
 {
     public class R_DriverDomainService
     {        
@@ -22,7 +24,7 @@
         //=============================================
         // DRIVER
         //=============================================
-        public R_Driver GetDriverById(string id)
+        public R_Driver GetDriverById(Guid id)
         {
             // doi chieu email/phone voi database
             var r_DriverGetByIdSpec = new R_DriverGetByIdSpec(id);

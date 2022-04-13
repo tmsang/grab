@@ -9,5 +9,6 @@
         TokenDto DriverResetPassword(DriverResetPasswordDto resetPasswordDto);                
         TokenDto DriverChangePassword(DriverChangePasswordDto changePasswordDto);        
         void SendSmsCode(string phone);
+        void PushPosition(string lat, string lng);
     }
 }

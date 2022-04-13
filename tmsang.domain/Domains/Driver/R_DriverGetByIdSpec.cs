@@ -5,9 +5,9 @@ namespace tmsang.domain
 {
     public class R_DriverGetByIdSpec : SpecificationBase<R_Driver>
     {
-        readonly string id;
+        readonly Guid id;
 
-        public R_DriverGetByIdSpec(string id)
+        public R_DriverGetByIdSpec(Guid id)
         {
             this.id = id;
         }
@@ -15,8 +15,8 @@ namespace tmsang.domain
         public override Expression<Func<R_Driver, bool>> SpecExpression
         {
             get {
-                return p => p.AccountStatus == E_Status.Active 
-                            && p.Id.ToString() == this.id;
+                return p => p.AccountStatus == E_Status.Actived 
+                            && p.Id == this.id;
             }
         }
     }
