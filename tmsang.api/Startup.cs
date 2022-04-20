@@ -18,7 +18,7 @@ namespace tmsang.api
         {
             Configuration = configuration;
 
-            File.AppendAllText("Files/TrackMigration/test.txt", $"{DateTime.Now}: Begin Startup...\n");
+            Utils.Log($"{DateTime.Now}: Begin Startup...\n");
         }
 
         public IConfiguration Configuration { get; }
@@ -26,7 +26,7 @@ namespace tmsang.api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            File.AppendAllText("Files/TrackMigration/test.txt", $"{DateTime.Now}: Begin ConfigureServices...\n");
+            Utils.Log($"{DateTime.Now}: Begin ConfigureServices...\n");
 
             // TODO: add dbcontext cho MySQL
             string mySqlConnectionStr = Configuration.GetConnectionString("DefaultConnection");
@@ -61,7 +61,7 @@ namespace tmsang.api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            File.AppendAllText("Files/TrackMigration/test.txt", $"{DateTime.Now}: Begin Configure...\n");
+            Utils.Log($"{DateTime.Now}: Begin Configure...\n");
 
             if (env.IsDevelopment())
             {
@@ -82,8 +82,12 @@ namespace tmsang.api
                 .AllowAnyMethod()
                 .AllowAnyHeader());
 
+            // global error handler
+            app.UseMiddleware<ErrorHandlerMiddleware>();
+
             // custom jwt auth middleware
             app.UseMiddleware<JwtMiddleware>();
+
             // app.ConfigureExceptionHandler();                 // TODO
 
             app.UseEndpoints(endpoints =>

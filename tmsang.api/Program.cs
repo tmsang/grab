@@ -14,7 +14,8 @@ namespace tmsang.api
     {
         public static void Main(string[] args)
         {
-            File.AppendAllText("Files/TrackMigration/test.txt", $"{DateTime.Now}: Begin Main... \n");
+            Utils.Log($"{DateTime.Now}: Begin Main... \n");
+
             CreateHostBuilder(args).Build().Run();
         }
 
