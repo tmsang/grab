@@ -45,11 +45,12 @@ namespace tmsang.api
 
         
         [HttpPost("cancel-by-client")]
-        public async Task CancelAsync(string requestId, string reason)
+        public async Task CancelAsync(string orderId)
         {
             try
             {
-                await this.orderService.Cancel(requestId, reason);
+                string reason = "";
+                await this.orderService.Cancel(orderId, reason);
             }
             catch (Exception ex)
             {
